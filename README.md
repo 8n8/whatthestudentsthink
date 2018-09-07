@@ -49,3 +49,5 @@ Use screen for this, so that the servers will continue to run after the ssh sess
 + There is no logging of requests to the server at the moment, which would be nice to have and not too hard to do.
 
 + There are no tests.  This does not matter too much since everything is quite simple and I have manually compared the charts with the data for several hundred data points.
+
++ The Office for Students has now released the data for 2018, but this code still uses the 2017 data.  It would be good to update it to use the new data.
