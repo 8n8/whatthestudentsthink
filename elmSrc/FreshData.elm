@@ -52,11 +52,11 @@ freshData model =
 
         BySubject (Just subj) ->
             Http.send DataRequest
-                (makeGetRequest (SoSubject subj) model.unis model.questions)
+                (makePutRequest (SoSubject subj) model.unis model.questions)
 
         Overall ->
             Http.send DataRequest
-                (makeGetRequest SoOverall model.unis model.questions)
+                (makePutRequest SoOverall model.unis model.questions)
 
 
 {-| Makes a GET request to the server. The arguments are:
@@ -71,9 +71,19 @@ freshData model =
     + questions: A list of the integer codes of the selected questions.
 
 -}
-makeGetRequest : SubjectOrOverall -> List Int -> List Int -> Http.Request GetData
-makeGetRequest subOrOverall unis questions =
-    Http.get (makeRequestUrl subOrOverall unis questions) decodeData
+makePutRequest : SubjectOrOverall -> List Int -> List Int -> Http.Request GetData
+makePutRequest subOrOverall unis questions =
+    Http.request
+        { method = "PUT"
+        , headers = []
+        , url = case subOrOverall of
+            SoSubject _ -> "nss2"
+            SoOverall -> "nss"
+        , body = Http.jsonBody <| jsonRequest subOrOverall unis questions
+        , expect = Http.expectJson decodeData
+        , timeout = Nothing
+        , withCredentials = False
+        }
 
 
 {-| It makes the url for the GET request for data for the chart. 'nss2'

@@ -95,13 +95,13 @@ respond2requests nss2 nss = do
       Scot.setHeader "Content-Type" "text/css; charset=utf-8"
       subHeaders
       Scot.file aboutstylescss
-    Scot.get "/nss/:queryJson" $ do
+    Scot.put "/nss" $ do
       jsonHeaders
-      rawRequest <- Scot.param "queryJson"
+      rawRequest <- Scot.body
       respondToNssDataRequest (decodeNss rawRequest) nss
-    Scot.get "/nss2/:queryJson" $ do
+    Scot.put "/nss2" $ do
       jsonHeaders
-      rawRequest <- Scot.param "queryJson"
+      rawRequest <- Scot.body
       respondToNss2DataRequest (decodeNss2 rawRequest) nss2
 
 {-| Given a request for data from the NSS data set and the data,

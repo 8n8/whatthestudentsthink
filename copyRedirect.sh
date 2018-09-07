@@ -1,2 +1,2 @@
 #!/bin/bash
-rsync .stack-work/install/x86_64-linux/lts-11.15/8.2.2/bin/redirect true@whatthestudentsthink.uk:./wtst/
+rsync .stack-work/install/x86_64-linux/lts-12.5/8.4.3/bin/redirect true@whatthestudentsthink.uk:./wtst/
