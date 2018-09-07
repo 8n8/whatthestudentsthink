@@ -1,0 +1,145 @@
+body {
+    font-size: 100%;
+    margin-left: 1%;
+}
+
+.toplink {
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    font-family: "Ubuntu";
+    font-size: 2rem;
+}
+
+.topDiv {
+    font-family: "Ubuntu";
+    font-size: 1rem;
+}
+
+.mainChoices {
+    margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  font-family: "Ubuntu";
+  max-width: 40rem;
+}
+
+.defaultbutton {
+    color: black;
+    border: 1px solid grey;
+    background-color: white;
+    margin-bottom: 0.4rem;
+    padding: 0.4em 0.7rem;
+    display: block;
+    font-family: "Ubuntu";
+    font-size: 1rem;
+    border-color: grey;
+}
+
+.thickline {
+    stroke: gray;
+    stroke-width: 1;
+}
+
+.mediumline {
+    stroke: gray;
+    stroke-width: 0.5;
+}
+
+.thinline {
+    stroke: gray;
+    stroke-width: 0.3;
+}
+
+.searchBox {
+    font-family: "Ubuntu";
+    font-size: 1rem;
+}
+
+.buttonText {
+    font-family: "Ubuntu";
+    font-size: 1rem;
+}
+
+.explainP {
+    margin-top: 1rem;
+    max-width: 40rem;
+}
+
+label {
+    display: block;
+}
+
+.aboutDiv {
+    margin-bottom: 1rem;
+    font-family: "Ubuntu";
+    font-size: 1rem;
+}
+
+.chart {
+    font-family: "Ubuntu Mono";
+    font-size: 1rem;
+    margin-top: 1rem;
+    max-height: 100%;
+}
+
+svg {
+    display: block;
+    height: auto;
+    font-family: "Ubuntu Mono";
+}
+
+.errorBar {
+    stroke: black;
+    stroke-width: 2;
+}
+
+.generalCheckBox {
+    margin-top: -1.2rem;
+    margin-left: 1.7rem;
+    margin-bottom: 0.4rem;
+    max-width: 37rem;
+}
+
+.redCheckBox {
+    color: red;
+}
+
+.chooserSet {
+    margin-left: 1rem;
+}
+
+.blackCheckBox {
+    color: black;
+}
+
+.redMsg {
+    margin-bottom: 0.3rem;
+}
+
+.searchBox {
+    color: black;
+    border: 1px solid grey;
+    background-color: white;
+    margin-bottom: 0.3rem;
+    padding: 0.4em 0.7rem;
+    display: block;
+}
+
+.chartCaption {
+    font-family: "Ubuntu Mono";
+    font-size: 1rem;
+    margin-top: 1rem;
+    max-width: 40rem;
+    margin-bottom: 1rem;
+}
+
+.errMsg {
+    font-family: "Ubuntu Mono";
+    margin-top: 1rem;
+    max-width: 40rem;
+}

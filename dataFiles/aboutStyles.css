@@ -1,0 +1,26 @@
+body {
+    font-size: 100%;
+    font-family: "Ubuntu";
+    max-width: 40em;
+    margin-left: 1%;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+.toplink {
+    text-decoration: none;
+}
+
+.abouttitle {
+    color: black;
+}
+
+blockquote {
+    font-size: 1.1em;
+}

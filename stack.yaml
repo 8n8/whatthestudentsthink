@@ -1,0 +1,4 @@
+resolver: lts-12.5
+extra-deps:
+  - base-4.9.1.0
+  - scotty-tls-0.4.1
