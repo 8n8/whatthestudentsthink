@@ -43,3 +43,9 @@ There are two servers, one that listens on port 80 and redirects everything to p
 ## Run the servers
 
 Use screen for this, so that the servers will continue to run after the ssh session has ended.  From inside the ~/wtst directory, run ```screen``` then ```authbind ./redirect```, then type ```Control-A d``` to detach the session, run ```screen``` again, run ```authbind ./server```, then detach it with ```Control-A d```.  The ssh session can then be ended and the servers will continue to run.
+
+# TODO
+
++ There is no logging of requests to the server at the moment, which would be nice to have and not too hard to do.
+
++ There are no tests.  This does not matter too much since everything is quite simple and I have manually compared the charts with the data for several hundred data points.
