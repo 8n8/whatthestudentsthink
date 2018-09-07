@@ -8,7 +8,9 @@ The front end is written in Elm.  It retrieves data from the back end via JSON h
 
 # Building
 
-Software versions that the installation is tested with:
+First clone the repository and cd into it.
+
+Software versions that the build is tested with:
 
 + [Elm](https://guide.elm-lang.org/install.html) 0.18.0
 + [Haskell Tool Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/) 1.7.1
@@ -30,7 +32,7 @@ There are three scripts for copying the data and binaries over to the server.  T
 
 ## Https
 
-The https uses a free certificate from LetsEncrypt, using the Electronic Frontier Foundation's certbot tool.  The certificates are installed in /etc/letsencrypt/live/<domain>.  The path to these certificates is hard coded in the Haskell file haskellSrc/DevOrProduction.hs.  The owner of the files fullchain.pem and privkey.pem in the certificates directory will need to be changed to the user name of the account that will run the program.
+The https uses a free certificate from LetsEncrypt, using the Electronic Frontier Foundation's [certbot](https://certbot.eff.org/) tool.  The certificates are installed in /etc/letsencrypt/live/<domain>.  The path to these certificates is hard coded in the Haskell file haskellSrc/DevOrProduction.hs.  The owner of the files fullchain.pem and privkey.pem in the certificates directory will need to be changed to the user name of the account that will run the program.
 
 ## Accessing ports
 
@@ -38,4 +40,4 @@ There are two servers, one that listens on port 80 and redirects everything to p
 
 ## Run the servers
 
-Use screen for this, so that the servers will continue to run after the ssh session has ended.  From inside the ~/wtst directory, run the command ```screen``` then ```authbind ./redirect```, then type ```Control-A d``` to detach the session, run ```screen``` again, run ```authbind ./server```, then detach it with ```Control-A d```.  The ssh session can then be ended and the servers will continue to run.
+Use screen for this, so that the servers will continue to run after the ssh session has ended.  From inside the ~/wtst directory, run the ```screen``` then ```authbind ./redirect```, then type ```Control-A d``` to detach the session, run ```screen``` again, run ```authbind ./server```, then detach it with ```Control-A d```.  The ssh session can then be ended and the servers will continue to run.
