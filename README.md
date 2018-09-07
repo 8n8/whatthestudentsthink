@@ -1,6 +1,6 @@
 # What The Students Think
 
-A simple website for displaying the results of the National Student Survey.
+A simple [website](https://whatthestudentsthink.uk) for displaying the results of the National Student Survey.
 
 # Program structure
 
