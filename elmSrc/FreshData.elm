@@ -74,33 +74,18 @@ makePutRequest subOrOverall unis questions =
     Http.request
         { method = "PUT"
         , headers = []
-        , url = case subOrOverall of
-            SoSubject _ -> "nss2"
-            SoOverall -> "nss"
+        , url =
+            case subOrOverall of
+                SoSubject _ ->
+                    "nss2"
+
+                SoOverall ->
+                    "nss"
         , body = Http.jsonBody <| jsonRequest subOrOverall unis questions
         , expect = Http.expectJson decodeData
         , timeout = Nothing
         , withCredentials = False
         }
-
-
-{-| It makes the url for the GET request for data for the chart. 'nss2'
-signifies the detailed data which gives a breakdown per subject for each
-university. 'nss' is the overall data which gives a score for each
-survey question for each university.
--}
-makeRequestUrl : SubjectOrOverall -> List Int -> List Int -> String
-makeRequestUrl subOrOverall unis questions =
-    let
-        json =
-            Encode.encode 0 (jsonRequest subOrOverall unis questions)
-    in
-    case subOrOverall of
-        SoSubject _ ->
-            "nss2/" ++ json
-
-        SoOverall ->
-            "nss/" ++ json
 
 
 {-| Used to tell the function that constructs the GET request whether the
