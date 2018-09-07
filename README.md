@@ -40,4 +40,4 @@ There are two servers, one that listens on port 80 and redirects everything to p
 
 ## Run the servers
 
-Use screen for this, so that the servers will continue to run after the ssh session has ended.  From inside the ~/wtst directory, run the ```screen``` then ```authbind ./redirect```, then type ```Control-A d``` to detach the session, run ```screen``` again, run ```authbind ./server```, then detach it with ```Control-A d```.  The ssh session can then be ended and the servers will continue to run.
+Use screen for this, so that the servers will continue to run after the ssh session has ended.  From inside the ~/wtst directory, run ```screen``` then ```authbind ./redirect```, then type ```Control-A d``` to detach the session, run ```screen``` again, run ```authbind ./server```, then detach it with ```Control-A d```.  The ssh session can then be ended and the servers will continue to run.
