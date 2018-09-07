@@ -26,7 +26,7 @@ You can build either a development or production version.  The dev version uses 
 
 # Install on server
 
-I used a droplet from [DigitalOcean](https://www.digitalocean.com/).  This is a Linux virtual machine and is cheap and convenient.
+I used a droplet from [DigitalOcean](https://www.digitalocean.com/) for the server.  This is a Linux virtual machine and is cheap and convenient.
 
 There are three scripts for copying the data and binaries over to the server.  They contain the server name hardcoded, so will need to be edited for a different server address.  Make a directory on the server called ~/wtst, and then run (on the build machine) the scripts copyData.sh, copyRedirect.sh, and copyServer.sh.
 
