@@ -32,12 +32,10 @@ import Json.Decode as Decode
 import Json.Encode as Encode
 
 
-{-| It sends a GET request to the server (unless there is no subject chosen).
+{-| It sends a PUT request to the server (unless there is no subject chosen).
 It uses the selected subject, universities and questions from the model to
 make the request. The selection is sent to the server as lists of integer
-codes encoded to Json. Currently the Json is not URL-encoded, but just dumped
-literally into the URL. I'm not sure this is best practice, as I have not
-encountered it before, but it seems to work, so why change it?
+codes encoded to Json.
 
 The response is Json, a nested list of Ints, each sublist containing three
 elements, which are the lower bound of the 95% confidence interval, the score
