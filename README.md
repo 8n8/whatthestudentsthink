@@ -4,7 +4,9 @@ A simple [website](https://whatthestudentsthink.uk) for displaying the results o
 
 # Program structure
 
-The front end is written in Elm.  It retrieves data from the back end via JSON http requests.  The back end is written in Haskell.  There is no database.  It reads in the csv data files at startup and then holds all the data in memory.
+The data used for the website is held in two CSV files.  One contains the overall scores for each university and the other contains the by-subject breakdown for each university.
+
+The front end is written in Elm.  It retrieves data from the back end via JSON http requests.  The back end is written in Haskell.  There is no database.  It reads in the CSV data files at startup and then holds all the data in memory.
 
 # Building
 
