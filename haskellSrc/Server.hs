@@ -19,14 +19,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 
+module Server where
+
 {-| This is the main server.  First it reads and parses the data files 
 containing the survey data.  It assigns integer codes for the universities
-and subject areas and generates a file of Elm code so that the frontend
-is aware of the codes.  It sets up routes for serving up the frontend
-code, and for responding to json data requests.
+and subject areas. It sets up routes for serving up the frontend code, and
+for responding to json data requests.
 -}
-
-module Server where
 
 import qualified General as G
 import Data.ByteString.Lazy.Internal (ByteString)
