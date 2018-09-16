@@ -1,26 +1,25 @@
 -- Copyright 2017 True Ghiassi true@ghiassitrio.co.uk
+
 -- This file is part of Whatthestudentsthink.
+
 -- Whatthestudentsthink is free software: you can redistribute it and/or
 -- modify it under the terms of the GNU General Public License as
 -- published by the Free Software Foundation, either version 3 of the
--- License, or (at your option) any later version.
---
+-- License, or (at your option) any later version.  
+-- 
 -- Whatthestudentsthink is distributed in the hope that it will be
 -- useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 -- of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 -- General Public License for more details.
---
+-- 
 -- You should have received a copy of the GNU General Public License
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
+
 {-# LANGUAGE OverloadedStrings #-}
 
-module SelectDataForChart
-  ( nss
-  , nss2
-  ) where
+module SelectDataForChart (nss, nss2) where
 
-import           Data.Function (on)
 {-| It selects the data needed for drawing a chart, given the request
 from the front-end.  This is done by mapping over the whole data set
 for each request, filtering out the data that are not needed.
@@ -28,10 +27,12 @@ for each request, filtering out the data that are not needed.
 This sounds slow, but it was found after a lot of profiling and experimenting
 with other methods that this method has pretty good performance.
 -}
-import qualified Data.IntSet   as Si
-import           Data.List     (sortBy)
-import qualified General       as G
-import qualified Parser        as P
+
+import qualified Data.IntSet as Si
+import Data.List (sortBy)
+import qualified General as G
+import qualified Parser as P
+import Data.Function (on)
 
 {-| Given the data request from outside and the parsed data from file,
 this function selects and calculates the data needed for drawing
@@ -48,7 +49,8 @@ nss2 input = map nss2ToInt . sortNss2ByUni . filter (nss2InOrOut input)
 
 {-| It sorts the data by the integer code of the university. -}
 sortNss2ByUni :: [P.IntNss2Line] -> [P.IntNss2Line]
-sortNss2ByUni = sortBy (compare `on` P.i2Uni)
+sortNss2ByUni =
+  sortBy (compare `on` P.i2Uni)
 
 {-| Given a data point from the NSS2 data set and a request for a new
 chart from the frontend, it decides if the data point is needed to
@@ -79,7 +81,8 @@ nss input = map nssToInt . sortNssByUni . filter (nssInOrOut input)
 
 {-| It sorts the data by the university integer code. -}
 sortNssByUni :: [P.IntNssLine] -> [P.IntNssLine]
-sortNssByUni = sortBy (compare `on` P.iUni)
+sortNssByUni =
+  sortBy (compare `on` P.iUni)
 
 {-| It converts a data point from the NSS2 data set into a list containing
 three ints.  These three ints are the bounds of the 95% confidence interval
@@ -88,14 +91,15 @@ and the score.
 {-@ nss2ToInt :: P.IntNss2Line -> Int3 @-}
 nss2ToInt :: P.IntNss2Line -> [Int]
 nss2ToInt nss2line =
-  [P.i2MinConf nss2line, P.i2Value nss2line, P.i2MaxConf nss2line]
+  [ P.i2MinConf nss2line, P.i2Value nss2line, P.i2MaxConf nss2line ]
 
 {-| It converts a data point from the NSS data set into a list containing
 three ints.  See the comment on nss2ToInt.
 -}
 {-@ nssToInt :: P.IntNssLine -> Int3 @-}
 nssToInt :: P.IntNssLine -> [Int]
-nssToInt nssLine = [P.iMinConf nssLine, P.iValue nssLine, P.iMaxConf nssLine]
+nssToInt nssLine =
+  [ P.iMinConf nssLine, P.iValue nssLine, P.iMaxConf nssLine ]
 
 {-| Given a data point from the NSS data set and a request for a new
 chart from the frontend, it decides if the data point is needed to

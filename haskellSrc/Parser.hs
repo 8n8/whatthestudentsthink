@@ -1,18 +1,21 @@
 -- Copyright 2017 True Ghiassi true@ghiassitrio.co.uk
+
 -- This file is part of Whatthestudentsthink.
+
 -- Whatthestudentsthink is free software: you can redistribute it and/or
 -- modify it under the terms of the GNU General Public License as
 -- published by the Free Software Foundation, either version 3 of the
--- License, or (at your option) any later version.
---
+-- License, or (at your option) any later version.  
+-- 
 -- Whatthestudentsthink is distributed in the hope that it will be
 -- useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 -- of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 -- General Public License for more details.
---
+-- 
 -- You should have received a copy of the GNU General Public License
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
+
 {-# LANGUAGE OverloadedStrings #-}
 
 module Parser
@@ -29,36 +32,39 @@ module Parser
 spreadsheet and one for the worksheet "NSS2".
 
 The reason for building a custom parser and not just using a standard
-CSV parser is that I would have had to have made custom parsers for
+CSV parser is that I would have had to have made custom parsers for 
 a lot of the cells anyway, as they are not standard.  For example, the
 question number column does not just have a number, it has things like
 "Q3" or "NHS1".
 -}
-import           Data.Maybe           (catMaybes)
-import qualified Data.Text            as T
-import           Data.Void            (Void)
-import qualified Text.Megaparsec      as M
+
+import Data.Maybe (catMaybes)
+import qualified Data.Text as T
+import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as P
+import Data.Void ( Void )
+
 
 {-| A parsed line in the 'NSS' worksheet. -}
 data NssLine = NssLine
-  { nUniName    :: !T.Text
-  , nQNum       :: !Int
-  , nMinConf    :: !Int
-  , nValue      :: !Int
-  , nMaxConf    :: !Int
+  { nUniName :: !T.Text
+  , nQNum :: !Int
+  , nMinConf :: !Int
+  , nValue :: !Int
+  , nMaxConf :: !Int
   , nSampleSize :: !Int
   }
+
 
 {-| A parsed line in the NSS worksheet, but with the strings converted to their
 integer codes.
 -}
 data IntNssLine = IntNssLine
-  { iUni        :: !Int
-  , iqNum       :: !Int
-  , iMinConf    :: !Int
-  , iValue      :: !Int
-  , iMaxConf    :: !Int
+  { iUni :: !Int
+  , iqNum :: !Int
+  , iMinConf :: !Int
+  , iValue :: !Int
+  , iMaxConf :: !Int
   , iSampleSize :: !Int
   }
 
@@ -68,25 +74,25 @@ type ParseError = M.ParseError Char Void
 
 {-| It contains a single data point from the 'NSS2' worksheet, after parsing. -}
 data Nss2Line = Nss2Line
-  { n2UniName    :: !T.Text
-  , n2Subject    :: !T.Text
-  , n2Question   :: !Int
-  , n2MinConf    :: !Int
-  , n2Value      :: !Int
-  , n2MaxConf    :: !Int
+  { n2UniName :: !T.Text
+  , n2Subject :: !T.Text
+  , n2Question :: !Int
+  , n2MinConf :: !Int
+  , n2Value :: !Int
+  , n2MaxConf :: !Int
   , n2SampleSize :: !Int
-  } deriving (Show)
+  } deriving Show
 
 {-| A parsed line in the NSS2 worksheet, but with the strings converted to their
 integer codes.
 -}
 data IntNss2Line = IntNss2Line
-  { i2Uni        :: !Int
-  , i2Subject    :: !Int
-  , i2Question   :: !Int
-  , i2MinConf    :: !Int
-  , i2Value      :: !Int
-  , i2MaxConf    :: !Int
+  { i2Uni :: !Int
+  , i2Subject :: !Int
+  , i2Question :: !Int
+  , i2MinConf :: !Int
+  , i2Value :: !Int
+  , i2MaxConf :: !Int
   , i2SampleSize :: !Int
   }
 
@@ -98,10 +104,11 @@ parseNssLine = do
   (minConf, value, maxConf) <- parseQColsAndMinValMax
   sampleSize <- M.try parseInt
   voidEol M.<|> M.eof
-  return $
-    case maybeQNum of
-      Just qNum -> Just $ NssLine uniName qNum minConf value maxConf sampleSize
-      _ -> Nothing
+  return $ case maybeQNum of
+    Just qNum ->
+        Just $ NssLine uniName qNum minConf value maxConf sampleSize
+    _ ->
+        Nothing
 
 {-| Parses the three numbers needed from each row: the ends of the 95%
 confidence interval and the score.
@@ -123,13 +130,17 @@ parseQColsAndMinValMax = do
 is an error or the parsed data.
 -}
 nss :: T.Text -> Either ParseError [NssLine]
-nss = M.parse parseNss "nssFile"
+nss =
+  M.parse parseNss "nssFile"
+
 
 {-| The input is the whole of the 'NSS2' worksheet in CSV form.  The output
 is an error or the parsed data.
 -}
 nss2 :: T.Text -> Either ParseError [Nss2Line]
-nss2 = M.parse parseNss2 "nss2File"
+nss2 =
+  M.parse parseNss2 "nss2File"
+
 
 {-| The parser for the 'NSS' worksheet. -}
 parseNss :: Parser [NssLine]
@@ -224,14 +235,15 @@ parseEndOfQuote = do
 quoted or not.
 -}
 parseUniName :: Parser T.Text
-parseUniName = M.try parseQuotedUni M.<|> parseText
+parseUniName =
+  M.try parseQuotedUni M.<|> parseText
 
 {-| It parses n cells, ignoring their content. -}
 ignoreCells :: Int -> Parser ()
 ignoreCells 0 = return ()
 ignoreCells n = do
   ignoreCell
-  ignoreCells (n - 1)
+  ignoreCells (n-1)
 
 {-| It parses the university ID number and ignores it, and then
 parses the university name that is in the next column.
@@ -256,11 +268,10 @@ parseNss2Line = do
   (minConf, value, maxConf) <- parseQColsAndMinValMax
   sampleSize <- parseInt
   voidEol M.<|> M.eof
-  return $
-    case (level == "First degree", maybeQNum) of
-      (True, Just qNum) ->
-        Just $ Nss2Line uniName subject qNum minConf value maxConf sampleSize
-      _ -> Nothing
+  return $ case (level == "First degree", maybeQNum) of
+    (True, Just qNum) -> Just $
+        Nss2Line uniName subject qNum minConf value maxConf sampleSize
+    _ -> Nothing
 
 {-| It parses an end of line. -}
 voidEol :: Parser ()
@@ -280,7 +291,8 @@ parseInt = do
 
 {-| Checks that a character is a number. -}
 isInt :: Char -> Bool
-isInt ch = ch `elem` intStr
+isInt ch =
+  ch `elem` intStr
 
 {-| The characters that are accepted as integers. -}
 intStr :: String
