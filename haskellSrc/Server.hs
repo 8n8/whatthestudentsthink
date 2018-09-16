@@ -1,51 +1,46 @@
 -- Copyright 2017 True Ghiassi true@ghiassitrio.co.uk
-
 -- This file is part of Whatthestudentsthink.
-
 -- Whatthestudentsthink is free software: you can redistribute it and/or
 -- modify it under the terms of the GNU General Public License as
 -- published by the Free Software Foundation, either version 3 of the
--- License, or (at your option) any later version.  
--- 
+-- License, or (at your option) any later version.
+--
 -- Whatthestudentsthink is distributed in the hope that it will be
 -- useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 -- of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 -- General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
-
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module Server where
 
-{-| This is the main server.  First it reads and parses the data files 
+import qualified Data.Aeson                    as Json
+import           Data.ByteString.Lazy.Internal (ByteString)
+import qualified Data.IntSet                   as Si
+import qualified Data.Text                     as T
+import qualified DevOrProduction               as Dp
+import           GHC.Generics                  (Generic)
+{-| This is the main server.  First it reads and parses the data files
 containing the survey data.  It assigns integer codes for the universities
 and subject areas. It sets up routes for serving up the frontend code, and
 for responding to json data requests.
 -}
-
-import qualified General as G
-import Data.ByteString.Lazy.Internal (ByteString)
-import GHC.Generics (Generic)
-import qualified Data.IntSet as Si
-import qualified Data.Aeson as Json
-import qualified Data.Text as T
+import qualified General                       as G
+import qualified Parser                        as P
+import           ReadAndBasicProcess           (readAndBasicProcess)
 import qualified SelectDataForChart
-import qualified Web.Scotty as Scot
-import ReadAndBasicProcess (readAndBasicProcess)
-import qualified Parser as P
-import qualified DevOrProduction as Dp
+import qualified Web.Scotty                    as Scot
 
 main :: IO ()
 main = do
   parsed <- readAndBasicProcess
   case parsed of
-    Left errMsg -> print errMsg
-    Right (nss, nss2, _, _) ->
-      respond2requests nss2 nss
+    Left errMsg             -> print errMsg
+    Right (nss, nss2, _, _) -> respond2requests nss2 nss
 
 {-| It sets up the routes for handling the requests from the
 frontend.
@@ -109,16 +104,9 @@ it selects the data for the response and encodes it to JSON.
 respondToNssDataRequest :: Maybe G.NssInput -> [P.IntNssLine] -> Scot.ActionM ()
 respondToNssDataRequest maybeRequest nss =
   case maybeRequest of
-    Nothing ->
-      Scot.json Output
-        { err = "Could not parse input."
-        , result = []
-        }
+    Nothing -> Scot.json Output {err = "Could not parse input.", result = []}
     Just input ->
-      Scot.json Output
-        { err = ""
-        , result = SelectDataForChart.nss input nss
-        }
+      Scot.json Output {err = "", result = SelectDataForChart.nss input nss}
 
 {-| It decodes the JSON in a request for data from the NSS2 data
 set.
@@ -128,9 +116,9 @@ decodeNss2 rawRequest =
   case Json.decode rawRequest of
     Nothing -> Nothing
     Just content ->
-      if nss2InputOk content then
-        Just content
-      else Nothing
+      if nss2InputOk content
+        then Just content
+        else Nothing
 
 {-| It decodes a JSON request for data from the NSS data set. -}
 decodeNss :: ByteString -> Maybe G.NssInput
@@ -138,9 +126,9 @@ decodeNss rawRequest =
   case Json.decode rawRequest of
     Nothing -> Nothing
     Just content ->
-      if nssInputOk content then
-        Just content
-      else Nothing
+      if nssInputOk content
+        then Just content
+        else Nothing
 
 {-| It does a quick reasonableness check on a data request for the
 NSS data set.
@@ -176,26 +164,22 @@ inputSetOk maxVal s
 was then it calculates the data to send back and sends it.  If not
 then it sends an error message.
 -}
-respondToNss2DataRequest
-  :: Maybe G.Nss2Input -> [P.IntNss2Line] -> Scot.ActionM ()
+respondToNss2DataRequest ::
+     Maybe G.Nss2Input -> [P.IntNss2Line] -> Scot.ActionM ()
 respondToNss2DataRequest maybeRequest nss2Dat =
   case maybeRequest of
-    Nothing ->
-      Scot.json Output
-        { err = "Could not parse input."
-        , result = []
-        }
+    Nothing -> Scot.json Output {err = "Could not parse input.", result = []}
     Just input ->
-      Scot.json Output
-        { err = ""
-        , result = SelectDataForChart.nss2 input nss2Dat
-        }
+      Scot.json
+        Output {err = "", result = SelectDataForChart.nss2 input nss2Dat}
 
 {-| Various headers intended to increase security somewhat.
 -}
 topHeaders :: Scot.ActionM ()
 topHeaders = do
-  Scot.setHeader "Content-Security-Policy" "script-src 'self' 'sha256-LY7oE7OZlrCiTGQMMFwKlDID0F8sf8t6FcUIyF06bjo='; default-src 'none'; connect-src 'self'; font-src https://fonts.googleapis.com https://fonts.gstatic.com data: ; img-src 'self'; object-src 'none'; style-src 'self' https://fonts.googleapis.com"
+  Scot.setHeader
+    "Content-Security-Policy"
+    "script-src 'self' 'sha256-LY7oE7OZlrCiTGQMMFwKlDID0F8sf8t6FcUIyF06bjo='; default-src 'none'; connect-src 'self'; font-src https://fonts.googleapis.com https://fonts.gstatic.com data: ; img-src 'self'; object-src 'none'; style-src 'self' https://fonts.googleapis.com"
   Scot.setHeader "X-Frame-Options" "SAMEORIGIN"
   Scot.setHeader "X-XSS-Protection" "1; mode=block"
   Scot.setHeader "X-Content-Type-Options" "nosniff"
@@ -204,22 +188,23 @@ topHeaders = do
   Scot.setHeader "Strict-Transport-Security" "max-age=63072000"
 
 subHeaders :: Scot.ActionM ()
-subHeaders =
-  Scot.setHeader "Server" ""
+subHeaders = Scot.setHeader "Server" ""
 
 jsonHeaders :: Scot.ActionM ()
 jsonHeaders = do
-    Scot.setHeader "Content-Type" "application/json; charset=utf-8"
-    subHeaders
-    apiCSP
+  Scot.setHeader "Content-Type" "application/json; charset=utf-8"
+  subHeaders
+  apiCSP
 
 apiCSP :: Scot.ActionM ()
 apiCSP =
-  Scot.setHeader "Content-SecurityPolicy" "default-src 'none'; frame-ancestors 'none'"
+  Scot.setHeader
+    "Content-SecurityPolicy"
+    "default-src 'none'; frame-ancestors 'none'"
 
 {-| It contains the response to a data request. -}
 data Output = Output
-  { err :: T.Text
+  { err    :: T.Text
   , result :: [[Int]]
   } deriving (Generic, Show)
 
