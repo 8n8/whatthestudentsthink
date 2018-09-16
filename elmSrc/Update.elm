@@ -41,7 +41,7 @@ import Tuple exposing (first)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        -- The university chooser button has been clicked on, so it opened if
+        -- The university chooser button has been clicked on, so it is opened if
         -- folded up and vice versa.
         ChooseAUni ->
             ( { model

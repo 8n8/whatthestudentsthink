@@ -57,7 +57,7 @@ freshData model =
                 (makePutRequest SoOverall model.unis model.questions)
 
 
-{-| Makes a GET request to the server. The arguments are:
+{-| Makes a request to the server. The arguments are:
 
     + subOrOverall: This says which data set to use.  If a subject has been
       selected then it is the by-subject worksheet from the data.  If a subject
@@ -88,7 +88,7 @@ makePutRequest subOrOverall unis questions =
         }
 
 
-{-| Used to tell the function that constructs the GET request whether the
+{-| Used to tell the function that constructs the data request whether the
 data is to come from the overall data set or the detailed per-subject
 data set.
 -}
@@ -97,7 +97,7 @@ type SubjectOrOverall
     | SoSubject Int
 
 
-{-| Encodes the JSON for the GET request.
+{-| Encodes the JSON for the data request.
 -}
 jsonRequest : SubjectOrOverall -> List Int -> List Int -> Encode.Value
 jsonRequest subOrOverall unis questions =
@@ -123,7 +123,7 @@ encodeList list =
     Encode.list (List.map Encode.int list)
 
 
-{-| Decodes the JSON given in response to the GET request to the server.
+{-| Decodes the JSON given in response to the request to the server.
 -}
 decodeData : Decode.Decoder GetData
 decodeData =
