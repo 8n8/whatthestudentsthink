@@ -17,9 +17,9 @@
 
 module Main exposing (..)
 
-{-| Provides the main Javascript script for the home page of
-whatthestudentsthink.uk. It provodes the buttons and menus for
-choosing the data to display, and the chart itself.
+{-| Provides the main script for the home page of whatthestudentsthink.uk.
+It provides the buttons and menus for choosing the data to display, and the
+chart itself.
 -}
 
 import Data exposing (overallUniCodes, subjectCodes)
@@ -50,8 +50,7 @@ main =
 
 {-| The initial state of the app. The chart displayed initially is the
 overall comparison chart for all universities on question 27 in the survey,
-which is something like "Overall, I am satisified with the quality of the
-course."
+which is the overall satisfaction question.
 -}
 initModel : Model
 initModel =
