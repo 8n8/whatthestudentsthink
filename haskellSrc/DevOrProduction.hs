@@ -33,7 +33,7 @@ import qualified Web.Scotty.TLS as Tls
 data DevOrProduction = Dev | Production
 
 status :: DevOrProduction
-status = Production
+status = Dev
 
 {-| Given a file path like "/a/b/c/d.txt", it removes the file
 name, giving "/a/b/c".
