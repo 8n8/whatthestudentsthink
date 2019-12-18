@@ -73,11 +73,13 @@ dataChooserButtons_ { uni, question, subject, uniSearchText, subjectSearchText }
                 model.uniSearchResults
                 model.unis
             ]
+
           else
             []
         , showChooserButton question ChooseAQuestion (qButtonText model)
         , if question then
             [ questionChooserButtons model.axesConfig model.questions ]
+
           else
             []
         , case model.chartMode of
@@ -104,6 +106,7 @@ dataChooserButtons_ { uni, question, subject, uniSearchText, subjectSearchText }
                         model.subjectSearchResults
                         maybeSubject
                     ]
+
                 else
                     []
 
@@ -249,6 +252,7 @@ showChooserButton showing msg ( showMsg, hideMsg ) =
             [ text <|
                 if showing then
                     hideMsg
+
                 else
                     showMsg
             ]
@@ -587,7 +591,7 @@ chooserCheckBox enabled checkBoxType alreadyChosen codes msgFunc thisChoice =
         label =
             case get thisChoice codes of
                 Nothing ->
-                    toString thisChoice
+                    String.fromInt thisChoice
 
                 Just str ->
                     str
@@ -611,6 +615,7 @@ checkBox checkBoxType msg label ticked enabled =
             [ class
                 (if enabled then
                     "blackCheckBox"
+
                  else
                     "redCheckBox"
                 )

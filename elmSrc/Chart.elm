@@ -94,9 +94,9 @@ chart model =
         Just yLabels ->
             [ svg
                 [ viewBox <|
-                    join " " [ "0 0", toString viewX, toString viewY ]
+                    join " " [ "0 0", String.fromInt viewX, String.fromInt viewY ]
                 , preserveAspectRatio "xMidYMid meet"
-                , width <| (toString <| 0.27 * toFloat viewX) ++ "mm"
+                , width <| (String.fromFloat <| 0.27 * toFloat viewX) ++ "mm"
                 ]
               <|
                 concat [ xLabels, yLabels, points ]
@@ -123,8 +123,8 @@ or
 -}
 makeCaption : Model -> List (Html Msg)
 makeCaption model =
-    case ( model.axesConfig, model.chartMode, model.questions, model.unis ) of
-        ( UniVsA, Overall, [ questionNum ], _ ) ->
+    case ( (model.axesConfig, model.chartMode), (model.questions, model.unis) ) of
+        ( ( UniVsA, Overall) , ([ questionNum ], _) ) ->
             case get questionNum questionCodes of
                 Nothing ->
                     []
@@ -132,13 +132,13 @@ makeCaption model =
                 Just question ->
                     percentWhoAgreed question
 
-        ( UniVsA, Overall, _, _ ) ->
+        ( (UniVsA, Overall), ( _, _) ) ->
             []
 
-        ( UniVsA, BySubject Nothing, _, _ ) ->
+        ( (UniVsA, BySubject Nothing), (_, _) ) ->
             []
 
-        ( UniVsA, BySubject (Just subjectNum), [ questionNum ], _ ) ->
+        ( (UniVsA, BySubject (Just subjectNum)), ([ questionNum ], _) ) ->
             case ( get subjectNum subjectCodes, get questionNum questionCodes ) of
                 ( Just subject, Just question ) ->
                     whoWereStudying question subject
@@ -146,10 +146,10 @@ makeCaption model =
                 _ ->
                     []
 
-        ( UniVsA, BySubject _, _, _ ) ->
+        ( (UniVsA, BySubject _), (_, _) ) ->
             []
 
-        ( QVsA, Overall, _, [ uniNum ] ) ->
+        ( (QVsA, Overall), (_, [ uniNum ]) ) ->
             case get uniNum overallUniCodes of
                 Nothing ->
                     []
@@ -157,7 +157,7 @@ makeCaption model =
                 Just uni ->
                     overallQVsA uni
 
-        ( QVsA, BySubject (Just subjectNum), _, [ uniNum ] ) ->
+        ( (QVsA, BySubject (Just subjectNum)), (_, [ uniNum ]) ) ->
             case ( get subjectNum subjectCodes, get uniNum uniCodes ) of
                 ( Just subject, Just uni ) ->
                     bySubjectQVsA subject uni
@@ -279,12 +279,12 @@ plotLine : Int -> Int -> Int -> Int -> Svg.Svg Msg
 plotLine x1 x2 y yoffset =
     let
         ycoord =
-            toString <| round scale * (y + 1) + yoffset + 1
+            String.fromInt <| round scale * (y + 1) + yoffset + 1
     in
     Svg.line
-        [ Svg.Attributes.x1 <| toString <| (x1 * plotScale) + gapOnLeft
+        [ Svg.Attributes.x1 <| String.fromInt <| (x1 * plotScale) + gapOnLeft
         , Svg.Attributes.y1 ycoord
-        , Svg.Attributes.x2 <| toString <| (x2 * plotScale) + gapOnLeft
+        , Svg.Attributes.x2 <| String.fromInt <| (x2 * plotScale) + gapOnLeft
         , Svg.Attributes.y2 ycoord
         , Svg.Attributes.class "errorBar"
         ]
@@ -303,9 +303,9 @@ plotDot x y yoffset =
             round scale * (y + 1) + yoffset + 1
     in
     circle
-        [ cx <| toString xCoord
-        , cy <| toString yCoord
-        , r <| toString 3
+        [ cx <| String.fromInt xCoord
+        , cy <| String.fromInt yCoord
+        , r <| String.fromInt 3
         , fill "black"
         ]
         []
@@ -317,7 +317,7 @@ box containing the chart can be calculated.
 -}
 labelList : Model -> AxisType -> List String
 labelList model axisType =
-    maybe2list <| uncurry getCurrentLabels (axisType2Codes axisType model)
+    maybe2list <| (\( a, b ) -> getCurrentLabels a b) (axisType2Codes axisType model)
 
 
 {-| It uses the lookup table of code numbers to find the list of string
@@ -325,7 +325,7 @@ names for the axis labels.
 -}
 getCurrentLabels : Dict Int String -> List Int -> Maybe (List String)
 getCurrentLabels codes selections =
-    combine <| map (flip get codes) selections
+    combine <| map (\a -> get a codes) selections
 
 
 {-| The Nothing state is represented as an empty list.

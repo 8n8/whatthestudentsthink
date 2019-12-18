@@ -116,13 +116,13 @@ oneVerticalLine : LineWeight -> Int -> Int -> Int -> Svg.Svg Msg
 oneVerticalLine weight yoffset maxY xPos =
     let
         xCoord =
-            toString <| xPos * plotScale + gapOnLeft
+            String.fromInt <| xPos * plotScale + gapOnLeft
     in
     Svg.line
         [ Svg.Attributes.x1 xCoord
         , Svg.Attributes.x2 xCoord
-        , Svg.Attributes.y1 <| toString <| yoffset + (round <| scale * 0.5)
-        , Svg.Attributes.y2 <| toString <| yoffset + round scale * maxY + 15
+        , Svg.Attributes.y1 <| String.fromInt <| yoffset + (round <| scale * 0.5)
+        , Svg.Attributes.y2 <| String.fromInt <| yoffset + round scale * maxY + 15
         , class
             (case weight of
                 Thick ->
@@ -171,8 +171,8 @@ oneYLabel chartMode axisType yoffset pos labelID =
         Just label ->
             Just <|
                 text_
-                    [ x <| toString <| 100 * plotScale + gapOnLeft + 12
-                    , y <| toString ypos
+                    [ x <| String.fromInt <| 100 * plotScale + gapOnLeft + 12
+                    , y <| String.fromInt ypos
                     , textAnchor "left"
                     , fill "black"
                     ]
@@ -192,12 +192,12 @@ oneXLabel yoffset pos =
             pos * plotScale + gapOnLeft
     in
     text_
-        [ x <| toString xpos
-        , y <| toString <| yoffset + 2
+        [ x <| String.fromInt xpos
+        , y <| String.fromInt <| yoffset + 2
         , textAnchor "middle"
         , fill "black"
         ]
-        [ text <| toString pos
+        [ text <| String.fromInt pos
         ]
 
 

@@ -15,20 +15,19 @@
 -- <http://www.gnu.org/licenses/>.
 
 
-module DataTypes
-    exposing
-        ( AxesConfigType(..)
-        , AxisType(..)
-        , ChartMode(..)
-        , DataChooserMode(..)
-        , GetData
-        , Model
-        , Msg(..)
-        , plotScale
-        , questionCodes
-        , scale
-        , yAxisType
-        )
+module DataTypes exposing
+    ( AxesConfigType(..)
+    , AxisType(..)
+    , ChartMode(..)
+    , DataChooserMode(..)
+    , GetData
+    , Model
+    , Msg(..)
+    , plotScale
+    , questionCodes
+    , scale
+    , yAxisType
+    )
 
 {-| It contains the common functions and data types needed by several
 modules.
@@ -42,7 +41,7 @@ import Maybe
 
 axisLabelFontSizeStr : String
 axisLabelFontSizeStr =
-    toString axisLabelFontSize ++ "%"
+    String.fromFloat axisLabelFontSize ++ "%"
 
 
 axisLabelFontSize : Float

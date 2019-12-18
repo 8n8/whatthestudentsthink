@@ -36,6 +36,26 @@ import FreshData exposing (freshData)
 import List exposing (filter, map, member)
 import Maybe.Extra exposing (combine)
 import Tuple exposing (first)
+import Http
+
+
+errToStr : Http.Error -> String
+errToStr e =
+    case e of
+        Http.BadUrl str ->
+            "bad url: " ++ str
+
+        Http.Timeout ->
+            "timeout"
+
+        Http.NetworkError ->
+            "network error"
+
+        Http.BadStatus s ->
+            "bad status: " ++ String.fromInt s
+
+        Http.BadBody str ->
+            "bad body: " ++ str
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -336,7 +356,7 @@ update msg model =
             case dat of
                 Err err ->
                     ( { model
-                        | getRequestErr = Just (toString err)
+                        | getRequestErr = Just (errToStr err)
                         , pageLoading = False
                       }
                     , Cmd.none
@@ -363,6 +383,7 @@ update msg model =
                                   }
                                 , Cmd.none
                                 )
+
                     else
                         ( { model
                             | getRequestErr = Just error
@@ -400,6 +421,7 @@ freshModel : Model -> ( Model, Cmd Msg )
 freshModel ({ questions, unis } as model) =
     if List.any List.isEmpty [ questions, unis ] then
         ( model, Cmd.none )
+
     else
         ( { model
             | pageLoading = True
@@ -415,6 +437,7 @@ calculateDataChoice : List Int -> Int -> List Int
 calculateDataChoice currentChoices new =
     if List.member new currentChoices then
         List.filter (\x -> x /= new) currentChoices
+
     else
         List.sort <| new :: currentChoices
 

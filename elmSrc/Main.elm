@@ -33,14 +33,14 @@ import DataTypes as D
         )
 import Dict exposing (Dict, keys, values)
 import FreshData exposing (freshData)
-import Html exposing (program)
+import Html
 import Update
 import View
+import Browser
 
 
-main : Program Never Model Msg
 main =
-    program
+    Browser.element
         { init = init
         , view = View.view
         , update = Update.update
@@ -70,6 +70,6 @@ initModel =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( initModel, freshData initModel )

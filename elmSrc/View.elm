@@ -103,34 +103,34 @@ message if not.
 errorMsg : Model -> Maybe String
 errorMsg { pageLoading, axesConfig, chartMode, data, getRequestErr, unis, questions } =
     case
-        ( pageLoading
+        ( (pageLoading
         , getRequestErr
-        , unis
-        , chartMode
+        , unis)
+        , (chartMode
         , questions
-        , data
+        , data)
         , dataCorrectLength axesConfig data unis questions
         )
     of
-        ( True, _, _, _, _, _, _ ) ->
+        ( (True, _, _), (_, _, _), _ ) ->
             Just <| "Loading data.  Please wait..."
 
-        ( _, Just _, _, _, _, _, _ ) ->
+        ( (_, Just _, _), (_, _, _), _ ) ->
             Just "Chart not available.  Check internet connection."
 
-        ( _, _, [], _, _, _, _ ) ->
+        ( (_, _, []), (_, _, _), _ ) ->
             Just <| noSelectErrorMsg UniErr
 
-        ( _, _, _, BySubject Nothing, _, _, _ ) ->
+        ( (_, _, _), (BySubject Nothing, _, _), _ ) ->
             Just <| noSelectErrorMsg SubjectErr
 
-        ( _, _, _, _, [], _, _ ) ->
+        ( (_, _, _), (_, [], _), _ ) ->
             Just <| noSelectErrorMsg QuestionErr
 
-        ( _, _, _, _, _, [], _ ) ->
+        ( (_, _, _), (_, _, []), _ ) ->
             Just "No chart because no data for this university and subject."
 
-        ( _, _, _, _, _, _, False ) ->
+        ( (_, _, _), (_, _, _), False ) ->
             Just <| "No chart because not enough data for these universities and subjects. Check to see if a university or subject in red is selected."
 
         _ ->

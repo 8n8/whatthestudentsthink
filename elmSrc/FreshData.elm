@@ -49,11 +49,11 @@ freshData model =
             Cmd.none
 
         BySubject (Just subj) ->
-            Http.send DataRequest
+            Http.request
                 (makePutRequest (SoSubject subj) model.unis model.questions)
 
         Overall ->
-            Http.send DataRequest
+            Http.request
                 (makePutRequest SoOverall model.unis model.questions)
 
 
@@ -69,9 +69,8 @@ freshData model =
     + questions: A list of the integer codes of the selected questions.
 
 -}
-makePutRequest : SubjectOrOverall -> List Int -> List Int -> Http.Request GetData
+-- makePutRequest : SubjectOrOverall -> List Int -> List Int -> Http.Request GetData
 makePutRequest subOrOverall unis questions =
-    Http.request
         { method = "PUT"
         , headers = []
         , url =
@@ -82,9 +81,9 @@ makePutRequest subOrOverall unis questions =
                 SoOverall ->
                     "nss"
         , body = Http.jsonBody <| jsonRequest subOrOverall unis questions
-        , expect = Http.expectJson decodeData
+        , expect = Http.expectJson DataRequest decodeData
         , timeout = Nothing
-        , withCredentials = False
+        , tracker = Nothing
         }
 
 
@@ -120,7 +119,7 @@ jsonRequest subOrOverall unis questions =
 -}
 encodeList : List Int -> Encode.Value
 encodeList list =
-    Encode.list (List.map Encode.int list)
+    Encode.list Encode.int list
 
 
 {-| Decodes the JSON given in response to the request to the server.
