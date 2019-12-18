@@ -103,6 +103,8 @@ parseNssLine = do
   maybeQNum <- parseQuestionNum M.<|> parseNhs
   (minConf, value, maxConf) <- parseQColsAndMinValMax
   sampleSize <- M.try parseInt
+  comma
+  _ <- P.char 'Y' M.<|> return ' '
   voidEol M.<|> M.eof
   return $ case maybeQNum of
     Just qNum ->
@@ -187,35 +189,18 @@ ignoreCell = do
   comma
   return ()
 
-{-| The subject names are preceded with a reference number in brackets, like
-
-    (05) Medicine and Dentistry
-
-This parses the number and ignores what it is, since it is not needed here.
--}
-parseSubjectNum :: Parser ()
-parseSubjectNum = do
-  _ <- P.char '('
-  _ <- P.digitChar
-  _ <- P.digitChar
-  _ <- P.char ')'
-  _ <- P.char ' '
-  return ()
-
 {-| Parses a subject without quote marks around it.  Some subjects areas
 contain commas in the name, so are quoted to avoid confusion with the
 commas that separate the cells.
 -}
 parsePlainSubject :: Parser T.Text
 parsePlainSubject = do
-  parseSubjectNum
   parseText
 
 {-| Parses a subject enclosed in quotation marks. -}
 parseQuotedSubject :: Parser T.Text
 parseQuotedSubject = do
   _ <- P.char '\"'
-  parseSubjectNum
   parseEndOfQuote
 
 {-| Parses a university name enclosed in quotation marks. -}
@@ -256,17 +241,25 @@ parseIdAndUni = do
   comma
   return uniName
 
+parseSubjectCode :: Parser ()
+parseSubjectCode = do
+    _ <- M.takeWhileP Nothing notComma
+    comma
+
 {-| It parses one line of data in the 'NSS2' worksheet. -}
 parseNss2Line :: Parser (Maybe Nss2Line)
 parseNss2Line = do
   uniName <- parseIdAndUni
-  subject <- M.try parsePlainSubject M.<|> parseQuotedSubject
+  parseSubjectCode
+  subject <- M.try parseQuotedSubject M.<|> parsePlainSubject
   comma
   level <- parseText
   comma
   maybeQNum <- parseQuestionNum M.<|> parseNhs
   (minConf, value, maxConf) <- parseQColsAndMinValMax
   sampleSize <- parseInt
+  comma
+  _ <- P.char 'Y' M.<|> return ' '
   voidEol M.<|> M.eof
   return $ case (level == "First degree", maybeQNum) of
     (True, Just qNum) -> Just $
@@ -288,6 +281,10 @@ parseInt :: Parser Int
 parseInt = do
   digits <- M.takeWhileP Nothing isInt
   return $ txt2int digits
+
+notComma :: Char -> Bool
+notComma ch =
+    ch /= ','
 
 {-| Checks that a character is a number. -}
 isInt :: Char -> Bool
@@ -311,9 +308,20 @@ needed in this case.  This parser parses them and ignores the content.
 -}
 parseNhs :: Parser (Maybe Int)
 parseNhs = do
-  _ <- P.string "NHS"
-  _ <- P.digitChar
+  _ <- P.string "NHS" M.<|> P.string "Scale"
+  oneOrTwoDigits M.<|> scale
   return Nothing
+
+scale :: Parser ()
+scale = do
+  _ <- P.string "NHS"
+  return ()
+
+oneOrTwoDigits :: Parser ()
+oneOrTwoDigits = M.try $ do
+  _ <- P.digitChar
+  _ <- P.digitChar M.<|> return ' '
+  return ()
 
 {-| The question numbers are the letter 'Q' followed by an integer between
 1 and 27.  This parser extracts the number.

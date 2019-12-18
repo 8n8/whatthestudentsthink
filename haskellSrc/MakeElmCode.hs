@@ -41,23 +41,35 @@ five Elm dictionaries:
 
 import qualified General as G
 import qualified Data.Text as T
+import qualified Parser as P
 
 {-| It converts the lookup tables of names to numbers to Elm code, for
 both the universities and the subject areas.
 -}
-elmify :: G.Nss2Codes -> G.NssCodes -> T.Text
-elmify nss2Codes (G.NssCodes nssCodes) = T.concat
+elmify :: ([P.IntNssLine], [P.IntNss2Line], G.NssCodes, G.Nss2Codes) -> T.Text
+elmify (nss, nss2, G.NssCodes nssCodes, nss2Codes) = T.concat
    [ preamble
+   , "\n"
    , "\n"
    , elmifyCode "uniCodes" $ reverseCode $ G.c2Unis nss2Codes
    , "\n"
+   , "\n"
    , elmifyCode "subjectCodes" $ reverseCode $ G.c2Subjects nss2Codes
+   , "\n"
    , "\n"
    , elmifyOffered "subjectsOffered" $ G.c2SubjectsOffered nss2Codes
    , "\n"
+   , "\n"
    , elmifyOffered "unisOffering" $ G.c2UnisOffering nss2Codes
    , "\n"
+   , "\n"
    , elmifyCode "overallUniCodes" $ reverseCode nssCodes
+   , "\n"
+   , "\n"
+   , elmifyNss nss
+   , "\n"
+   , "\n"
+   , elmifyNss2 nss2
    ]
 
 {-| The declaration of the dictionaries that have type "Dict Int (List Int)".
@@ -149,7 +161,7 @@ elmifyCode name codes = T.concat
   [ codePreamble name
   , elmifyOneCode '[' (head codes)
   , T.concat $ map (elmifyOneCode ',') (tail codes)
-  , "  ]\n"
+  , "    ]\n"
   ]
 
 
@@ -167,7 +179,7 @@ variable should be either a comma or a '['.
 -}
 elmifyOneCode :: Char -> (Int, T.Text) -> T.Text
 elmifyOneCode startChar code = T.concat
-  [ "  "
+  [ "    "
   , T.singleton startChar
   , " "
   , showCode code
@@ -193,16 +205,57 @@ showCode (num, str) = T.concat
 
 {-| The preamble of the whole Data module. -}
 preamble :: T.Text
-preamble = T.concat
-  [ "module Data exposing\n"
-  , "    ( uniCodes\n"
-  , "    , subjectCodes\n"
-  , "    , subjectsOffered\n"
-  , "    , unisOffering\n"
-  , "    , overallUniCodes\n"
-  , "    )\n"
-  , "import Dict exposing (Dict, fromList)\n"
-  ]
+preamble =
+   "module Data exposing\n\
+   \    ( uniCodes\n\
+   \    , subjectCodes\n\
+   \    , subjectsOffered\n\
+   \    , unisOffering\n\
+   \    , overallUniCodes\n\
+   \    , nss\n\
+   \    , nss2\n\
+   \    )\n\
+   \import Dict exposing (Dict, fromList)\n\
+   \\n\
+   \\n\
+   \type alias NssLineInt =\n\
+   \    { uni : Int\n\
+   \    , q : Int\n\
+   \    , min : Int\n\
+   \    , value : Int\n\
+   \    , max : Int\n\
+   \    }\n\
+   \\n\
+   \\n\
+   \type alias Nss2LineInt =\n\
+   \    { uni : Int\n\
+   \    , subject : Int\n\
+   \    , q : Int\n\
+   \    , min : Int\n\
+   \    , value : Int\n\
+   \    , max : Int\n\
+   \    }\n\
+   \\n\
+   \\n\
+   \x : Int -> Int -> Int -> Int -> Int -> NssLineInt\n\
+   \x a b c d e =\n\
+   \    { uni = a\n\
+   \    , q = b\n\
+   \    , min = c\n\
+   \    , value = d\n\
+   \    , max = e\n\
+   \    }\n\
+   \\n\
+   \\n\
+   \y : Int -> Int -> Int -> Int -> Int -> Int -> Nss2LineInt\n\
+   \y a b c d e f =\n\
+   \    { uni = a\n\
+   \    , subject = b\n\
+   \    , q = c\n\
+   \    , min = d\n\
+   \    , value = e\n\
+   \    , max = f\n\
+   \    }\n"
 
 
 reverseCode :: [(T.Text, Int)] -> [(Int, T.Text)]
@@ -210,3 +263,65 @@ reverseCode = map reverse2tup
 
 reverse2tup :: (a, b) -> (b, a)
 reverse2tup (a, b) = (b, a)
+
+
+elmifyNss :: [P.IntNssLine] -> T.Text
+elmifyNss nss =
+    T.concat
+        [ "nss : List NssLineInt\n"
+        , "nss =\n"
+        , elmifyOneNss '[' (head nss)
+        , T.concat $ map (elmifyOneNss ',') (tail nss)
+        , "    ]\n"
+        ]
+        
+
+elmifyOneNss :: Char -> P.IntNssLine -> T.Text
+elmifyOneNss startChar nss =
+    T.concat
+        [ "    "
+        , T.singleton startChar
+        , " x "
+        , T.pack $ show $ P.iUni nss
+        , " "
+        , T.pack $ show $ P.iqNum nss
+        , " "
+        , T.pack $ show $ P.iMinConf nss
+        , " "
+        , T.pack $ show $ P.iValue nss
+        , " "
+        , T.pack $ show $ P.iMaxConf nss
+        , "\n"
+        ]
+
+
+elmifyNss2 :: [P.IntNss2Line] -> T.Text
+elmifyNss2 nss2 =
+    T.concat
+        [ "nss2 : List Nss2LineInt\n"
+        , "nss2 =\n"
+        , elmifyOneNss2 '[' (head nss2)
+        , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
+        , "    ]\n"
+        ]
+
+
+elmifyOneNss2 :: Char -> P.IntNss2Line -> T.Text
+elmifyOneNss2 startChar nss2 =
+    T.concat
+        [ "    "
+        , T.singleton startChar
+        , " y "
+        , T.pack $ show $ P.i2Uni nss2
+        , " "
+        , T.pack $ show $ P.i2Subject nss2
+        , " "
+        , T.pack $ show $ P.i2Question nss2
+        , " "
+        , T.pack $ show $ P.i2MinConf nss2
+        , " "
+        , T.pack $ show $ P.i2Value nss2
+        , " "
+        , T.pack $ show $ P.i2MaxConf nss2
+        , "\n"
+        ]

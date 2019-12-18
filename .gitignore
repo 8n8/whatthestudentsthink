@@ -30,3 +30,5 @@ elmSrc/Data.elm
 oldGit/
 node_modules/
 stack.yaml.lock
+dataTemplate.elm
+testserver.py

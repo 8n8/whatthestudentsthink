@@ -30,8 +30,8 @@ import ReadAndBasicProcess (readAndBasicProcess)
 
 main :: IO ()
 main = do
-  result <- readAndBasicProcess
-  case result of
+  eitherResult <- readAndBasicProcess
+  case eitherResult of
     Left err -> print err
-    Right (_, _, nss, nss2) ->
-      Tio.writeFile "elmSrc/Data.elm" $ elmify nss2 nss
+    Right result ->
+      Tio.writeFile "elmSrc/Data.elm" $ elmify result

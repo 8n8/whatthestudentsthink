@@ -32,6 +32,7 @@ import Data.List (nub)
 import qualified Data.Map as Map
 import qualified General as G
 import qualified DevOrProduction as Dp
+import qualified Text.Megaparsec
 
 {-| It reads a file to Text, using UTF8 encoding. -}
 readUtf8 :: String -> IO T.Text
@@ -55,7 +56,7 @@ readAndBasicProcess = do
     Left parseErr -> return $ Left $ show parseErr
     Right nss2 ->
       case P.nss nssOverallContents of
-        Left parseErr -> return $ Left $ show parseErr
+        Left parseErr -> return $ Left $ Text.Megaparsec.parseErrorPretty parseErr
         Right nss -> do
           let bigNss2Unis = findBigNss2Unis nss2
           let bigNssUnis = findBigNssUnis (S.map fst bigNss2Unis) nss
