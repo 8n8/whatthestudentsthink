@@ -32,3 +32,4 @@ node_modules/
 stack.yaml.lock
 dataTemplate.elm
 testserver.py
+main.min.js.gz

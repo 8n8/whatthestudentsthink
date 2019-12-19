@@ -15,12 +15,12 @@
 -- <http://www.gnu.org/licenses/>.
 
 
-module Update exposing (makeSearchIndex, update)
+module Update exposing (makeSearchIndex, update, freshModel)
 
 {-| Provides the main 'update' function for the app.
 -}
 
-import Data exposing (overallUniCodes, subjectsOffered, uniCodes, unisOffering)
+import Data
 import DataTypes
     exposing
         ( AxesConfigType(..)
@@ -32,11 +32,11 @@ import DataTypes
         )
 import Dict exposing (Dict, get, keys)
 import ElmTextSearch exposing (Index, addDocs, new, search)
-import FreshData exposing (freshData)
 import List exposing (filter, map, member)
 import Maybe.Extra exposing (combine)
 import Tuple exposing (first)
 import Http
+import Set
 
 
 errToStr : Http.Error -> String
@@ -116,7 +116,7 @@ update msg model =
                     , unis =
                         case model.chartMode of
                             BySubject (Just subj) ->
-                                case get subj unisOffering of
+                                case get subj Data.unisOffering of
                                     Nothing ->
                                         []
 
@@ -124,10 +124,10 @@ update msg model =
                                         unis
 
                             BySubject Nothing ->
-                                keys uniCodes
+                                keys Data.uniCodes
 
                             Overall ->
-                                keys overallUniCodes
+                                keys Data.overallUniCodes
                     , questions = [ 27 ]
                     , chooserMode = FoldedUp
                 }
@@ -149,21 +149,21 @@ update msg model =
             freshModel <|
                 case model.chartMode of
                     Overall ->
-                        { model | unis = keys overallUniCodes }
+                        { model | unis = keys Data.overallUniCodes }
 
                     BySubject (Just subject) ->
                         { model
                             | unis =
-                                case get subject unisOffering of
+                                case get subject Data.unisOffering of
                                     Nothing ->
-                                        keys uniCodes
+                                        keys Data.uniCodes
 
                                     Just unis ->
                                         unis
                         }
 
                     BySubject Nothing ->
-                        { model | unis = keys uniCodes }
+                        { model | unis = keys Data.uniCodes }
 
         -- The 'Clear All' button in the university chooser menu has been
         -- clicked on.
@@ -213,7 +213,7 @@ update msg model =
         -- One of the unticked radio buttons in the subject chooser menu has been
         -- clicked on.
         ChangeSubject subject ->
-            case ( get subject unisOffering, model.axesConfig ) of
+            case ( get subject Data.unisOffering, model.axesConfig ) of
                 ( Nothing, _ ) ->
                     ( { model
                         | fatalErr =
@@ -256,7 +256,7 @@ update msg model =
         -- has been clicked on.  This message only happens when the chart is
         -- in the mode for looking at each question for a single university.
         ChangeUni uni ->
-            case get uni subjectsOffered of
+            case get uni Data.subjectsOffered of
                 Nothing ->
                     ( { model
                         | fatalErr =
@@ -326,10 +326,10 @@ update msg model =
                     UniVsA ->
                         { model
                             | chartMode = Overall
-                            , unis = keys overallUniCodes
+                            , unis = keys Data.overallUniCodes
                             , questions = [ 27 ]
                             , chooserMode = FoldedUp
-                            , uniSearchIndex = makeSearchIndex overallUniCodes
+                            , uniSearchIndex = makeSearchIndex Data.overallUniCodes
                         }
 
                     QVsA ->
@@ -338,7 +338,7 @@ update msg model =
                             , unis = []
                             , questions = keys questionCodes
                             , chooserMode = Uni ""
-                            , uniSearchIndex = makeSearchIndex overallUniCodes
+                            , uniSearchIndex = makeSearchIndex Data.overallUniCodes
                         }
 
         -- The 'compare by subject' tick-box has been selected.
@@ -348,7 +348,7 @@ update msg model =
                     | chartMode = BySubject Nothing
                     , chooserMode = Subject ""
                     , unis = []
-                    , uniSearchIndex = makeSearchIndex uniCodes
+                    , uniSearchIndex = makeSearchIndex Data.uniCodes
                 }
 
         -- A JSON response has been sent back from the server and decoded.
@@ -423,11 +423,68 @@ freshModel ({ questions, unis } as model) =
         ( model, Cmd.none )
 
     else
-        ( { model
-            | pageLoading = True
-          }
-        , freshData model
-        )
+        case model.chartMode of
+            BySubject Nothing ->
+                ( model, Cmd.none)
+
+            BySubject (Just subj) ->
+                ( { model |
+                        data = getSubjectData subj questions unis }
+                , Cmd.none
+                )
+
+            Overall ->
+                ( { model | data = getOverallData questions unis }
+                , Cmd.none
+                )
+
+
+getOverallData : List Int -> List Int -> List (Int, Int, Int)
+getOverallData qList uniList =
+  let
+    uniS = Set.fromList uniList
+    qS = Set.fromList qList
+  in
+    List.map Tuple.second <|
+        List.sortBy Tuple.first <|
+            List.map getDataPoint <|
+                List.filter (matching qS uniS) Data.nss
+
+
+getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
+getDataPoint {uni, min, value, max} =
+    (uni, (min, value, max))
+
+
+matching : Set.Set Int -> Set.Set Int -> Data.NssLineInt -> Bool
+matching qs unis {q, uni}=
+    Set.member q qs && Set.member uni unis
+
+
+getSubjectData : Int -> List Int -> List Int -> List (Int, Int, Int)
+getSubjectData subject questionList uniList =
+  let
+    uniS = Set.fromList uniList
+    qS = Set.fromList questionList
+  in
+    List.map Tuple.second <|
+    List.sortBy Tuple.first <|
+    List.map getDataPoint2 <|
+        List.filter (matching2 subject qS uniS) Data.nss2
+
+
+matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool
+matching2 subjectCandidate qs unis {uni, subject, q} =
+    List.all (\x -> x)
+        [ subject == subjectCandidate
+        , Set.member uni unis
+        , Set.member q qs
+        ]
+
+
+getDataPoint2 : Data.Nss2LineInt -> (Int, (Int, Int, Int))
+getDataPoint2 {uni, min, value, max} =
+    (uni, (min, value, max))
 
 
 {-| It is used to update the lists of selected data when the checkboxes

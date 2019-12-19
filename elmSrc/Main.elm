@@ -32,7 +32,6 @@ import DataTypes as D
         , Msg(..)
         )
 import Dict exposing (Dict, keys, values)
-import FreshData exposing (freshData)
 import Html
 import Update
 import View
@@ -56,7 +55,7 @@ initModel : Model
 initModel =
     { data = []
     , chartMode = Overall
-    , pageLoading = True
+    , pageLoading = False
     , getRequestErr = Nothing
     , axesConfig = UniVsA
     , fatalErr = Nothing
@@ -72,4 +71,4 @@ initModel =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( initModel, freshData initModel )
+    Update.freshModel initModel
