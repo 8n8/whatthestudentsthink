@@ -175,7 +175,7 @@ questionCodes =
         , ( 2, "Staff have made the subject interesting." )
         , ( 3, "The course is intellectually stimulating." )
         , ( 4, "My course has challenged me to achieve my best work." )
-        , ( 5, "My course has provided me with opportunities to explore ideas or concepts further." )
+        , ( 5, "My course has provided me with opportunities to explore ideas or concepts in depth." )
         , ( 6, "My course has provided me with opportunities to bring information and ideas together from different topics." )
         , ( 7, "My course has provided me with opportunities to apply what I have learnt." )
         , ( 8, "The criteria used in marking have been clear in advance." )
