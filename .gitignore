@@ -21,7 +21,6 @@ buildDir/*
 *.aux
 *.ps
 remoteScript.sh
-main.js
 runRedirect.sh
 runServer.sh
 *.hi
