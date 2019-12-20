@@ -76,3 +76,4 @@ data Answer
   | DefinitelyDisagree
   | NoAnswer
   deriving Show
+

@@ -16,16 +16,6 @@ dependencies:
   - http-types
 
 executables:
-  server:
-    main: Server.hs
-    ghc-options: -Wall -O2 -threaded -main-is Server
-    source-dirs:
-      - haskellSrc
-  redirect:
-    main: Redirect.hs
-    ghc-options: -Wall -O2 -threaded -main-is Redirect
-    source-dirs:
-      - haskellSrc
   generateCodes:
     main: GenerateCodes.hs
     ghc-options: -Wall -O2 -threaded -main-is GenerateCodes

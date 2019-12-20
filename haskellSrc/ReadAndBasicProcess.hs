@@ -31,12 +31,14 @@ import qualified MakeCodes
 import Data.List (nub)
 import qualified Data.Map as Map
 import qualified General as G
-import qualified DevOrProduction as Dp
 import qualified Text.Megaparsec
 
 {-| It reads a file to Text, using UTF8 encoding. -}
 readUtf8 :: String -> IO T.Text
 readUtf8 fileName = decodeUtf8 <$> Data.ByteString.readFile fileName
+
+binPath :: String
+binPath = "dataFiles"
 
 {-| It reads in the two CSV data files, parses them, removes the small
 universities and creates the integer codes.
@@ -49,7 +51,6 @@ readAndBasicProcess
          , G.Nss2Codes
          ))
 readAndBasicProcess = do
-  binPath <- Dp.binPath
   nssOverallContents <- readUtf8 $ binPath ++ "/nss.csv"
   nss2Contents <- readUtf8 $ binPath ++ "/nss3.csv"
   case P.nss2 nss2Contents of
