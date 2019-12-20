@@ -42,7 +42,6 @@ five Elm dictionaries:
 import qualified General as G
 import qualified Data.Text as T
 import qualified Parser as P
-import Data.Bits (shift)
 
 {-| It converts the lookup tables of names to numbers to Elm code, for
 both the universities and the subject areas.
@@ -215,8 +214,6 @@ preamble =
    \    , overallUniCodes\n\
    \    , nss\n\
    \    , nss2\n\
-   \    , NssLineInt\n\
-   \    , Nss2LineInt\n\
    \    )\n\
    \import Dict exposing (Dict, fromList)\n\
    \\n\
@@ -238,7 +235,27 @@ preamble =
    \    , value : Int\n\
    \    , max : Int\n\
    \    }\n\
-   \\n"
+   \\n\
+   \\n\
+   \x : Int -> Int -> Int -> Int -> Int -> NssLineInt\n\
+   \x a b c d e =\n\
+   \    { uni = a\n\
+   \    , q = b\n\
+   \    , min = c\n\
+   \    , value = d\n\
+   \    , max = e\n\
+   \    }\n\
+   \\n\
+   \\n\
+   \y : Int -> Int -> Int -> Int -> Int -> Int -> Nss2LineInt\n\
+   \y a b c d e f =\n\
+   \    { uni = a\n\
+   \    , subject = b\n\
+   \    , q = c\n\
+   \    , min = d\n\
+   \    , value = e\n\
+   \    , max = f\n\
+   \    }\n"
 
 
 reverseCode :: [(T.Text, Int)] -> [(Int, T.Text)]
@@ -251,7 +268,7 @@ reverse2tup (a, b) = (b, a)
 elmifyNss :: [P.IntNssLine] -> T.Text
 elmifyNss nss =
     T.concat
-        [ "nss : List Int\n"
+        [ "nss : List NssLineInt\n"
         , "nss =\n"
         , elmifyOneNss '[' (head nss)
         , T.concat $ map (elmifyOneNss ',') (tail nss)
@@ -264,35 +281,24 @@ elmifyOneNss startChar nss =
     T.concat
         [ "    "
         , T.singleton startChar
+        , " x "
+        , T.pack $ show $ P.iUni nss
         , " "
-        , T.pack $ show $ nssLineToInt nss
+        , T.pack $ show $ P.iqNum nss
+        , " "
+        , T.pack $ show $ P.iMinConf nss
+        , " "
+        , T.pack $ show $ P.iValue nss
+        , " "
+        , T.pack $ show $ P.iMaxConf nss
         , "\n"
         ]
-
-
-nss2LineToInt :: P.IntNss2Line -> Integer
-nss2LineToInt (P.IntNss2Line uni subject q min' val max' _) =
-    (toInteger max') + 
-    shift (toInteger val) 7 +
-    shift (toInteger min') 14 +
-    shift (toInteger q) 21 +
-    shift (toInteger subject) 26 +
-    shift (toInteger uni) 32
-
-
-nssLineToInt :: P.IntNssLine -> Integer
-nssLineToInt (P.IntNssLine uni q min' val max' _) =
-    (toInteger max') + 
-    shift (toInteger val) 7 +
-    shift (toInteger min') 14 +
-    shift (toInteger q) 21 +
-    shift (toInteger uni) 26
 
 
 elmifyNss2 :: [P.IntNss2Line] -> T.Text
 elmifyNss2 nss2 =
     T.concat
-        [ "nss2 : List Int\n"
+        [ "nss2 : List Nss2LineInt\n"
         , "nss2 =\n"
         , elmifyOneNss2 '[' (head nss2)
         , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
@@ -305,7 +311,17 @@ elmifyOneNss2 startChar nss2 =
     T.concat
         [ "    "
         , T.singleton startChar
+        , " y "
+        , T.pack $ show $ P.i2Uni nss2
         , " "
-        , T.pack $ show $ nss2LineToInt nss2
+        , T.pack $ show $ P.i2Subject nss2
+        , " "
+        , T.pack $ show $ P.i2Question nss2
+        , " "
+        , T.pack $ show $ P.i2MinConf nss2
+        , " "
+        , T.pack $ show $ P.i2Value nss2
+        , " "
+        , T.pack $ show $ P.i2MaxConf nss2
         , "\n"
         ]

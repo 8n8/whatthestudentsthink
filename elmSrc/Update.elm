@@ -20,7 +20,6 @@ module Update exposing (makeSearchIndex, update, freshModel)
 {-| Provides the main 'update' function for the app.
 -}
 
-import Bitwise
 import Data
 import DataTypes
     exposing
@@ -38,27 +37,6 @@ import Maybe.Extra exposing (combine)
 import Tuple exposing (first)
 import Http
 import Set
-
-
-intToNssLine2 : Int -> Data.Nss2LineInt
-intToNssLine2 i =
-    { max = Bitwise.and i 127
-    , value = Bitwise.shiftRightBy 7 i |> Bitwise.and 127
-    , min = Bitwise.shiftRightBy 14 i |> Bitwise.and 127
-    , q = Bitwise.shiftRightBy 21 i |> Bitwise.and 31
-    , subject = Bitwise.shiftRightBy 26 i |> Bitwise.and 63
-    , uni = Bitwise.shiftRightBy 32 i |> Bitwise.and 255
-    }
-
-
-intToNssLine : Int -> Data.NssLineInt
-intToNssLine i =
-    { max = Bitwise.and i 127 
-    , value = Bitwise.shiftRightBy 7 i |> Bitwise.and 127
-    , min = Bitwise.shiftRightBy 14 i |> Bitwise.and 127
-    , q = Bitwise.shiftRightBy 21 i |> Bitwise.and 31
-    , uni = Bitwise.shiftRightBy 26 i |> Bitwise.and 255
-    }
 
 
 errToStr : Http.Error -> String
@@ -468,10 +446,9 @@ getOverallData qList uniList =
     qS = Set.fromList qList
   in
     List.map Tuple.second <|
-    List.sortBy Tuple.first <|
-    List.map getDataPoint <|
-    List.filter (matching qS uniS) <|
-    List.map intToNssLine Data.nss
+        List.sortBy Tuple.first <|
+            List.map getDataPoint <|
+                List.filter (matching qS uniS) Data.nss
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -493,8 +470,7 @@ getSubjectData subject questionList uniList =
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
     List.map getDataPoint2 <|
-    List.filter (matching2 subject qS uniS) <|
-    List.map intToNssLine2 Data.nss2
+        List.filter (matching2 subject qS uniS) Data.nss2
 
 
 matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool
