@@ -249,7 +249,7 @@ reverse2tup (a, b) = (b, a)
 elmifyNss :: [P.IntNssLine] -> T.Text
 elmifyNss nss =
     T.concat
-        [ "nss : List ((Int, Int), (Int, Int, Int))\n"
+        [ "nss : List (List Int)\n"
         , "nss =\n"
         , elmifyOneNss '[' (head nss)
         , T.concat $ map (elmifyOneNss ',') (tail nss)
@@ -262,24 +262,24 @@ elmifyOneNss startChar nss =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " (("
+        , " ["
         , T.pack $ show $ P.iUni nss
         , ", "
         , T.pack $ show $ P.iqNum nss
-        , "), ("
+        , ", "
         , T.pack $ show $ P.iMinConf nss
         , ", "
         , T.pack $ show $ P.iValue nss
         , ", "
         , T.pack $ show $ P.iMaxConf nss
-        , "))\n"
+        , "]\n"
         ]
 
 
 elmifyNss2 :: [P.IntNss2Line] -> T.Text
 elmifyNss2 nss2 =
     T.concat
-        [ "nss2 : List ((Int, Int, Int), (Int, Int, Int))\n"
+        [ "nss2 : List (List Int)\n"
         , "nss2 =\n"
         , elmifyOneNss2 '[' (head nss2)
         , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
@@ -292,17 +292,17 @@ elmifyOneNss2 startChar nss2 =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " (("
+        , " ["
         , T.pack $ show $ P.i2Uni nss2
         , ", "
         , T.pack $ show $ P.i2Subject nss2
         , ", "
         , T.pack $ show $ P.i2Question nss2
-        , "), ("
+        , ", "
         , T.pack $ show $ P.i2MinConf nss2
         , ", "
         , T.pack $ show $ P.i2Value nss2
         , ", "
         , T.pack $ show $ P.i2MaxConf nss2
-        , "))\n"
+        , "]\n"
         ]
