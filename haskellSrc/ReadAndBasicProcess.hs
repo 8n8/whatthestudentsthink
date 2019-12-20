@@ -51,7 +51,7 @@ readAndBasicProcess
 readAndBasicProcess = do
   binPath <- Dp.binPath
   nssOverallContents <- readUtf8 $ binPath ++ "/nss.csv"
-  nss2Contents <- readUtf8 $ binPath ++ "/nss2.csv"
+  nss2Contents <- readUtf8 $ binPath ++ "/nss3.csv"
   case P.nss2 nss2Contents of
     Left parseErr -> return $ Left $ show parseErr
     Right nss2 ->
