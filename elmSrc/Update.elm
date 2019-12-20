@@ -37,6 +37,7 @@ import Maybe.Extra exposing (combine)
 import Tuple exposing (first)
 import Http
 import Set
+import Maybe.Extra
 
 
 errToStr : Http.Error -> String
@@ -446,9 +447,17 @@ getOverallData qList uniList =
     qS = Set.fromList qList
   in
     List.map Tuple.second <|
-        List.sortBy Tuple.first <|
-            List.map getDataPoint <|
-                List.filter (matching qS uniS) Data.nss
+    List.sortBy Tuple.first <|
+    List.map getDataPoint <|
+    List.filter (matching qS uniS) nss
+
+
+nss =
+    Maybe.Extra.values <| List.map intsToNss Data.nss
+
+
+nss2 =
+    Maybe.Extra.values <| List.map intsToNss2 Data.nss2
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -470,7 +479,27 @@ getSubjectData subject questionList uniList =
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
     List.map getDataPoint2 <|
-        List.filter (matching2 subject qS uniS) Data.nss2
+    List.filter (matching2 subject qS uniS) nss2
+
+
+intsToNss2 : List Int -> Maybe Data.Nss2LineInt
+intsToNss2 is =
+    case is of
+        [uni, subject, q, min, val, max] ->
+            Just <| Data.Nss2LineInt uni subject q min val max
+
+        _ ->
+            Nothing
+
+
+intsToNss : List Int -> Maybe Data.NssLineInt
+intsToNss is =
+    case is of
+        [uni, q, min, val, max] ->
+            Just <| Data.NssLineInt uni q min val max
+
+        _ ->
+            Nothing
 
 
 matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool

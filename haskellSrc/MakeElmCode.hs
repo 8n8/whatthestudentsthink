@@ -214,6 +214,8 @@ preamble =
    \    , overallUniCodes\n\
    \    , nss\n\
    \    , nss2\n\
+   \    , NssLineInt\n\
+   \    , Nss2LineInt\n\
    \    )\n\
    \import Dict exposing (Dict, fromList)\n\
    \\n\
@@ -234,27 +236,6 @@ preamble =
    \    , min : Int\n\
    \    , value : Int\n\
    \    , max : Int\n\
-   \    }\n\
-   \\n\
-   \\n\
-   \x : Int -> Int -> Int -> Int -> Int -> NssLineInt\n\
-   \x a b c d e =\n\
-   \    { uni = a\n\
-   \    , q = b\n\
-   \    , min = c\n\
-   \    , value = d\n\
-   \    , max = e\n\
-   \    }\n\
-   \\n\
-   \\n\
-   \y : Int -> Int -> Int -> Int -> Int -> Int -> Nss2LineInt\n\
-   \y a b c d e f =\n\
-   \    { uni = a\n\
-   \    , subject = b\n\
-   \    , q = c\n\
-   \    , min = d\n\
-   \    , value = e\n\
-   \    , max = f\n\
    \    }\n"
 
 
@@ -268,7 +249,7 @@ reverse2tup (a, b) = (b, a)
 elmifyNss :: [P.IntNssLine] -> T.Text
 elmifyNss nss =
     T.concat
-        [ "nss : List NssLineInt\n"
+        [ "nss : List (List Int)\n"
         , "nss =\n"
         , elmifyOneNss '[' (head nss)
         , T.concat $ map (elmifyOneNss ',') (tail nss)
@@ -281,24 +262,24 @@ elmifyOneNss startChar nss =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " x "
+        , " ["
         , T.pack $ show $ P.iUni nss
-        , " "
+        , ", "
         , T.pack $ show $ P.iqNum nss
-        , " "
+        , ", "
         , T.pack $ show $ P.iMinConf nss
-        , " "
+        , ", "
         , T.pack $ show $ P.iValue nss
-        , " "
+        , ", "
         , T.pack $ show $ P.iMaxConf nss
-        , "\n"
+        , "]\n"
         ]
 
 
 elmifyNss2 :: [P.IntNss2Line] -> T.Text
 elmifyNss2 nss2 =
     T.concat
-        [ "nss2 : List Nss2LineInt\n"
+        [ "nss2 : List (List Int)\n"
         , "nss2 =\n"
         , elmifyOneNss2 '[' (head nss2)
         , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
@@ -311,17 +292,17 @@ elmifyOneNss2 startChar nss2 =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " y "
+        , " ["
         , T.pack $ show $ P.i2Uni nss2
-        , " "
+        , ", "
         , T.pack $ show $ P.i2Subject nss2
-        , " "
+        , ", "
         , T.pack $ show $ P.i2Question nss2
-        , " "
+        , ", "
         , T.pack $ show $ P.i2MinConf nss2
-        , " "
+        , ", "
         , T.pack $ show $ P.i2Value nss2
-        , " "
+        , ", "
         , T.pack $ show $ P.i2MaxConf nss2
-        , "\n"
+        , "]\n"
         ]
