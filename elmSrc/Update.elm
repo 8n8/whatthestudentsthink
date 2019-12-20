@@ -453,11 +453,11 @@ getOverallData qList uniList =
 
 
 nss =
-    Maybe.Extra.values <| List.map intsToNss Data.nss
+    List.map intsToNss Data.nss
 
 
 nss2 =
-    Maybe.Extra.values <| List.map intsToNss2 Data.nss2
+    List.map intsToNss2 Data.nss2
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -482,24 +482,14 @@ getSubjectData subject questionList uniList =
     List.filter (matching2 subject qS uniS) nss2
 
 
-intsToNss2 : List Int -> Maybe Data.Nss2LineInt
-intsToNss2 is =
-    case is of
-        [uni, subject, q, min, val, max] ->
-            Just <| Data.Nss2LineInt uni subject q min val max
-
-        _ ->
-            Nothing
+intsToNss2 : ((Int, Int, Int), (Int, Int, Int)) -> Data.Nss2LineInt
+intsToNss2 ((uni, subject, q), (min, val, max)) =
+     { uni = uni, subject = subject, q = q, min = min, value = val, max = max }
 
 
-intsToNss : List Int -> Maybe Data.NssLineInt
-intsToNss is =
-    case is of
-        [uni, q, min, val, max] ->
-            Just <| Data.NssLineInt uni q min val max
-
-        _ ->
-            Nothing
+intsToNss : ((Int, Int), (Int, Int, Int)) -> Data.NssLineInt
+intsToNss ((uni, q), (min, val, max))=
+    { uni = uni, q = q, min = min, value = val, max = max }
 
 
 matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool
