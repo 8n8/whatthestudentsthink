@@ -17,7 +17,7 @@ dependencies:
 
 executables:
   generateCodes:
-    main: GenerateCodes.hs
-    ghc-options: -Wall -O2 -threaded -main-is GenerateCodes
+    main: Main.hs
+    ghc-options: -Wall -O2 -threaded
     source-dirs:
       - haskellSrc

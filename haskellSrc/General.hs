@@ -20,8 +20,6 @@
 
 module General
   ( Answer(..)
-  , Nss2Input(..)
-  , NssInput(..)
   , NssCodes(..)
   , Nss2Codes(..)
   ) where
@@ -29,22 +27,7 @@ module General
 {-| This module provides some datatypes required by several other modules.
 -}
 
-import GHC.Generics (Generic)
-import qualified Data.IntSet as Si
 import qualified Data.Text as T
-import Data.Aeson (FromJSON)
-
-{-| It contains a request for data from the internet. -}
-data Nss2Input = Nss2Input
-  { n2Subject :: Int
-  , n2Unis :: Si.IntSet
-  , n2Questions :: Si.IntSet
-  } deriving (Generic, Show)
-
-data NssInput = NssInput
-  { nUnis :: Si.IntSet
-  , nQuestions :: Si.IntSet
-  } deriving (Generic, Show)
 
 data NssCodes = NssCodes
   { cUnis :: [(T.Text, Int)]
@@ -60,13 +43,6 @@ data Nss2Codes = Nss2Codes
   , c2UnisOffering :: [(Int, [Int])]
   }
 
-{-| These are for decoding and encoding NssInput and Nss2Input to and
-from JSON.
--}
-instance FromJSON NssInput
-
-instance FromJSON Nss2Input
-
 {-| The possible answers to the survey questions. -}
 data Answer
   = DefinitelyAgree
@@ -76,4 +52,3 @@ data Answer
   | DefinitelyDisagree
   | NoAnswer
   deriving Show
-

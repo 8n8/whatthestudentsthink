@@ -18,7 +18,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 
-module GenerateCodes where
+module Main (main) where
 
 {-| This module analyses the data files and creates the Elm code
 containing the various lookup dictionaries for the front end.
