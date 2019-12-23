@@ -249,7 +249,7 @@ reverse2tup (a, b) = (b, a)
 elmifyNss :: [P.IntNssLine] -> T.Text
 elmifyNss nss =
     T.concat
-        [ "nss : List Int\n"
+        [ "nss : List Float\n"
         , "nss =\n"
         , elmifyOneNss '[' (head nss)
         , T.concat $ map (elmifyOneNss ',') (tail nss)
@@ -271,7 +271,7 @@ elmifyOneNss startChar nss =
 elmifyNss2 :: [P.IntNss2Line] -> T.Text
 elmifyNss2 nss2 =
     T.concat
-        [ "nss2 : List Int\n"
+        [ "nss2 : List Float\n"
         , "nss2 =\n"
         , elmifyOneNss2 '[' (head nss2)
         , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
