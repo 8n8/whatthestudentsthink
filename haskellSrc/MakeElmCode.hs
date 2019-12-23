@@ -249,7 +249,7 @@ reverse2tup (a, b) = (b, a)
 elmifyNss :: [P.IntNssLine] -> T.Text
 elmifyNss nss =
     T.concat
-        [ "nss : List (List Int)\n"
+        [ "nss : List Int\n"
         , "nss =\n"
         , elmifyOneNss '[' (head nss)
         , T.concat $ map (elmifyOneNss ',') (tail nss)
@@ -262,24 +262,16 @@ elmifyOneNss startChar nss =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " ["
-        , T.pack $ show $ P.iUni nss
-        , ", "
-        , T.pack $ show $ P.iqNum nss
-        , ", "
-        , T.pack $ show $ P.iMinConf nss
-        , ", "
-        , T.pack $ show $ P.iValue nss
-        , ", "
-        , T.pack $ show $ P.iMaxConf nss
-        , "]\n"
+        , " "
+        , T.pack $ show $ nssToInt nss
+        , "\n"
         ]
 
 
 elmifyNss2 :: [P.IntNss2Line] -> T.Text
 elmifyNss2 nss2 =
     T.concat
-        [ "nss2 : List (List Int)\n"
+        [ "nss2 : List Int\n"
         , "nss2 =\n"
         , elmifyOneNss2 '[' (head nss2)
         , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
@@ -292,17 +284,46 @@ elmifyOneNss2 startChar nss2 =
     T.concat
         [ "    "
         , T.singleton startChar
-        , " ["
-        , T.pack $ show $ P.i2Uni nss2
-        , ", "
-        , T.pack $ show $ P.i2Subject nss2
-        , ", "
-        , T.pack $ show $ P.i2Question nss2
-        , ", "
-        , T.pack $ show $ P.i2MinConf nss2
-        , ", "
-        , T.pack $ show $ P.i2Value nss2
-        , ", "
-        , T.pack $ show $ P.i2MaxConf nss2
-        , "]\n"
+        , " "
+        , T.pack $ show $ nss2ToInt nss2
+        , "\n"
         ]
+
+nssToInt :: P.IntNssLine -> Integer
+nssToInt (P.IntNssLine uniS qS minS valS maxS _) =
+  let
+    uniL = toInteger uniS
+    qL = toInteger qS
+    minL = toInteger $ wrap minS
+    valL = toInteger $ wrap valS
+    maxL = toInteger $ wrap maxS
+  in
+    maxL +
+    valL * 100 +
+    minL * 10000 +
+    qL * 1000000 +
+    uniL * 100000000
+
+nss2ToInt :: P.IntNss2Line -> Integer
+nss2ToInt (P.IntNss2Line uniS subS qS minS valS maxS _) =
+  let
+    uniL = toInteger uniS
+    subL = toInteger subS
+    qL = toInteger qS
+    minL = toInteger $ wrap minS
+    valL = toInteger $ wrap valS
+    maxL = toInteger $ wrap maxS
+  in
+    maxL +
+    valL * 100 +
+    minL * 10000 +
+    qL * 1000000 +
+    subL * 100000000 +
+    uniL * 100000000000
+    
+wrap :: Int -> Int
+wrap i =
+    if i == 100 then
+        0
+    else
+        i

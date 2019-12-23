@@ -30,6 +30,7 @@ import DataTypes
         , Msg(..)
         , questionCodes
         )
+import Debug exposing (log)
 import Dict exposing (Dict, get, keys)
 import ElmTextSearch exposing (Index, addDocs, new, search)
 import List exposing (filter, map, member)
@@ -38,6 +39,7 @@ import Tuple exposing (first)
 import Http
 import Set
 import Maybe.Extra
+import Basics.Extra exposing (fractionalModBy)
 
 
 errToStr : Http.Error -> String
@@ -453,11 +455,11 @@ getOverallData qList uniList =
 
 
 nss =
-    Maybe.Extra.values <| List.map intsToNss Data.nss
+    List.map intToNss Data.nss
 
 
 nss2 =
-    Maybe.Extra.values <| List.map intsToNss2 Data.nss2
+    List.map intToNss2 Data.nss2
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -482,24 +484,33 @@ getSubjectData subject questionList uniList =
     List.filter (matching2 subject qS uniS) nss2
 
 
-intsToNss2 : List Int -> Maybe Data.Nss2LineInt
-intsToNss2 is =
-    case is of
-        [uni, subject, q, min, val, max] ->
-            Just <| Data.Nss2LineInt uni subject q min val max
+intToNss2 : Float -> Data.Nss2LineInt
+intToNss2 i =
+        { max = unwrap <| floor <| fractionalModBy 100 i
+        , value = unwrap <| floor <| fractionalModBy 100 (i / 100)
+        , min = unwrap <| floor <| fractionalModBy 100 (i / 10000)
+        , q = floor <| fractionalModBy 100 ( i / 1000000)
+        , subject = floor <| fractionalModBy 1000 (i / 100000000)
+        , uni = floor <| fractionalModBy 1000 (i / 100000000000)
+        }
 
-        _ ->
-            Nothing
+
+unwrap : Int -> Int
+unwrap i =
+    if i == 0 then
+        100
+    else
+        i
 
 
-intsToNss : List Int -> Maybe Data.NssLineInt
-intsToNss is =
-    case is of
-        [uni, q, min, val, max] ->
-            Just <| Data.NssLineInt uni q min val max
-
-        _ ->
-            Nothing
+intToNss : Float -> Data.NssLineInt
+intToNss i =
+        { max = unwrap <| floor <| fractionalModBy 100 i
+        , value = unwrap <| floor <| fractionalModBy 100 (i / 100)
+        , min = unwrap <| floor <| fractionalModBy 100 (i / 10000)
+        , q = floor <| fractionalModBy 100 (i / 1000000)
+        , uni = floor <| fractionalModBy 1000 (i / 100000000)
+        }
 
 
 matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool
