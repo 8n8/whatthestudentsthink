@@ -484,15 +484,20 @@ getSubjectData subject questionList uniList =
     List.filter (matching2 subject qS uniS) nss2
 
 
-intToNss2 : Float -> Data.Nss2LineInt
-intToNss2 i =
-        { max = unwrap <| floor <| fractionalModBy 100 i
-        , value = unwrap <| floor <| fractionalModBy 100 (i / 100)
-        , min = unwrap <| floor <| fractionalModBy 100 (i / 10000)
-        , q = floor <| fractionalModBy 100 ( i / 1000000)
-        , subject = floor <| fractionalModBy 1000 (i / 100000000)
-        , uni = floor <| fractionalModBy 1000 (i / 100000000000)
+intToNss2 : Int -> Data.Nss2LineInt
+intToNss2 ii =
+  let
+    i = log "i" ii 
+    over100 = log "over100" <| i // 100
+    r = log "r" { max = unwrap <| modBy 100 i
+        , value = unwrap <| modBy 100 over100
+        , min = unwrap <| modBy 100 (i // 10000)
+        , q = modBy 100 ( i // 1000000)
+        , subject = modBy 1000 (i // 100000000)
+        , uni = modBy 1000 (i // 100000000000)
         }
+  in
+    r
 
 
 unwrap : Int -> Int
@@ -503,13 +508,13 @@ unwrap i =
         i
 
 
-intToNss : Float -> Data.NssLineInt
+intToNss : Int -> Data.NssLineInt
 intToNss i =
-        { max = unwrap <| floor <| fractionalModBy 100 i
-        , value = unwrap <| floor <| fractionalModBy 100 (i / 100)
-        , min = unwrap <| floor <| fractionalModBy 100 (i / 10000)
-        , q = floor <| fractionalModBy 100 (i / 1000000)
-        , uni = floor <| fractionalModBy 1000 (i / 100000000)
+        { max = unwrap <| modBy 100 i
+        , value = unwrap <| modBy 100 (i // 100)
+        , min = unwrap <| modBy 100 (i // 10000)
+        , q = modBy 100 (i // 1000000)
+        , uni = modBy 1000 (i // 100000000)
         }
 
 
