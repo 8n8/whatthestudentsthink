@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.1/optimize for better performance and smaller assets.');
+
 
 
 // EQUALITY
@@ -113,7 +113,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 		return true;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x.$ === 'Set_elm_builtin')
 	{
 		x = $elm$core$Set$toList(x);
@@ -126,7 +126,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (x.$ < 0)
 	{
 		x = $elm$core$Dict$toList(x);
@@ -161,7 +161,7 @@ function _Utils_cmp(x, y, ord)
 		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x instanceof String)
 	{
 		var a = x.valueOf();
@@ -170,10 +170,10 @@ function _Utils_cmp(x, y, ord)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (typeof x.$ === 'undefined')
 	//*/
-	/**/
+	/**_UNUSED/
 	if (x.$[0] === '#')
 	//*/
 	{
@@ -203,17 +203,17 @@ var _Utils_compare = F2(function(x, y)
 
 // COMMON VALUES
 
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
+var _Utils_Tuple0 = 0;
+var _Utils_Tuple0_UNUSED = { $: '#0' };
 
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2_UNUSED(a, b) { return { $: '#2', a: a, b: b }; }
 
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3_UNUSED(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
+function _Utils_chr(c) { return c; }
+function _Utils_chr_UNUSED(c) { return new String(c); }
 
 
 // RECORDS
@@ -264,11 +264,11 @@ function _Utils_ap(xs, ys)
 
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
+var _List_Nil = { $: 0 };
+var _List_Nil_UNUSED = { $: '[]' };
 
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons_UNUSED(hd, tl) { return { $: '::', a: hd, b: tl }; }
 
 
 var _List_cons = F2(_List_Cons);
@@ -499,12 +499,12 @@ var _JsArray_appendN = F3(function(n, dest, source)
 
 // LOG
 
-var _Debug_log_UNUSED = F2(function(tag, value)
+var _Debug_log = F2(function(tag, value)
 {
 	return value;
 });
 
-var _Debug_log = F2(function(tag, value)
+var _Debug_log_UNUSED = F2(function(tag, value)
 {
 	console.log(tag + ': ' + _Debug_toString(value));
 	return value;
@@ -530,12 +530,12 @@ function _Debug_todoCase(moduleName, region, value)
 
 // TO STRING
 
-function _Debug_toString_UNUSED(value)
+function _Debug_toString(value)
 {
 	return '<internals>';
 }
 
-function _Debug_toString(value)
+function _Debug_toString_UNUSED(value)
 {
 	return _Debug_toAnsiString(false, value);
 }
@@ -720,13 +720,13 @@ function _Debug_toHexDigit(n)
 // CRASH
 
 
-function _Debug_crash_UNUSED(identifier)
+function _Debug_crash(identifier)
 {
 	throw new Error('https://github.com/elm/core/blob/1.0.0/hints/' + identifier + '.md');
 }
 
 
-function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
+function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 {
 	switch(identifier)
 	{
@@ -784,11 +784,11 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.start.line === region.end.line)
+	if (region.R.y === region._.y)
 	{
-		return 'on line ' + region.start.line;
+		return 'on line ' + region.R.y;
 	}
-	return 'on lines ' + region.start.line + ' through ' + region.end.line;
+	return 'on lines ' + region.R.y + ' through ' + region._.y;
 }
 
 
@@ -1212,7 +1212,7 @@ function _Char_toLocaleLower(char)
 
 
 
-/**/
+/**_UNUSED/
 function _Json_errorToString(error)
 {
 	return $elm$json$Json$Decode$errorToString(error);
@@ -1616,11 +1616,11 @@ var _Json_encode = F2(function(indentLevel, value)
 	return JSON.stringify(_Json_unwrap(value), null, indentLevel) + '';
 });
 
-function _Json_wrap(value) { return { $: 0, a: value }; }
-function _Json_unwrap(value) { return value.a; }
+function _Json_wrap_UNUSED(value) { return { $: 0, a: value }; }
+function _Json_unwrap_UNUSED(value) { return value.a; }
 
-function _Json_wrap_UNUSED(value) { return value; }
-function _Json_unwrap_UNUSED(value) { return value; }
+function _Json_wrap(value) { return value; }
+function _Json_unwrap(value) { return value; }
 
 function _Json_emptyArray() { return []; }
 function _Json_emptyObject() { return {}; }
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.a2,
+		impl.bw,
+		impl.bp,
 		function() { return function() {} }
 	);
 });
@@ -1872,7 +1872,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	$elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
+	$elm$core$Result$isOk(result) || _Debug_crash(2 /**_UNUSED/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -2316,7 +2316,7 @@ function _Platform_setupIncomingPort(name, sendToApp)
 //
 
 
-function _Platform_export_UNUSED(exports)
+function _Platform_export(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsProd(scope['Elm'], exports)
@@ -2337,7 +2337,7 @@ function _Platform_mergeExportsProd(obj, exports)
 }
 
 
-function _Platform_export(exports)
+function _Platform_export_UNUSED(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsDebug('Elm', scope['Elm'], exports)
@@ -2377,10 +2377,10 @@ var _VirtualDom_init = F4(function(virtualNode, flagDecoder, debugMetadata, args
 {
 	// NOTE: this function needs _Platform_export available to work
 
-	/**_UNUSED/
+	/**/
 	var node = args['node'];
 	//*/
-	/**/
+	/**_UNUSED/
 	var node = args && args['node'] ? args['node'] : _Debug_crash(0);
 	//*/
 
@@ -2635,24 +2635,24 @@ function _VirtualDom_noInnerHtmlOrFormAction(key)
 	return key == 'innerHTML' || key == 'formAction' ? 'data-' + key : key;
 }
 
-function _VirtualDom_noJavaScriptUri_UNUSED(value)
+function _VirtualDom_noJavaScriptUri(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,'')) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptUri(value)
+function _VirtualDom_noJavaScriptUri_UNUSED(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,''))
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
 		: value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
+function _VirtualDom_noJavaScriptOrHtmlUri(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri(value)
+function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value)
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		message: func(record.message),
-		stopPropagation: record.stopPropagation,
-		preventDefault: record.preventDefault
+		n: func(record.n),
+		S: record.S,
+		P: record.P
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.message;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.stopPropagation;
+		var message = !tag ? value : tag < 3 ? value.a : value.n;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.S;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.preventDefault) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.P) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,15 +3928,15 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.a2,
+		impl.bw,
+		impl.bp,
 		function(sendToApp, initialModel) {
-			var view = impl.view;
-			/**_UNUSED/
+			var view = impl.bx;
+			/**/
 			var domNode = args['node'];
 			//*/
-			/**/
+			/**_UNUSED/
 			var domNode = args && args['node'] ? args['node'] : _Debug_crash(0);
 			//*/
 			var currNode = _VirtualDom_virtualize(domNode);
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.a2,
+		impl.bw,
+		impl.bp,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.setup && impl.setup(sendToApp)
-			var view = impl.view;
+			var divertHrefToApp = impl.Q && impl.Q(sendToApp)
+			var view = impl.bx;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.body);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aO);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.title) && (_VirtualDom_doc.title = title = doc.title);
+				(title !== doc.br) && (_VirtualDom_doc.title = title = doc.br);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.onUrlChange;
-	var onUrlRequest = impl.onUrlRequest;
+	var onUrlChange = impl.a9;
+	var onUrlRequest = impl.ba;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		setup: function(sendToApp)
+		Q: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.protocol === next.protocol
-							&& curr.host === next.host
-							&& curr.port_.a === next.port_.a
+							&& curr.ar === next.ar
+							&& curr.af === next.af
+							&& curr.ao.a === next.ao.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		init: function(flags)
+		a2: function(flags)
 		{
-			return A3(impl.init, flags, _Browser_getUrl(), key);
+			return A3(impl.a2, flags, _Browser_getUrl(), key);
 		},
-		view: impl.view,
-		update: impl.update,
-		subscriptions: impl.subscriptions
+		bx: impl.bx,
+		bw: impl.bw,
+		bp: impl.bp
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { hidden: 'hidden', change: 'visibilitychange' }
+		? { a$: 'hidden', aQ: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { hidden: 'mozHidden', change: 'mozvisibilitychange' }
+		? { a$: 'mozHidden', aQ: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { hidden: 'msHidden', change: 'msvisibilitychange' }
+		? { a$: 'msHidden', aQ: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { hidden: 'webkitHidden', change: 'webkitvisibilitychange' }
-		: { hidden: 'hidden', change: 'visibilitychange' };
+		? { a$: 'webkitHidden', aQ: 'webkitvisibilitychange' }
+		: { a$: 'hidden', aQ: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		scene: _Browser_getScene(),
-		viewport: {
-			x: _Browser_window.pageXOffset,
-			y: _Browser_window.pageYOffset,
-			width: _Browser_doc.documentElement.clientWidth,
-			height: _Browser_doc.documentElement.clientHeight
+		ay: _Browser_getScene(),
+		aG: {
+			aI: _Browser_window.pageXOffset,
+			aJ: _Browser_window.pageYOffset,
+			aH: _Browser_doc.documentElement.clientWidth,
+			ae: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		width: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		height: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aH: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ae: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			scene: {
-				width: node.scrollWidth,
-				height: node.scrollHeight
+			ay: {
+				aH: node.scrollWidth,
+				ae: node.scrollHeight
 			},
-			viewport: {
-				x: node.scrollLeft,
-				y: node.scrollTop,
-				width: node.clientWidth,
-				height: node.clientHeight
+			aG: {
+				aI: node.scrollLeft,
+				aJ: node.scrollTop,
+				aH: node.clientWidth,
+				ae: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			scene: _Browser_getScene(),
-			viewport: {
-				x: x,
-				y: y,
-				width: _Browser_doc.documentElement.clientWidth,
-				height: _Browser_doc.documentElement.clientHeight
+			ay: _Browser_getScene(),
+			aG: {
+				aI: x,
+				aJ: y,
+				aH: _Browser_doc.documentElement.clientWidth,
+				ae: _Browser_doc.documentElement.clientHeight
 			},
-			element: {
-				x: x + rect.left,
-				y: y + rect.top,
-				width: rect.width,
-				height: rect.height
+			aU: {
+				aI: x + rect.left,
+				aJ: y + rect.top,
+				aH: rect.width,
+				ae: rect.height
 			}
 		};
 	});
@@ -4364,8 +4364,8 @@ var _Regex_never = /.^/;
 var _Regex_fromStringWith = F2(function(options, string)
 {
 	var flags = 'g';
-	if (options.multiline) { flags += 'm'; }
-	if (options.caseInsensitive) { flags += 'i'; }
+	if (options.a7) { flags += 'm'; }
+	if (options.aP) { flags += 'i'; }
 
 	try
 	{
@@ -4456,15 +4456,15 @@ var _Regex_splitAtMost = F3(function(n, re, str)
 });
 
 var _Regex_infinity = Infinity;
-var $elm$core$Basics$EQ = {$: 'EQ'};
-var $elm$core$Basics$GT = {$: 'GT'};
-var $elm$core$Basics$LT = {$: 'LT'};
+var $elm$core$Basics$EQ = 1;
+var $elm$core$Basics$GT = 2;
+var $elm$core$Basics$LT = 0;
 var $elm$core$List$cons = _List_cons;
 var $elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
 		while (true) {
-			if (t.$ === 'RBEmpty_elm_builtin') {
+			if (t.$ === -2) {
 				return acc;
 			} else {
 				var key = t.b;
@@ -4509,7 +4509,7 @@ var $elm$core$Dict$keys = function (dict) {
 		dict);
 };
 var $elm$core$Set$toList = function (_v0) {
-	var dict = _v0.a;
+	var dict = _v0;
 	return $elm$core$Dict$keys(dict);
 };
 var $elm$core$Elm$JsArray$foldr = _JsArray_foldr;
@@ -4519,7 +4519,7 @@ var $elm$core$Array$foldr = F3(
 		var tail = _v0.d;
 		var helper = F2(
 			function (node, acc) {
-				if (node.$ === 'SubTree') {
+				if (!node.$) {
 					var subTree = node.a;
 					return A3($elm$core$Elm$JsArray$foldr, helper, acc, subTree);
 				} else {
@@ -4537,32 +4537,32 @@ var $elm$core$Array$toList = function (array) {
 	return A3($elm$core$Array$foldr, $elm$core$List$cons, _List_Nil, array);
 };
 var $elm$core$Result$Err = function (a) {
-	return {$: 'Err', a: a};
+	return {$: 1, a: a};
 };
 var $elm$json$Json$Decode$Failure = F2(
 	function (a, b) {
-		return {$: 'Failure', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var $elm$json$Json$Decode$Field = F2(
 	function (a, b) {
-		return {$: 'Field', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var $elm$json$Json$Decode$Index = F2(
 	function (a, b) {
-		return {$: 'Index', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var $elm$core$Result$Ok = function (a) {
-	return {$: 'Ok', a: a};
+	return {$: 0, a: a};
 };
 var $elm$json$Json$Decode$OneOf = function (a) {
-	return {$: 'OneOf', a: a};
+	return {$: 2, a: a};
 };
-var $elm$core$Basics$False = {$: 'False'};
+var $elm$core$Basics$False = 1;
 var $elm$core$Basics$add = _Basics_add;
 var $elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+	return {$: 0, a: a};
 };
-var $elm$core$Maybe$Nothing = {$: 'Nothing'};
+var $elm$core$Maybe$Nothing = {$: 1};
 var $elm$core$String$all = _String_all;
 var $elm$core$Basics$and = _Basics_and;
 var $elm$core$Basics$append = _Utils_append;
@@ -4687,12 +4687,12 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 		errorToStringHelp:
 		while (true) {
 			switch (error.$) {
-				case 'Field':
+				case 0:
 					var f = error.a;
 					var err = error.b;
 					var isSimple = function () {
 						var _v1 = $elm$core$String$uncons(f);
-						if (_v1.$ === 'Nothing') {
+						if (_v1.$ === 1) {
 							return false;
 						} else {
 							var _v2 = _v1.a;
@@ -4707,7 +4707,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'Index':
+				case 1:
 					var i = error.a;
 					var err = error.b;
 					var indexName = '[' + ($elm$core$String$fromInt(i) + ']');
@@ -4716,7 +4716,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'OneOf':
+				case 2:
 					var errors = error.a;
 					if (!errors.b) {
 						return 'Ran into a Json.Decode.oneOf with no possibilities' + function () {
@@ -4780,7 +4780,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 var $elm$core$Array$branchFactor = 32;
 var $elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
-		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
+		return {$: 0, a: a, b: b, c: c, d: d};
 	});
 var $elm$core$Elm$JsArray$empty = _JsArray_empty;
 var $elm$core$Basics$ceiling = _Basics_ceiling;
@@ -4795,7 +4795,7 @@ var $elm$core$Array$shiftStep = $elm$core$Basics$ceiling(
 var $elm$core$Array$empty = A4($elm$core$Array$Array_elm_builtin, 0, $elm$core$Array$shiftStep, $elm$core$Elm$JsArray$empty, $elm$core$Elm$JsArray$empty);
 var $elm$core$Elm$JsArray$initialize = _JsArray_initialize;
 var $elm$core$Array$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
+	return {$: 1, a: a};
 };
 var $elm$core$Basics$apL = F2(
 	function (f, x) {
@@ -4815,7 +4815,7 @@ var $elm$core$Basics$max = F2(
 	});
 var $elm$core$Basics$mul = _Basics_mul;
 var $elm$core$Array$SubTree = function (a) {
-	return {$: 'SubTree', a: a};
+	return {$: 0, a: a};
 };
 var $elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
 var $elm$core$Array$compressNodes = F2(
@@ -4862,25 +4862,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.nodeListSize) {
+		if (!builder.a) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.tail),
+				$elm$core$Elm$JsArray$length(builder.c),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.tail);
+				builder.c);
 		} else {
-			var treeLen = builder.nodeListSize * $elm$core$Array$branchFactor;
+			var treeLen = builder.a * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.nodeList) : builder.nodeList;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.nodeListSize);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.d) : builder.d;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.a);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.tail) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.c) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.tail);
+				builder.c);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4893,7 +4893,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{nodeList: nodeList, nodeListSize: (len / $elm$core$Array$branchFactor) | 0, tail: tail});
+					{d: nodeList, a: (len / $elm$core$Array$branchFactor) | 0, c: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -4923,9 +4923,9 @@ var $elm$core$Array$initialize = F2(
 			return A5($elm$core$Array$initializeHelp, fn, initialFromIndex, len, _List_Nil, tail);
 		}
 	});
-var $elm$core$Basics$True = {$: 'True'};
+var $elm$core$Basics$True = 0;
 var $elm$core$Result$isOk = function (result) {
-	if (result.$ === 'Ok') {
+	if (!result.$) {
 		return true;
 	} else {
 		return false;
@@ -4936,33 +4936,31 @@ var $elm$json$Json$Decode$map2 = _Json_map2;
 var $elm$json$Json$Decode$succeed = _Json_succeed;
 var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
-		case 'Normal':
+		case 0:
 			return 0;
-		case 'MayStopPropagation':
+		case 1:
 			return 1;
-		case 'MayPreventDefault':
+		case 2:
 			return 2;
 		default:
 			return 3;
 	}
 };
 var $elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
+	return {$: 1, a: a};
 };
 var $elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
+	return {$: 0, a: a};
 };
 var $elm$core$Basics$identity = function (x) {
 	return x;
 };
-var $elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
-var $elm$url$Url$Http = {$: 'Http'};
-var $elm$url$Url$Https = {$: 'Https'};
+var $elm$browser$Browser$Dom$NotFound = $elm$core$Basics$identity;
+var $elm$url$Url$Http = 0;
+var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
+		return {ac: fragment, af: host, am: path, ao: port_, ar: protocol, at: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -4998,7 +4996,7 @@ var $elm$url$Url$chompBeforePath = F5(
 					var i = _v0.a;
 					var _v1 = $elm$core$String$toInt(
 						A2($elm$core$String$dropLeft, i + 1, str));
-					if (_v1.$ === 'Nothing') {
+					if (_v1.$ === 1) {
 						return $elm$core$Maybe$Nothing;
 					} else {
 						var port_ = _v1;
@@ -5081,26 +5079,24 @@ var $elm$core$String$startsWith = _String_startsWith;
 var $elm$url$Url$fromString = function (str) {
 	return A2($elm$core$String$startsWith, 'http://', str) ? A2(
 		$elm$url$Url$chompAfterProtocol,
-		$elm$url$Url$Http,
+		0,
 		A2($elm$core$String$dropLeft, 7, str)) : (A2($elm$core$String$startsWith, 'https://', str) ? A2(
 		$elm$url$Url$chompAfterProtocol,
-		$elm$url$Url$Https,
+		1,
 		A2($elm$core$String$dropLeft, 8, str)) : $elm$core$Maybe$Nothing);
 };
 var $elm$core$Basics$never = function (_v0) {
 	never:
 	while (true) {
-		var nvr = _v0.a;
+		var nvr = _v0;
 		var $temp$_v0 = nvr;
 		_v0 = $temp$_v0;
 		continue never;
 	}
 };
-var $elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
+var $elm$core$Task$Perform = $elm$core$Basics$identity;
 var $elm$core$Task$succeed = _Scheduler_succeed;
-var $elm$core$Task$init = $elm$core$Task$succeed(_Utils_Tuple0);
+var $elm$core$Task$init = $elm$core$Task$succeed(0);
 var $elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5206,7 +5202,7 @@ var $elm$core$Task$sequence = function (tasks) {
 var $elm$core$Platform$sendToApp = _Platform_sendToApp;
 var $elm$core$Task$spawnCmd = F2(
 	function (router, _v0) {
-		var task = _v0.a;
+		var task = _v0;
 		return _Scheduler_spawn(
 			A2(
 				$elm$core$Task$andThen,
@@ -5218,7 +5214,7 @@ var $elm$core$Task$onEffects = F3(
 		return A2(
 			$elm$core$Task$map,
 			function (_v0) {
-				return _Utils_Tuple0;
+				return 0;
 			},
 			$elm$core$Task$sequence(
 				A2(
@@ -5228,21 +5224,19 @@ var $elm$core$Task$onEffects = F3(
 	});
 var $elm$core$Task$onSelfMsg = F3(
 	function (_v0, _v1, _v2) {
-		return $elm$core$Task$succeed(_Utils_Tuple0);
+		return $elm$core$Task$succeed(0);
 	});
 var $elm$core$Task$cmdMap = F2(
 	function (tagger, _v0) {
-		var task = _v0.a;
-		return $elm$core$Task$Perform(
-			A2($elm$core$Task$map, tagger, task));
+		var task = _v0;
+		return A2($elm$core$Task$map, tagger, task);
 	});
 _Platform_effectManagers['Task'] = _Platform_createManager($elm$core$Task$init, $elm$core$Task$onEffects, $elm$core$Task$onSelfMsg, $elm$core$Task$cmdMap);
 var $elm$core$Task$command = _Platform_leaf('Task');
 var $elm$core$Task$perform = F2(
 	function (toMessage, task) {
 		return $elm$core$Task$command(
-			$elm$core$Task$Perform(
-				A2($elm$core$Task$map, toMessage, task)));
+			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
 var $elm$core$List$any = F2(
@@ -5277,27 +5271,25 @@ var $elm$core$List$filter = F2(
 			_List_Nil,
 			list);
 	});
-var $elm$core$Set$Set_elm_builtin = function (a) {
-	return {$: 'Set_elm_builtin', a: a};
-};
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var $elm$core$Set$Set_elm_builtin = $elm$core$Basics$identity;
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$core$Set$empty = $elm$core$Set$Set_elm_builtin($elm$core$Dict$empty);
-var $elm$core$Dict$Black = {$: 'Black'};
+var $elm$core$Set$empty = $elm$core$Dict$empty;
+var $elm$core$Dict$Black = 1;
 var $elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
 	});
-var $elm$core$Dict$Red = {$: 'Red'};
+var $elm$core$Dict$Red = 0;
 var $elm$core$Dict$balance = F5(
 	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+		if ((right.$ === -1) && (!right.a)) {
 			var _v1 = right.a;
 			var rK = right.b;
 			var rV = right.c;
 			var rLeft = right.d;
 			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+			if ((left.$ === -1) && (!left.a)) {
 				var _v3 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5305,22 +5297,22 @@ var $elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
+					0,
 					key,
 					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
 			} else {
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
 					color,
 					rK,
 					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
+					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
 					rRight);
 			}
 		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
 				var _v5 = left.a;
 				var lK = left.b;
 				var lV = left.c;
@@ -5333,11 +5325,11 @@ var $elm$core$Dict$balance = F5(
 				var lRight = left.e;
 				return A5(
 					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
+					0,
 					lK,
 					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
 			} else {
 				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
 			}
@@ -5346,8 +5338,8 @@ var $elm$core$Dict$balance = F5(
 var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		if (dict.$ === -2) {
+			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
 		} else {
 			var nColor = dict.a;
 			var nKey = dict.b;
@@ -5355,8 +5347,8 @@ var $elm$core$Dict$insertHelp = F3(
 			var nLeft = dict.d;
 			var nRight = dict.e;
 			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1.$) {
-				case 'LT':
+			switch (_v1) {
+				case 0:
 					return A5(
 						$elm$core$Dict$balance,
 						nColor,
@@ -5364,7 +5356,7 @@ var $elm$core$Dict$insertHelp = F3(
 						nValue,
 						A3($elm$core$Dict$insertHelp, key, value, nLeft),
 						nRight);
-				case 'EQ':
+				case 1:
 					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
 				default:
 					return A5(
@@ -5380,13 +5372,13 @@ var $elm$core$Dict$insertHelp = F3(
 var $elm$core$Dict$insert = F3(
 	function (key, value, dict) {
 		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+		if ((_v0.$ === -1) && (!_v0.a)) {
 			var _v1 = _v0.a;
 			var k = _v0.b;
 			var v = _v0.c;
 			var l = _v0.d;
 			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
 		} else {
 			var x = _v0;
 			return x;
@@ -5394,18 +5386,17 @@ var $elm$core$Dict$insert = F3(
 	});
 var $elm$core$Set$insert = F2(
 	function (key, _v0) {
-		var dict = _v0.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A3($elm$core$Dict$insert, key, _Utils_Tuple0, dict));
+		var dict = _v0;
+		return A3($elm$core$Dict$insert, key, 0, dict);
 	});
 var $elm$core$Set$fromList = function (list) {
 	return A3($elm$core$List$foldl, $elm$core$Set$insert, $elm$core$Set$empty, list);
 };
 var $author$project$Update$getDataPoint = function (_v0) {
-	var uni = _v0.uni;
-	var min = _v0.min;
-	var value = _v0.value;
-	var max = _v0.max;
+	var uni = _v0.aE;
+	var min = _v0.aj;
+	var value = _v0.aF;
+	var max = _v0.ai;
 	return _Utils_Tuple2(
 		uni,
 		_Utils_Tuple3(min, value, max));
@@ -5414,7 +5405,7 @@ var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return $elm$core$Maybe$Nothing;
 			} else {
 				var key = dict.b;
@@ -5422,14 +5413,14 @@ var $elm$core$Dict$get = F2(
 				var left = dict.d;
 				var right = dict.e;
 				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
+				switch (_v1) {
+					case 0:
 						var $temp$targetKey = targetKey,
 							$temp$dict = left;
 						targetKey = $temp$targetKey;
 						dict = $temp$dict;
 						continue get;
-					case 'EQ':
+					case 1:
 						return $elm$core$Maybe$Just(value);
 					default:
 						var $temp$targetKey = targetKey,
@@ -5444,7 +5435,7 @@ var $elm$core$Dict$get = F2(
 var $elm$core$Dict$member = F2(
 	function (key, dict) {
 		var _v0 = A2($elm$core$Dict$get, key, dict);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			return true;
 		} else {
 			return false;
@@ -5452,13 +5443,13 @@ var $elm$core$Dict$member = F2(
 	});
 var $elm$core$Set$member = F2(
 	function (key, _v0) {
-		var dict = _v0.a;
+		var dict = _v0;
 		return A2($elm$core$Dict$member, key, dict);
 	});
 var $author$project$Update$matching = F3(
 	function (qs, unis, _v0) {
-		var q = _v0.q;
-		var uni = _v0.uni;
+		var q = _v0.as;
+		var uni = _v0.aE;
 		return A2($elm$core$Set$member, q, qs) && A2($elm$core$Set$member, uni, unis);
 	});
 var $elm_community$basics_extra$Basics$Extra$fractionalModBy = F2(
@@ -5470,17 +5461,17 @@ var $author$project$Update$unwrap = function (i) {
 };
 var $author$project$Update$intToNss = function (i) {
 	return {
-		max: $author$project$Update$unwrap(
+		ai: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i))),
-		min: $author$project$Update$unwrap(
+		aj: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 10000))),
-		q: $elm$core$Basics$floor(
+		as: $elm$core$Basics$floor(
 			A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 1000000)),
-		uni: $elm$core$Basics$floor(
+		aE: $elm$core$Basics$floor(
 			A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 1000, i / 100000000)),
-		value: $author$project$Update$unwrap(
+		aF: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 100)))
 	};
@@ -5512,10 +5503,10 @@ var $author$project$Update$getOverallData = F2(
 						$author$project$Update$nss))));
 	});
 var $author$project$Update$getDataPoint2 = function (_v0) {
-	var uni = _v0.uni;
-	var min = _v0.min;
-	var value = _v0.value;
-	var max = _v0.max;
+	var uni = _v0.aE;
+	var min = _v0.aj;
+	var value = _v0.aF;
+	var max = _v0.ai;
 	return _Utils_Tuple2(
 		uni,
 		_Utils_Tuple3(min, value, max));
@@ -5535,9 +5526,9 @@ var $elm$core$List$all = F2(
 	});
 var $author$project$Update$matching2 = F4(
 	function (subjectCandidate, qs, unis, _v0) {
-		var uni = _v0.uni;
-		var subject = _v0.subject;
-		var q = _v0.q;
+		var uni = _v0.aE;
+		var subject = _v0.bl;
+		var q = _v0.as;
 		return A2(
 			$elm$core$List$all,
 			function (x) {
@@ -5552,19 +5543,19 @@ var $author$project$Update$matching2 = F4(
 	});
 var $author$project$Update$intToNss2 = function (i) {
 	return {
-		max: $author$project$Update$unwrap(
+		ai: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i))),
-		min: $author$project$Update$unwrap(
+		aj: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 10000))),
-		q: $elm$core$Basics$floor(
+		as: $elm$core$Basics$floor(
 			A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 1000000)),
-		subject: $elm$core$Basics$floor(
+		bl: $elm$core$Basics$floor(
 			A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 1000, i / 100000000)),
-		uni: $elm$core$Basics$floor(
+		aE: $elm$core$Basics$floor(
 			A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 1000, i / 100000000000)),
-		value: $author$project$Update$unwrap(
+		aF: $author$project$Update$unwrap(
 			$elm$core$Basics$floor(
 				A2($elm_community$basics_extra$Basics$Extra$fractionalModBy, 100, i / 100)))
 	};
@@ -5600,8 +5591,8 @@ var $elm$core$List$isEmpty = function (xs) {
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Update$freshModel = function (model) {
-	var questions = model.questions;
-	var unis = model.unis;
+	var questions = model.bd;
+	var unis = model.bv;
 	if (A2(
 		$elm$core$List$any,
 		$elm$core$List$isEmpty,
@@ -5609,9 +5600,9 @@ var $author$project$Update$freshModel = function (model) {
 			[questions, unis]))) {
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	} else {
-		var _v0 = model.chartMode;
-		if (_v0.$ === 'BySubject') {
-			if (_v0.a.$ === 'Nothing') {
+		var _v0 = model.X;
+		if (_v0.$ === 1) {
+			if (_v0.a.$ === 1) {
 				var _v1 = _v0.a;
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			} else {
@@ -5620,7 +5611,7 @@ var $author$project$Update$freshModel = function (model) {
 					_Utils_update(
 						model,
 						{
-							data: A3($author$project$Update$getSubjectData, subj, questions, unis)
+							aS: A3($author$project$Update$getSubjectData, subj, questions, unis)
 						}),
 					$elm$core$Platform$Cmd$none);
 			}
@@ -5629,35 +5620,33 @@ var $author$project$Update$freshModel = function (model) {
 				_Utils_update(
 					model,
 					{
-						data: A2($author$project$Update$getOverallData, questions, unis)
+						aS: A2($author$project$Update$getOverallData, questions, unis)
 					}),
 				$elm$core$Platform$Cmd$none);
 		}
 	}
 };
-var $author$project$DataTypes$FoldedUp = {$: 'FoldedUp'};
-var $author$project$DataTypes$Overall = {$: 'Overall'};
-var $author$project$DataTypes$UniVsA = {$: 'UniVsA'};
-var $rluiten$elm_text_search$Index$Model$Index = function (a) {
-	return {$: 'Index', a: a};
-};
-var $rluiten$trie$TrieModel$EmptyTrie = {$: 'EmptyTrie'};
+var $author$project$DataTypes$FoldedUp = {$: 3};
+var $author$project$DataTypes$Overall = {$: 0};
+var $author$project$DataTypes$UniVsA = 0;
+var $rluiten$elm_text_search$Index$Model$Index = $elm$core$Basics$identity;
+var $rluiten$trie$TrieModel$EmptyTrie = {$: 0};
 var $rluiten$trie$TrieModel$TrieNode = function (a) {
-	return {$: 'TrieNode', a: a};
+	return {$: 2, a: a};
 };
 var $rluiten$trie$TrieModel$ValNode = function (a) {
-	return {$: 'ValNode', a: a};
+	return {$: 1, a: a};
 };
 var $rluiten$trie$TrieModel$ValTrieNode = function (a) {
-	return {$: 'ValTrieNode', a: a};
+	return {$: 3, a: a};
 };
 var $elm$core$Dict$singleton = F2(
 	function (key, value) {
-		return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		return A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
 	});
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
+		if (!maybe.$) {
 			var value = maybe.a;
 			return value;
 		} else {
@@ -5670,14 +5659,14 @@ var $rluiten$trie$TrieModel$addByStr = F3(
 		var value = _v0.b;
 		if (!key.b) {
 			switch (trie.$) {
-				case 'EmptyTrie':
+				case 0:
 					return $rluiten$trie$TrieModel$ValNode(
 						A2($elm$core$Dict$singleton, ref, value));
-				case 'ValNode':
+				case 1:
 					var refValues = trie.a;
 					return $rluiten$trie$TrieModel$ValNode(
 						A3($elm$core$Dict$insert, ref, value, refValues));
-				case 'TrieNode':
+				case 2:
 					var trieDict = trie.a;
 					return $rluiten$trie$TrieModel$ValTrieNode(
 						_Utils_Tuple2(
@@ -5717,16 +5706,16 @@ var $rluiten$trie$TrieModel$addByStr = F3(
 						$rluiten$trie$TrieModel$EmptyTrie));
 			};
 			switch (trie.$) {
-				case 'EmptyTrie':
+				case 0:
 					return $rluiten$trie$TrieModel$TrieNode(
-						lazyNewTrieDict(_Utils_Tuple0));
-				case 'ValNode':
+						lazyNewTrieDict(0));
+				case 1:
 					var refValues = trie.a;
 					return $rluiten$trie$TrieModel$ValTrieNode(
 						_Utils_Tuple2(
 							refValues,
-							lazyNewTrieDict(_Utils_Tuple0)));
-				case 'TrieNode':
+							lazyNewTrieDict(0)));
+				case 2:
 					var trieDict = trie.a;
 					return $rluiten$trie$TrieModel$TrieNode(
 						updateTrieDict(trieDict));
@@ -5795,21 +5784,21 @@ var $rluiten$elm_text_search$Index$Utils$buildOrderIndex = function (tokenSet) {
 		withIndex);
 };
 var $elm$core$Dict$isEmpty = function (dict) {
-	if (dict.$ === 'RBEmpty_elm_builtin') {
+	if (dict.$ === -2) {
 		return true;
 	} else {
 		return false;
 	}
 };
 var $elm$core$Set$isEmpty = function (_v0) {
-	var dict = _v0.a;
+	var dict = _v0;
 	return $elm$core$Dict$isEmpty(dict);
 };
 var $elm$core$Dict$sizeHelp = F2(
 	function (n, dict) {
 		sizeHelp:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return n;
 			} else {
 				var left = dict.d;
@@ -5826,7 +5815,7 @@ var $elm$core$Dict$size = function (dict) {
 	return A2($elm$core$Dict$sizeHelp, 0, dict);
 };
 var $elm$core$Set$size = function (_v0) {
-	var dict = _v0.a;
+	var dict = _v0;
 	return $elm$core$Dict$size(dict);
 };
 var $rluiten$elm_text_search$Index$scoreToken = F2(
@@ -5850,7 +5839,7 @@ var $elm$core$Dict$foldl = F3(
 	function (func, acc, dict) {
 		foldl:
 		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
+			if (dict.$ === -2) {
 				return acc;
 			} else {
 				var key = dict.b;
@@ -5877,21 +5866,20 @@ var $elm$core$Dict$union = F2(
 	});
 var $elm$core$Set$union = F2(
 	function (_v0, _v1) {
-		var dict1 = _v0.a;
-		var dict2 = _v1.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A2($elm$core$Dict$union, dict1, dict2));
+		var dict1 = _v0;
+		var dict2 = _v1;
+		return A2($elm$core$Dict$union, dict1, dict2);
 	});
 var $rluiten$elm_text_search$Index$addDoc = F4(
 	function (docRef, fieldsTokens, docTokens, index) {
-		var irec = index.a;
-		var updatedDocumentStore = A3($elm$core$Dict$insert, docRef, docTokens, irec.documentStore);
-		var updatedCorpusTokens = A2($elm$core$Set$union, irec.corpusTokens, docTokens);
+		var irec = index;
+		var updatedDocumentStore = A3($elm$core$Dict$insert, docRef, docTokens, irec.H);
+		var updatedCorpusTokens = A2($elm$core$Set$union, irec.G, docTokens);
 		var updatedCorpusTokensIndex = $rluiten$elm_text_search$Index$Utils$buildOrderIndex(updatedCorpusTokens);
 		var allBoosts = A2(
 			$elm$core$List$append,
-			A2($elm$core$List$map, $elm$core$Tuple$second, irec.listFields),
-			A2($elm$core$List$map, $elm$core$Tuple$second, irec.fields));
+			A2($elm$core$List$map, $elm$core$Tuple$second, irec.a4),
+			A2($elm$core$List$map, $elm$core$Tuple$second, irec.aY));
 		var fieldTokensAndBoosts = A3($elm$core$List$map2, $elm$core$Tuple$pair, fieldsTokens, allBoosts);
 		var tokenAndScores = A2(
 			$elm$core$List$map,
@@ -5907,11 +5895,10 @@ var $rluiten$elm_text_search$Index$addDoc = F4(
 					token,
 					trie);
 			});
-		var updatedTokenStore = A3($elm$core$List$foldr, addTokenScore, irec.tokenStore, tokenAndScores);
-		return $rluiten$elm_text_search$Index$Model$Index(
-			_Utils_update(
-				irec,
-				{corpusTokens: updatedCorpusTokens, corpusTokensIndex: updatedCorpusTokensIndex, documentStore: updatedDocumentStore, idfCache: $elm$core$Dict$empty, tokenStore: updatedTokenStore}));
+		var updatedTokenStore = A3($elm$core$List$foldr, addTokenScore, irec.T, tokenAndScores);
+		return _Utils_update(
+			irec,
+			{G: updatedCorpusTokens, Y: updatedCorpusTokensIndex, H: updatedDocumentStore, J: $elm$core$Dict$empty, T: updatedTokenStore});
 	});
 var $rluiten$elm_text_search$Index$Utils$applyFilterList = F2(
 	function (filters, token) {
@@ -5960,7 +5947,7 @@ var $rluiten$elm_text_search$Index$Utils$runFactories = F2(
 var $rluiten$elm_text_search$Index$Utils$getOrSetIndexFuncList = F4(
 	function (getFuncs, getFactoryFuncs, setFuncs, index) {
 		var _v0 = getFuncs(index);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			var funcList = _v0.a;
 			return _Utils_Tuple2(index, funcList);
 		} else {
@@ -5976,24 +5963,23 @@ var $rluiten$elm_text_search$Index$Utils$getOrSetIndexFuncList = F4(
 	});
 var $rluiten$elm_text_search$Index$Utils$setIndexFilters = F2(
 	function (_v0, listFuncs) {
-		var irec = _v0.a;
-		return $rluiten$elm_text_search$Index$Model$Index(
-			_Utils_update(
-				irec,
-				{
-					filters: $elm$core$Maybe$Just(listFuncs)
-				}));
+		var irec = _v0;
+		return _Utils_update(
+			irec,
+			{
+				aZ: $elm$core$Maybe$Just(listFuncs)
+			});
 	});
 var $rluiten$elm_text_search$Index$Utils$getOrSetFilterList = function (index) {
 	return A4(
 		$rluiten$elm_text_search$Index$Utils$getOrSetIndexFuncList,
 		function (_v0) {
-			var irec = _v0.a;
-			return irec.filters;
+			var irec = _v0;
+			return irec.aZ;
 		},
 		function (_v1) {
-			var irec = _v1.a;
-			return irec.filterFactories;
+			var irec = _v1;
+			return irec.ab;
 		},
 		$rluiten$elm_text_search$Index$Utils$setIndexFilters,
 		index);
@@ -6034,24 +6020,23 @@ var $rluiten$elm_text_search$Index$Utils$applyTransformList = F2(
 	});
 var $rluiten$elm_text_search$Index$Utils$setIndexInitialTransforms = F2(
 	function (_v0, listFuncs) {
-		var irec = _v0.a;
-		return $rluiten$elm_text_search$Index$Model$Index(
-			_Utils_update(
-				irec,
-				{
-					initialTransforms: $elm$core$Maybe$Just(listFuncs)
-				}));
+		var irec = _v0;
+		return _Utils_update(
+			irec,
+			{
+				a3: $elm$core$Maybe$Just(listFuncs)
+			});
 	});
 var $rluiten$elm_text_search$Index$Utils$getOrSetInitialTransformList = function (index) {
 	return A4(
 		$rluiten$elm_text_search$Index$Utils$getOrSetIndexFuncList,
 		function (_v0) {
-			var irec = _v0.a;
-			return irec.initialTransforms;
+			var irec = _v0;
+			return irec.a3;
 		},
 		function (_v1) {
-			var irec = _v1.a;
-			return irec.initialTransformFactories;
+			var irec = _v1;
+			return irec.ag;
 		},
 		$rluiten$elm_text_search$Index$Utils$setIndexInitialTransforms,
 		index);
@@ -6076,24 +6061,23 @@ var $rluiten$elm_text_search$Index$Utils$applyInitialTransform = F2(
 	});
 var $rluiten$elm_text_search$Index$Utils$setIndexTransforms = F2(
 	function (_v0, listFuncs) {
-		var irec = _v0.a;
-		return $rluiten$elm_text_search$Index$Model$Index(
-			_Utils_update(
-				irec,
-				{
-					transforms: $elm$core$Maybe$Just(listFuncs)
-				}));
+		var irec = _v0;
+		return _Utils_update(
+			irec,
+			{
+				bs: $elm$core$Maybe$Just(listFuncs)
+			});
 	});
 var $rluiten$elm_text_search$Index$Utils$getOrSetTransformList = function (index) {
 	return A4(
 		$rluiten$elm_text_search$Index$Utils$getOrSetIndexFuncList,
 		function (_v0) {
-			var irec = _v0.a;
-			return irec.transforms;
+			var irec = _v0;
+			return irec.bs;
 		},
 		function (_v1) {
-			var irec = _v1.a;
-			return irec.transformFactories;
+			var irec = _v1;
+			return irec.aD;
 		},
 		$rluiten$elm_text_search$Index$Utils$setIndexTransforms,
 		index);
@@ -6127,13 +6111,13 @@ var $rluiten$elm_text_search$Index$Utils$processTokens = F2(
 	});
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
-		return {index: index, match: match, number: number, submatches: submatches};
+		return {a1: index, a5: match, a8: number, bo: submatches};
 	});
 var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
 var $elm$regex$Regex$fromString = function (string) {
 	return A2(
 		$elm$regex$Regex$fromStringWith,
-		{caseInsensitive: false, multiline: false},
+		{aP: false, a7: false},
 		string);
 };
 var $elm$regex$Regex$never = _Regex_never;
@@ -6234,13 +6218,13 @@ var $rluiten$elm_text_search$Index$getWordsForFieldList = F3(
 	});
 var $rluiten$elm_text_search$Index$Utils$refExists = F2(
 	function (docRef, _v0) {
-		var irec = _v0.a;
-		return A2($elm$core$Dict$member, docRef, irec.documentStore);
+		var irec = _v0;
+		return A2($elm$core$Dict$member, docRef, irec.H);
 	});
 var $rluiten$elm_text_search$Index$add = F2(
 	function (doc, index) {
-		var irec = index.a;
-		var docRef = irec.ref(doc);
+		var irec = index;
+		var docRef = irec.bf(doc);
 		if ($elm$core$String$isEmpty(docRef)) {
 			return $elm$core$Result$Err('Error document has an empty unique id (ref).');
 		} else {
@@ -6251,14 +6235,14 @@ var $rluiten$elm_text_search$Index$add = F2(
 					$elm$core$List$foldr,
 					$rluiten$elm_text_search$Index$getWordsForField(doc),
 					_Utils_Tuple2(index, _List_Nil),
-					A2($elm$core$List$map, $elm$core$Tuple$first, irec.fields));
+					A2($elm$core$List$map, $elm$core$Tuple$first, irec.aY));
 				var u1index = _v0.a;
 				var fieldsWordList = _v0.b;
 				var _v1 = A3(
 					$elm$core$List$foldr,
 					$rluiten$elm_text_search$Index$getWordsForFieldList(doc),
 					_Utils_Tuple2(u1index, fieldsWordList),
-					A2($elm$core$List$map, $elm$core$Tuple$first, irec.listFields));
+					A2($elm$core$List$map, $elm$core$Tuple$first, irec.a4));
 				var u2index = _v1.a;
 				var u2fieldsWordList = _v1.b;
 				var fieldsTokens = A2($elm$core$List$map, $elm$core$Set$fromList, u2fieldsWordList);
@@ -6272,14 +6256,14 @@ var $rluiten$elm_text_search$Index$addDocsCore = F4(
 	function (docsI, docs, index, errors) {
 		addDocsCore:
 		while (true) {
-			var irec = index.a;
+			var irec = index;
 			if (!docs.b) {
 				return _Utils_Tuple2(index, errors);
 			} else {
 				var headDoc = docs.a;
 				var tailDocs = docs.b;
 				var _v1 = A2($rluiten$elm_text_search$Index$add, headDoc, index);
-				if (_v1.$ === 'Ok') {
+				if (!_v1.$) {
 					var u1index = _v1.a;
 					var $temp$docsI = docsI + 1,
 						$temp$docs = tailDocs,
@@ -6329,16 +6313,16 @@ var $author$project$Update$indexContent = function (codes) {
 	return A2(
 		$elm$core$List$map,
 		function (x) {
-			return {name: x};
+			return {N: x};
 		},
 		$elm$core$Dict$values(codes));
 };
 var $rluiten$elm_text_search$Index$Defaults$elmTextSearchIndexType = '-= ElmTextSearch Index Type 1 =-';
 var $rluiten$elm_text_search$Index$Defaults$getIndexSimpleConfig = function (_v0) {
-	var ref = _v0.ref;
-	var fields = _v0.fields;
-	var listFields = _v0.listFields;
-	return {fields: fields, indexType: $rluiten$elm_text_search$Index$Defaults$elmTextSearchIndexType, listFields: listFields, ref: ref};
+	var ref = _v0.bf;
+	var fields = _v0.aY;
+	var listFields = _v0.a4;
+	return {aY: fields, K: $rluiten$elm_text_search$Index$Defaults$elmTextSearchIndexType, a4: listFields, bf: ref};
 };
 var $rluiten$elm_text_search$StopWordFilter$createFilterFunc = F2(
 	function (tokens, index) {
@@ -6378,7 +6362,7 @@ var $rluiten$stemmer$Stemmer$step1aX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$isVowelCore = F2(
 	function (includeY, c) {
-		switch (c.valueOf()) {
+		switch (c) {
 			case 'a':
 				return true;
 			case 'e':
@@ -6400,7 +6384,7 @@ var $rluiten$stemmer$Stemmer$hasVowel2X = function (word) {
 	hasVowel2X:
 	while (true) {
 		var _v0 = $elm$core$String$uncons(word);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			var _v1 = _v0.a;
 			var h = _v1.a;
 			var wordTail = _v1.b;
@@ -6421,7 +6405,7 @@ var $rluiten$stemmer$Stemmer$isVowel = $rluiten$stemmer$Stemmer$isVowelCore(fals
 var $rluiten$stemmer$Stemmer$hasVowelX = function (drow) {
 	var _v0 = $elm$core$String$uncons(
 		$elm$core$String$reverse(drow));
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var h = _v1.a;
 		var wordTail = _v1.b;
@@ -6440,7 +6424,7 @@ var $rluiten$stemmer$Stemmer$foundConsonantX = F2(
 		foundConsonantX:
 		while (true) {
 			var _v3 = $elm$core$String$uncons(word);
-			if (_v3.$ === 'Just') {
+			if (!_v3.$) {
 				var _v4 = _v3.a;
 				var h = _v4.a;
 				var wordTail = _v4.b;
@@ -6464,7 +6448,7 @@ var $rluiten$stemmer$Stemmer$foundVowelX = F2(
 		foundVowelX:
 		while (true) {
 			var _v0 = $elm$core$String$uncons(word);
-			if (_v0.$ === 'Just') {
+			if (!_v0.$) {
 				var _v1 = _v0.a;
 				var h = _v1.a;
 				var wordTail = _v1.b;
@@ -6487,7 +6471,7 @@ var $rluiten$stemmer$Stemmer$foundLeadingConsonantX = function (word) {
 	foundLeadingConsonantX:
 	while (true) {
 		var _v0 = $elm$core$String$uncons(word);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			var _v1 = _v0.a;
 			var h = _v1.a;
 			var wordTail = _v1.b;
@@ -6507,7 +6491,7 @@ var $rluiten$stemmer$Stemmer$foundLeadingConsonantX = function (word) {
 var $rluiten$stemmer$Stemmer$measureX = function (drow) {
 	var word = $elm$core$String$reverse(drow);
 	var _v0 = $elm$core$String$uncons(word);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var h = _v1.a;
 		var wordTail = _v1.b;
@@ -6523,25 +6507,19 @@ var $rluiten$stemmer$Stemmer$measureX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$endsWithCVCX = function (drow) {
 	var _v0 = $elm$core$String$uncons(drow);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var c2 = _v1.a;
 		var drowTail1 = _v1.b;
-		if (!($rluiten$stemmer$Stemmer$isVowel(c2) || (_Utils_eq(
-			c2,
-			_Utils_chr('w')) || (_Utils_eq(
-			c2,
-			_Utils_chr('x')) || _Utils_eq(
-			c2,
-			_Utils_chr('y')))))) {
+		if (!($rluiten$stemmer$Stemmer$isVowel(c2) || ((c2 === 'w') || ((c2 === 'x') || (c2 === 'y'))))) {
 			var _v2 = $elm$core$String$uncons(drowTail1);
-			if (_v2.$ === 'Just') {
+			if (!_v2.$) {
 				var _v3 = _v2.a;
 				var v = _v3.a;
 				var drowTail2 = _v3.b;
 				if ($rluiten$stemmer$Stemmer$isVowelWithY(v)) {
 					var _v4 = $elm$core$String$uncons(drowTail2);
-					if (_v4.$ === 'Just') {
+					if (!_v4.$) {
 						var _v5 = _v4.a;
 						var c1 = _v5.a;
 						var drowTail3 = _v5.b;
@@ -6564,13 +6542,13 @@ var $rluiten$stemmer$Stemmer$endsWithCVCX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$endsWithDoubleConsX = function (drow) {
 	var _v0 = $elm$core$String$uncons(drow);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var c1 = _v1.a;
 		var drowTail = _v1.b;
 		if (!$rluiten$stemmer$Stemmer$isVowelWithY(c1)) {
 			var _v2 = $elm$core$String$uncons(drowTail);
-			if (_v2.$ === 'Just') {
+			if (!_v2.$) {
 				var _v3 = _v2.a;
 				var c2 = _v3.a;
 				var drowTail2 = _v3.b;
@@ -6587,26 +6565,14 @@ var $rluiten$stemmer$Stemmer$endsWithDoubleConsX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$step1b2X = function (drow) {
 	if (A2($elm$core$String$startsWith, 'ta', drow) || (A2($elm$core$String$startsWith, 'lb', drow) || A2($elm$core$String$startsWith, 'zi', drow))) {
-		return A2(
-			$elm$core$String$cons,
-			_Utils_chr('e'),
-			drow);
+		return A2($elm$core$String$cons, 'e', drow);
 	} else {
 		var _v0 = $elm$core$String$uncons(drow);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			var _v1 = _v0.a;
 			var h = _v1.a;
 			var drowTail = _v1.b;
-			return ($rluiten$stemmer$Stemmer$endsWithDoubleConsX(drow) && (!(_Utils_eq(
-				h,
-				_Utils_chr('l')) || (_Utils_eq(
-				h,
-				_Utils_chr('s')) || _Utils_eq(
-				h,
-				_Utils_chr('z')))))) ? drowTail : ((($rluiten$stemmer$Stemmer$measureX(drow) === 1) && $rluiten$stemmer$Stemmer$endsWithCVCX(drow)) ? A2(
-				$elm$core$String$cons,
-				_Utils_chr('e'),
-				drow) : drow);
+			return ($rluiten$stemmer$Stemmer$endsWithDoubleConsX(drow) && (!((h === 'l') || ((h === 's') || (h === 'z'))))) ? drowTail : ((($rluiten$stemmer$Stemmer$measureX(drow) === 1) && $rluiten$stemmer$Stemmer$endsWithCVCX(drow)) ? A2($elm$core$String$cons, 'e', drow) : drow);
 		} else {
 			return drow;
 		}
@@ -6632,16 +6598,11 @@ var $rluiten$stemmer$Stemmer$step1bX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$step1cX = function (drow) {
 	var _v0 = $elm$core$String$uncons(drow);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var c = _v1.a;
 		var drowTail = _v1.b;
-		return (_Utils_eq(
-			c,
-			_Utils_chr('y')) && $rluiten$stemmer$Stemmer$hasVowelX(drowTail)) ? A2(
-			$elm$core$String$cons,
-			_Utils_chr('i'),
-			drowTail) : drow;
+		return ((c === 'y') && $rluiten$stemmer$Stemmer$hasVowelX(drowTail)) ? A2($elm$core$String$cons, 'i', drowTail) : drow;
 	} else {
 		return drow;
 	}
@@ -6795,15 +6756,11 @@ var $rluiten$stemmer$Stemmer$step4IonX = F3(
 	function (mThreshold, startLen, drow) {
 		var afterNoi = A2($elm$core$String$dropLeft, startLen, drow);
 		var _v0 = $elm$core$String$uncons(afterNoi);
-		if (_v0.$ === 'Just') {
+		if (!_v0.$) {
 			var _v1 = _v0.a;
 			var _char = _v1.a;
 			var drowEnd = _v1.b;
-			return ((_Utils_eq(
-				_char,
-				_Utils_chr('t')) || _Utils_eq(
-				_char,
-				_Utils_chr('s'))) && (_Utils_cmp(
+			return (((_char === 't') || (_char === 's')) && (_Utils_cmp(
 				$rluiten$stemmer$Stemmer$measureX(afterNoi),
 				mThreshold) > 0)) ? afterNoi : drow;
 		} else {
@@ -6876,13 +6833,11 @@ var $rluiten$stemmer$Stemmer$step4X = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$step5aX = function (drow) {
 	var _v0 = $elm$core$String$uncons(drow);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var _char = _v1.a;
 		var drowEnd = _v1.b;
-		if (_Utils_eq(
-			_char,
-			_Utils_chr('e'))) {
+		if (_char === 'e') {
 			var m = $rluiten$stemmer$Stemmer$measureX(drowEnd);
 			return (m > 1) ? drowEnd : (((m === 1) && (!$rluiten$stemmer$Stemmer$endsWithCVCX(drowEnd))) ? drowEnd : drow);
 		} else {
@@ -6894,13 +6849,11 @@ var $rluiten$stemmer$Stemmer$step5aX = function (drow) {
 };
 var $rluiten$stemmer$Stemmer$step5bX = function (drow) {
 	var _v0 = $elm$core$String$uncons(drow);
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var _v1 = _v0.a;
 		var _char = _v1.a;
 		var drowEnd = _v1.b;
-		return (_Utils_eq(
-			_char,
-			_Utils_chr('l')) && (($rluiten$stemmer$Stemmer$measureX(drowEnd) > 1) && $rluiten$stemmer$Stemmer$endsWithDoubleConsX(drow))) ? drowEnd : drow;
+		return ((_char === 'l') && (($rluiten$stemmer$Stemmer$measureX(drowEnd) > 1) && $rluiten$stemmer$Stemmer$endsWithDoubleConsX(drow))) ? drowEnd : drow;
 	} else {
 		return drow;
 	}
@@ -6929,25 +6882,24 @@ var $rluiten$elm_text_search$Index$Defaults$defaultStemmerFuncCreator = $rluiten
 var $rluiten$elm_text_search$Index$Defaults$defaultTransformFactories = _List_fromArray(
 	[$rluiten$elm_text_search$Index$Defaults$defaultStemmerFuncCreator]);
 var $rluiten$elm_text_search$Index$Defaults$getDefaultIndexConfig = function (_v0) {
-	var indexType = _v0.indexType;
-	var ref = _v0.ref;
-	var fields = _v0.fields;
-	var listFields = _v0.listFields;
-	return {fields: fields, filterFactories: $rluiten$elm_text_search$Index$Defaults$defaultFilterFactories, indexType: indexType, initialTransformFactories: $rluiten$elm_text_search$Index$Defaults$defaultInitialTransformFactories, listFields: listFields, ref: ref, transformFactories: $rluiten$elm_text_search$Index$Defaults$defaultTransformFactories};
+	var indexType = _v0.K;
+	var ref = _v0.bf;
+	var fields = _v0.aY;
+	var listFields = _v0.a4;
+	return {aY: fields, ab: $rluiten$elm_text_search$Index$Defaults$defaultFilterFactories, K: indexType, ag: $rluiten$elm_text_search$Index$Defaults$defaultInitialTransformFactories, a4: listFields, bf: ref, aD: $rluiten$elm_text_search$Index$Defaults$defaultTransformFactories};
 };
 var $rluiten$trie$TrieModel$empty = $rluiten$trie$TrieModel$EmptyTrie;
 var $rluiten$trie$Trie$empty = $rluiten$trie$TrieModel$empty;
 var $rluiten$elm_text_search$Index$Defaults$indexVersion = '1.1.0';
 var $rluiten$elm_text_search$Index$newWith = function (_v0) {
-	var indexType = _v0.indexType;
-	var ref = _v0.ref;
-	var fields = _v0.fields;
-	var listFields = _v0.listFields;
-	var initialTransformFactories = _v0.initialTransformFactories;
-	var transformFactories = _v0.transformFactories;
-	var filterFactories = _v0.filterFactories;
-	return $rluiten$elm_text_search$Index$Model$Index(
-		{corpusTokens: $elm$core$Set$empty, corpusTokensIndex: $elm$core$Dict$empty, documentStore: $elm$core$Dict$empty, fields: fields, filterFactories: filterFactories, filters: $elm$core$Maybe$Nothing, idfCache: $elm$core$Dict$empty, indexType: indexType, indexVersion: $rluiten$elm_text_search$Index$Defaults$indexVersion, initialTransformFactories: initialTransformFactories, initialTransforms: $elm$core$Maybe$Nothing, listFields: listFields, ref: ref, tokenStore: $rluiten$trie$Trie$empty, transformFactories: transformFactories, transforms: $elm$core$Maybe$Nothing});
+	var indexType = _v0.K;
+	var ref = _v0.bf;
+	var fields = _v0.aY;
+	var listFields = _v0.a4;
+	var initialTransformFactories = _v0.ag;
+	var transformFactories = _v0.aD;
+	var filterFactories = _v0.ab;
+	return {G: $elm$core$Set$empty, Y: $elm$core$Dict$empty, H: $elm$core$Dict$empty, aY: fields, ab: filterFactories, aZ: $elm$core$Maybe$Nothing, J: $elm$core$Dict$empty, K: indexType, L: $rluiten$elm_text_search$Index$Defaults$indexVersion, ag: initialTransformFactories, a3: $elm$core$Maybe$Nothing, a4: listFields, bf: ref, T: $rluiten$trie$Trie$empty, aD: transformFactories, bs: $elm$core$Maybe$Nothing};
 };
 var $rluiten$elm_text_search$Index$new = function (simpleConfig) {
 	return $rluiten$elm_text_search$Index$newWith(
@@ -6959,17 +6911,17 @@ var $rluiten$elm_text_search$ElmTextSearch$new = function (simpleConfig) {
 };
 var $author$project$Update$initIndex = $rluiten$elm_text_search$ElmTextSearch$new(
 	{
-		fields: _List_fromArray(
+		aY: _List_fromArray(
 			[
 				_Utils_Tuple2(
 				function ($) {
-					return $.name;
+					return $.N;
 				},
 				1.0)
 			]),
-		listFields: _List_Nil,
-		ref: function ($) {
-			return $.name;
+		a4: _List_Nil,
+		bf: function ($) {
+			return $.N;
 		}
 	});
 var $author$project$Update$makeSearchIndex = function (codes) {
@@ -7291,20 +7243,20 @@ var $author$project$Data$subjectCodes = $elm$core$Dict$fromList(
 			_Utils_Tuple2(133, 'Zoology')
 		]));
 var $author$project$Main$initModel = {
-	axesConfig: $author$project$DataTypes$UniVsA,
-	chartMode: $author$project$DataTypes$Overall,
-	chooserMode: $author$project$DataTypes$FoldedUp,
-	data: _List_Nil,
-	fatalErr: $elm$core$Maybe$Nothing,
-	getRequestErr: $elm$core$Maybe$Nothing,
-	pageLoading: false,
-	questions: _List_fromArray(
+	aN: 0,
+	X: $author$project$DataTypes$Overall,
+	aR: $author$project$DataTypes$FoldedUp,
+	aS: _List_Nil,
+	aX: $elm$core$Maybe$Nothing,
+	a_: $elm$core$Maybe$Nothing,
+	bc: false,
+	bd: _List_fromArray(
 		[27]),
-	subjectSearchIndex: $author$project$Update$makeSearchIndex($author$project$Data$subjectCodes),
-	subjectSearchResults: _List_Nil,
-	uniSearchIndex: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
-	uniSearchResults: _List_Nil,
-	unis: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
+	bm: $author$project$Update$makeSearchIndex($author$project$Data$subjectCodes),
+	bn: _List_Nil,
+	bt: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
+	bu: _List_Nil,
+	bv: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
 };
 var $author$project$Main$init = function (_v0) {
 	return $author$project$Update$freshModel($author$project$Main$initModel);
@@ -7312,15 +7264,15 @@ var $author$project$Main$init = function (_v0) {
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$DataTypes$BySubject = function (a) {
-	return {$: 'BySubject', a: a};
+	return {$: 1, a: a};
 };
-var $author$project$DataTypes$QVsA = {$: 'QVsA'};
-var $author$project$DataTypes$Question = {$: 'Question'};
+var $author$project$DataTypes$QVsA = 1;
+var $author$project$DataTypes$Question = {$: 0};
 var $author$project$DataTypes$Subject = function (a) {
-	return {$: 'Subject', a: a};
+	return {$: 1, a: a};
 };
 var $author$project$DataTypes$Uni = function (a) {
-	return {$: 'Uni', a: a};
+	return {$: 2, a: a};
 };
 var $elm$core$List$member = F2(
 	function (x, xs) {
@@ -7346,11 +7298,11 @@ var $author$project$Update$calculateDataChoice = F2(
 	});
 var $elm$core$Maybe$map2 = F3(
 	function (func, ma, mb) {
-		if (ma.$ === 'Nothing') {
+		if (ma.$ === 1) {
 			return $elm$core$Maybe$Nothing;
 		} else {
 			var a = ma.a;
-			if (mb.$ === 'Nothing') {
+			if (mb.$ === 1) {
 				return $elm$core$Maybe$Nothing;
 			} else {
 				var b = mb.a;
@@ -7382,14 +7334,14 @@ var $author$project$Update$data2Tuple = function (dat) {
 };
 var $author$project$Update$errToStr = function (e) {
 	switch (e.$) {
-		case 'BadUrl':
+		case 0:
 			var str = e.a;
 			return 'bad url: ' + str;
-		case 'Timeout':
+		case 1:
 			return 'timeout';
-		case 'NetworkError':
+		case 2:
 			return 'network error';
-		case 'BadStatus':
+		case 3:
 			var s = e.a;
 			return 'bad status: ' + $elm$core$String$fromInt(s);
 		default:
@@ -7430,7 +7382,7 @@ var $author$project$DataTypes$questionCodes = $elm$core$Dict$fromList(
 		]));
 var $elm$core$Maybe$andThen = F2(
 	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
+		if (!maybeValue.$) {
 			var value = maybeValue.a;
 			return callback(value);
 		} else {
@@ -7451,11 +7403,11 @@ var $rluiten$trie$TrieModel$getNodeCore = F2(
 					A2($elm$core$Dict$get, keyHead, trieDict));
 			};
 			switch (trie.$) {
-				case 'EmptyTrie':
+				case 0:
 					return $elm$core$Maybe$Nothing;
-				case 'ValNode':
+				case 1:
 					return $elm$core$Maybe$Nothing;
-				case 'TrieNode':
+				case 2:
 					var trieDict = trie.a;
 					return getTrie(trieDict);
 				default:
@@ -7500,12 +7452,12 @@ var $rluiten$trie$TrieModel$expandCore = F3(
 				keyList) : keyList;
 		};
 		switch (trie.$) {
-			case 'EmptyTrie':
+			case 0:
 				return keyList;
-			case 'ValNode':
+			case 1:
 				var refValues = trie.a;
 				return addRefKey(refValues);
-			case 'TrieNode':
+			case 2:
 				var trieDict = trie.a;
 				return A3($elm$core$Dict$foldr, expandSub, keyList, trieDict);
 			default:
@@ -7519,7 +7471,7 @@ var $rluiten$trie$TrieModel$expandCore = F3(
 var $rluiten$trie$TrieModel$expandByStr = F2(
 	function (key, trie) {
 		var _v0 = A2($rluiten$trie$TrieModel$getNodeByStr, key, trie);
-		if (_v0.$ === 'Nothing') {
+		if (_v0.$ === 1) {
 			return _List_Nil;
 		} else {
 			var keyTrie = _v0.a;
@@ -7536,12 +7488,12 @@ var $rluiten$trie$TrieModel$expand = F2(
 var $rluiten$trie$Trie$expand = $rluiten$trie$TrieModel$expand;
 var $rluiten$trie$TrieModel$getValues = function (trie) {
 	switch (trie.$) {
-		case 'EmptyTrie':
+		case 0:
 			return $elm$core$Maybe$Nothing;
-		case 'ValNode':
+		case 1:
 			var refValues = trie.a;
 			return $elm$core$Maybe$Just(refValues);
-		case 'TrieNode':
+		case 2:
 			return $elm$core$Maybe$Nothing;
 		default:
 			var _v1 = trie.a;
@@ -7575,24 +7527,23 @@ var $rluiten$trie$TrieModel$valueCount = F2(
 var $rluiten$trie$Trie$valueCount = $rluiten$trie$TrieModel$valueCount;
 var $rluiten$elm_text_search$Index$Utils$calcIdf = F2(
 	function (_v0, token) {
-		var irec = _v0.a;
-		var docFrequency = A2($rluiten$trie$Trie$valueCount, token, irec.tokenStore);
+		var irec = _v0;
+		var docFrequency = A2($rluiten$trie$Trie$valueCount, token, irec.T);
 		var idfLocal = (docFrequency > 0) ? (1 + A2(
 			$elm$core$Basics$logBase,
 			10,
-			$elm$core$Dict$size(irec.documentStore) / docFrequency)) : 1;
-		var updatedIdfCache = A3($elm$core$Dict$insert, token, idfLocal, irec.idfCache);
-		var u1index = $rluiten$elm_text_search$Index$Model$Index(
-			_Utils_update(
-				irec,
-				{idfCache: updatedIdfCache}));
+			$elm$core$Dict$size(irec.H) / docFrequency)) : 1;
+		var updatedIdfCache = A3($elm$core$Dict$insert, token, idfLocal, irec.J);
+		var u1index = _Utils_update(
+			irec,
+			{J: updatedIdfCache});
 		return _Utils_Tuple2(u1index, idfLocal);
 	});
 var $rluiten$elm_text_search$Index$Utils$idf = F2(
 	function (index, token) {
-		var irec = index.a;
-		var _v0 = A2($elm$core$Dict$get, token, irec.idfCache);
-		if (_v0.$ === 'Nothing') {
+		var irec = index;
+		var _v0 = A2($elm$core$Dict$get, token, irec.J);
+		if (_v0.$ === 1) {
 			return A2($rluiten$elm_text_search$Index$Utils$calcIdf, index, token);
 		} else {
 			var idfValue = _v0.a;
@@ -7605,7 +7556,7 @@ var $rluiten$sparsevector$SparseVector$insert = F3(
 	});
 var $elm$core$Maybe$map = F2(
 	function (f, maybe) {
-		if (maybe.$ === 'Just') {
+		if (!maybe.$) {
 			var value = maybe.a;
 			return $elm$core$Maybe$Just(
 				f(value));
@@ -7628,10 +7579,10 @@ var $rluiten$elm_text_search$Index$Vector$updateSetAndVec = F4(
 		var docSets = _v0.a;
 		var vec = _v0.b;
 		var index = _v0.c;
-		var irec = index.a;
+		var irec = index;
 		var _v1 = A2($rluiten$elm_text_search$Index$Utils$idf, index, expandedToken);
 		var u1index = _v1.a;
-		var u1irec = u1index.a;
+		var u1irec = u1index;
 		var keyIdf = _v1.b;
 		var tfidf = (tf * keyIdf) * A2($rluiten$elm_text_search$Index$Vector$similarityBoost, token, expandedToken);
 		var u1vec = A2(
@@ -7642,7 +7593,7 @@ var $rluiten$elm_text_search$Index$Vector$updateSetAndVec = F4(
 				function (pos) {
 					return A3($rluiten$sparsevector$SparseVector$insert, pos, tfidf, vec);
 				},
-				A2($elm$core$Dict$get, expandedToken, irec.corpusTokensIndex)));
+				A2($elm$core$Dict$get, expandedToken, irec.Y)));
 		var expandedTokenDocSet = A2(
 			$elm$core$Maybe$withDefault,
 			$elm$core$Set$empty,
@@ -7652,7 +7603,7 @@ var $rluiten$elm_text_search$Index$Vector$updateSetAndVec = F4(
 					return $elm$core$Set$fromList(
 						$elm$core$Dict$keys(dict));
 				},
-				A2($rluiten$trie$Trie$get, expandedToken, u1irec.tokenStore)));
+				A2($rluiten$trie$Trie$get, expandedToken, u1irec.T)));
 		var u1docSets = A2($elm$core$Set$union, expandedTokenDocSet, docSets);
 		return _Utils_Tuple3(u1docSets, u1vec, u1index);
 	});
@@ -7661,9 +7612,9 @@ var $rluiten$elm_text_search$Index$Vector$buildDocVector = F4(
 		var docSets = _v0.a;
 		var vec = _v0.b;
 		var index = _v0.c;
-		var irec = index.a;
-		var termFrequency = ((1 / tokensLength) * $elm$core$List$length(irec.fields)) * fieldBoosts;
-		var expandedTokens = A2($rluiten$trie$Trie$expand, baseToken, irec.tokenStore);
+		var irec = index;
+		var termFrequency = ((1 / tokensLength) * $elm$core$List$length(irec.aY)) * fieldBoosts;
+		var expandedTokens = A2($rluiten$trie$Trie$expand, baseToken, irec.T);
 		var _v1 = A3(
 			$elm$core$List$foldr,
 			A2($rluiten$elm_text_search$Index$Vector$updateSetAndVec, termFrequency, baseToken),
@@ -7712,10 +7663,9 @@ var $elm$core$Dict$intersect = F2(
 	});
 var $elm$core$Set$intersect = F2(
 	function (_v0, _v1) {
-		var dict1 = _v0.a;
-		var dict2 = _v1.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A2($elm$core$Dict$intersect, dict1, dict2));
+		var dict1 = _v0;
+		var dict2 = _v1;
+		return A2($elm$core$Dict$intersect, dict1, dict2);
 	});
 var $rluiten$elm_text_search$Utils$intersectSets = function (sets) {
 	if (!sets.b) {
@@ -7786,7 +7736,7 @@ var $rluiten$sparsevector$SparseVector$cosineSimilarity = F2(
 var $rluiten$elm_text_search$Index$Vector$updateDocVector = F3(
 	function (docRef, token, inputTuple) {
 		var index = inputTuple.a;
-		var irec = index.a;
+		var irec = index;
 		var docVector = inputTuple.b;
 		return A2(
 			$elm$core$Maybe$withDefault,
@@ -7802,15 +7752,15 @@ var $rluiten$elm_text_search$Index$Vector$updateDocVector = F3(
 							u1index,
 							A3($rluiten$sparsevector$SparseVector$insert, position, termFrequency * idfScore, docVector));
 					}),
-				A2($elm$core$Dict$get, token, irec.corpusTokensIndex),
+				A2($elm$core$Dict$get, token, irec.Y),
 				A2(
 					$elm$core$Maybe$andThen,
 					$elm$core$Dict$get(docRef),
-					A2($rluiten$trie$Trie$get, token, irec.tokenStore))));
+					A2($rluiten$trie$Trie$get, token, irec.T))));
 	});
 var $rluiten$elm_text_search$Index$Vector$getDocVector = F2(
 	function (index, docRef) {
-		var irec = index.a;
+		var irec = index;
 		return A2(
 			$elm$core$Maybe$withDefault,
 			_Utils_Tuple2(index, $rluiten$sparsevector$SparseVector$empty),
@@ -7823,7 +7773,7 @@ var $rluiten$elm_text_search$Index$Vector$getDocVector = F2(
 						_Utils_Tuple2(index, $rluiten$sparsevector$SparseVector$empty),
 						$elm$core$Set$toList(tokenSet));
 				},
-				A2($elm$core$Dict$get, docRef, irec.documentStore)));
+				A2($elm$core$Dict$get, docRef, irec.H)));
 	});
 var $rluiten$elm_text_search$Index$Vector$scoreAndCompare = F3(
 	function (queryVector, ref, _v0) {
@@ -7843,9 +7793,9 @@ var $rluiten$elm_text_search$Index$Vector$scoreAndCompare = F3(
 	});
 var $rluiten$elm_text_search$Index$searchTokens = F2(
 	function (tokens, index) {
-		var irec = index.a;
+		var irec = index;
 		var fieldBoosts = $elm$core$List$sum(
-			A2($elm$core$List$map, $elm$core$Tuple$second, irec.fields));
+			A2($elm$core$List$map, $elm$core$Tuple$second, irec.aY));
 		var _v0 = A3($rluiten$elm_text_search$Index$Vector$getQueryVector, fieldBoosts, tokens, index);
 		var tokenDocSets = _v0.a;
 		var queryVector = _v0.b;
@@ -7867,14 +7817,14 @@ var $rluiten$elm_text_search$Index$search = F2(
 	function (query, index) {
 		var _v0 = A2($rluiten$elm_text_search$Index$Utils$getTokens, index, query);
 		var i1index = _v0.a;
-		var i1irec = i1index.a;
+		var i1irec = i1index;
 		var tokens = _v0.b;
 		var tokenInStore = function (token) {
 			return !_Utils_eq(
-				A2($rluiten$trie$Trie$getNode, token, i1irec.tokenStore),
+				A2($rluiten$trie$Trie$getNode, token, i1irec.T),
 				$elm$core$Maybe$Nothing);
 		};
-		return $elm$core$Dict$isEmpty(i1irec.documentStore) ? $elm$core$Result$Err('Error there are no documents in index to search.') : ($elm$core$String$isEmpty(
+		return $elm$core$Dict$isEmpty(i1irec.H) ? $elm$core$Result$Err('Error there are no documents in index to search.') : ($elm$core$String$isEmpty(
 			$elm$core$String$trim(query)) ? $elm$core$Result$Err('Error query is empty.') : ($elm$core$List$isEmpty(tokens) ? $elm$core$Result$Err('Error after tokenisation there are no terms to search for.') : (($elm$core$List$isEmpty(tokens) || (!A2($elm$core$List$any, tokenInStore, tokens))) ? $elm$core$Result$Ok(
 			_Utils_Tuple2(i1index, _List_Nil)) : $elm$core$Result$Ok(
 			A2($rluiten$elm_text_search$Index$searchTokens, tokens, i1index)))));
@@ -7883,7 +7833,7 @@ var $rluiten$elm_text_search$ElmTextSearch$search = $rluiten$elm_text_search$Ind
 var $author$project$Update$search4words = F2(
 	function (index, searchString) {
 		var _v0 = A2($rluiten$elm_text_search$ElmTextSearch$search, searchString, index);
-		if (_v0.$ === 'Err') {
+		if (_v0.$ === 1) {
 			var msg = _v0.a;
 			return _Utils_Tuple2(_List_Nil, index);
 		} else {
@@ -9457,30 +9407,30 @@ var $author$project$Data$unisOffering = $elm$core$Dict$fromList(
 var $author$project$Update$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'ChooseAUni':
+			case 6:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							chooserMode: function () {
-								var _v1 = model.chooserMode;
-								if (_v1.$ === 'Uni') {
+							aR: function () {
+								var _v1 = model.aR;
+								if (_v1.$ === 2) {
 									return $author$project$DataTypes$FoldedUp;
 								} else {
 									return $author$project$DataTypes$Uni('');
 								}
 							}(),
-							uniSearchResults: _List_Nil
+							bu: _List_Nil
 						}),
 					$elm$core$Platform$Cmd$none);
-			case 'ChooseAQuestion':
+			case 7:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							chooserMode: function () {
-								var _v2 = model.chooserMode;
-								if (_v2.$ === 'Question') {
+							aR: function () {
+								var _v2 = model.aR;
+								if (!_v2.$) {
 									return $author$project$DataTypes$FoldedUp;
 								} else {
 									return $author$project$DataTypes$Question;
@@ -9488,40 +9438,40 @@ var $author$project$Update$update = F2(
 							}()
 						}),
 					$elm$core$Platform$Cmd$none);
-			case 'ChooseASubject':
+			case 8:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							chooserMode: function () {
-								var _v3 = model.chooserMode;
-								if (_v3.$ === 'Subject') {
+							aR: function () {
+								var _v3 = model.aR;
+								if (_v3.$ === 1) {
 									return $author$project$DataTypes$FoldedUp;
 								} else {
 									return $author$project$DataTypes$Subject('');
 								}
 							}(),
-							subjectSearchResults: _List_Nil
+							bn: _List_Nil
 						}),
 					$elm$core$Platform$Cmd$none);
-			case 'AxesConfigChoice':
-				if (msg.a.$ === 'UniVsA') {
+			case 0:
+				if (!msg.a) {
 					var _v4 = msg.a;
 					return $author$project$Update$freshModel(
 						_Utils_update(
 							model,
 							{
-								axesConfig: $author$project$DataTypes$UniVsA,
-								chooserMode: $author$project$DataTypes$FoldedUp,
-								questions: _List_fromArray(
+								aN: 0,
+								aR: $author$project$DataTypes$FoldedUp,
+								bd: _List_fromArray(
 									[27]),
-								unis: function () {
-									var _v5 = model.chartMode;
-									if (_v5.$ === 'BySubject') {
-										if (_v5.a.$ === 'Just') {
+								bv: function () {
+									var _v5 = model.X;
+									if (_v5.$ === 1) {
+										if (!_v5.a.$) {
 											var subj = _v5.a.a;
 											var _v6 = A2($elm$core$Dict$get, subj, $author$project$Data$unisOffering);
-											if (_v6.$ === 'Nothing') {
+											if (_v6.$ === 1) {
 												return _List_Nil;
 											} else {
 												var unis = _v6.a;
@@ -9542,31 +9492,31 @@ var $author$project$Update$update = F2(
 						_Utils_update(
 							model,
 							{
-								axesConfig: $author$project$DataTypes$QVsA,
-								chooserMode: $author$project$DataTypes$Uni(''),
-								questions: $elm$core$Dict$keys($author$project$DataTypes$questionCodes),
-								unis: _List_Nil
+								aN: 1,
+								aR: $author$project$DataTypes$Uni(''),
+								bd: $elm$core$Dict$keys($author$project$DataTypes$questionCodes),
+								bv: _List_Nil
 							}));
 				}
-			case 'SelectAllUnis':
+			case 17:
 				return $author$project$Update$freshModel(
 					function () {
-						var _v9 = model.chartMode;
-						if (_v9.$ === 'Overall') {
+						var _v9 = model.X;
+						if (!_v9.$) {
 							return _Utils_update(
 								model,
 								{
-									unis: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
+									bv: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
 								});
 						} else {
-							if (_v9.a.$ === 'Just') {
+							if (!_v9.a.$) {
 								var subject = _v9.a.a;
 								return _Utils_update(
 									model,
 									{
-										unis: function () {
+										bv: function () {
 											var _v10 = A2($elm$core$Dict$get, subject, $author$project$Data$unisOffering);
-											if (_v10.$ === 'Nothing') {
+											if (_v10.$ === 1) {
 												return $elm$core$Dict$keys($author$project$Data$uniCodes);
 											} else {
 												var unis = _v10.a;
@@ -9579,85 +9529,85 @@ var $author$project$Update$update = F2(
 								return _Utils_update(
 									model,
 									{
-										unis: $elm$core$Dict$keys($author$project$Data$uniCodes)
+										bv: $elm$core$Dict$keys($author$project$Data$uniCodes)
 									});
 							}
 						}
 					}());
-			case 'ClearAllUnis':
+			case 14:
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
-						{unis: _List_Nil}));
-			case 'SelectAllQuestions':
+						{bv: _List_Nil}));
+			case 16:
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
 						{
-							questions: $elm$core$Dict$keys($author$project$DataTypes$questionCodes)
+							bd: $elm$core$Dict$keys($author$project$DataTypes$questionCodes)
 						}));
-			case 'ClearAllQuestions':
+			case 15:
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
-						{questions: _List_Nil}));
-			case 'UniChooserSearchText':
+						{bd: _List_Nil}));
+			case 4:
 				var txt = msg.a;
-				var _v12 = A2($author$project$Update$search4words, model.uniSearchIndex, txt);
+				var _v12 = A2($author$project$Update$search4words, model.bt, txt);
 				var searchResults = _v12.a;
 				var newSearchIndex = _v12.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							chooserMode: $author$project$DataTypes$Uni(txt),
-							uniSearchIndex: newSearchIndex,
-							uniSearchResults: searchResults
+							aR: $author$project$DataTypes$Uni(txt),
+							bt: newSearchIndex,
+							bu: searchResults
 						}),
 					$elm$core$Platform$Cmd$none);
-			case 'SubjectChooserSearchText':
+			case 5:
 				var txt = msg.a;
-				var _v13 = A2($author$project$Update$search4words, model.subjectSearchIndex, txt);
+				var _v13 = A2($author$project$Update$search4words, model.bm, txt);
 				var searchResults = _v13.a;
 				var newSearchIndex = _v13.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							chooserMode: $author$project$DataTypes$Subject(txt),
-							subjectSearchIndex: newSearchIndex,
-							subjectSearchResults: searchResults
+							aR: $author$project$DataTypes$Subject(txt),
+							bm: newSearchIndex,
+							bn: searchResults
 						}),
 					$elm$core$Platform$Cmd$none);
-			case 'ChangeSubject':
+			case 9:
 				var subject = msg.a;
 				var _v14 = _Utils_Tuple2(
 					A2($elm$core$Dict$get, subject, $author$project$Data$unisOffering),
-					model.axesConfig);
-				if (_v14.a.$ === 'Nothing') {
+					model.aN);
+				if (_v14.a.$ === 1) {
 					var _v15 = _v14.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								fatalErr: $elm$core$Maybe$Just('Could not find subject in \'unisOffering\'' + ' dictionary.')
+								aX: $elm$core$Maybe$Just('Could not find subject in \'unisOffering\'' + ' dictionary.')
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
-					if (_v14.b.$ === 'UniVsA') {
+					if (!_v14.b) {
 						var unis = _v14.a.a;
 						var _v16 = _v14.b;
 						return $author$project$Update$freshModel(
 							_Utils_update(
 								model,
 								{
-									chartMode: $author$project$DataTypes$BySubject(
+									X: $author$project$DataTypes$BySubject(
 										$elm$core$Maybe$Just(subject)),
-									chooserMode: $author$project$DataTypes$FoldedUp,
-									unis: function () {
-										var _v17 = model.unis;
+									aR: $author$project$DataTypes$FoldedUp,
+									bv: function () {
+										var _v17 = model.bv;
 										if (_v17.b && (!_v17.b.b)) {
-											return model.unis;
+											return model.bv;
 										} else {
 											return unis;
 										}
@@ -9669,29 +9619,29 @@ var $author$project$Update$update = F2(
 							_Utils_update(
 								model,
 								{
-									chartMode: $author$project$DataTypes$BySubject(
+									X: $author$project$DataTypes$BySubject(
 										$elm$core$Maybe$Just(subject)),
-									chooserMode: function () {
-										var _v19 = model.unis;
+									aR: function () {
+										var _v19 = model.bv;
 										if (!_v19.b) {
 											return $author$project$DataTypes$Uni('');
 										} else {
 											return $author$project$DataTypes$FoldedUp;
 										}
 									}(),
-									uniSearchResults: _List_Nil
+									bu: _List_Nil
 								}));
 					}
 				}
-			case 'ChangeUni':
+			case 13:
 				var uni = msg.a;
 				var _v20 = A2($elm$core$Dict$get, uni, $author$project$Data$subjectsOffered);
-				if (_v20.$ === 'Nothing') {
+				if (_v20.$ === 1) {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								fatalErr: $elm$core$Maybe$Just('Could not find university in \'subjectsOffered\'' + ' dictionary.')
+								aX: $elm$core$Maybe$Just('Could not find university in \'subjectsOffered\'' + ' dictionary.')
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
@@ -9700,12 +9650,12 @@ var $author$project$Update$update = F2(
 						_Utils_update(
 							model,
 							{
-								chooserMode: function () {
-									var _v21 = model.chartMode;
-									if (_v21.$ === 'Overall') {
+								aR: function () {
+									var _v21 = model.X;
+									if (!_v21.$) {
 										return $author$project$DataTypes$FoldedUp;
 									} else {
-										if (_v21.a.$ === 'Nothing') {
+										if (_v21.a.$ === 1) {
 											var _v22 = _v21.a;
 											return $author$project$DataTypes$Subject('');
 										} else {
@@ -9713,31 +9663,31 @@ var $author$project$Update$update = F2(
 										}
 									}
 								}(),
-								subjectSearchResults: _List_Nil,
-								unis: _List_fromArray(
+								bn: _List_Nil,
+								bv: _List_fromArray(
 									[uni])
 							}));
 				}
-			case 'ToggleQuestion':
+			case 11:
 				var question = msg.a;
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
 						{
-							questions: A2($author$project$Update$calculateDataChoice, model.questions, question)
+							bd: A2($author$project$Update$calculateDataChoice, model.bd, question)
 						}));
-			case 'ChangeQuestion':
+			case 12:
 				var q = msg.a;
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
 						{
-							chooserMode: function () {
-								var _v23 = model.chartMode;
-								if (_v23.$ === 'Overall') {
+							aR: function () {
+								var _v23 = model.X;
+								if (!_v23.$) {
 									return $author$project$DataTypes$FoldedUp;
 								} else {
-									if (_v23.a.$ === 'Nothing') {
+									if (_v23.a.$ === 1) {
 										var _v24 = _v23.a;
 										return $author$project$DataTypes$Subject('');
 									} else {
@@ -9745,87 +9695,87 @@ var $author$project$Update$update = F2(
 									}
 								}
 							}(),
-							questions: _List_fromArray(
+							bd: _List_fromArray(
 								[q])
 						}));
-			case 'ToggleUni':
+			case 10:
 				var uni = msg.a;
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
 						{
-							unis: A2($author$project$Update$calculateDataChoice, model.unis, uni)
+							bv: A2($author$project$Update$calculateDataChoice, model.bv, uni)
 						}));
-			case 'OverallMode':
+			case 1:
 				return $author$project$Update$freshModel(
 					function () {
-						var _v25 = model.axesConfig;
-						if (_v25.$ === 'UniVsA') {
+						var _v25 = model.aN;
+						if (!_v25) {
 							return _Utils_update(
 								model,
 								{
-									chartMode: $author$project$DataTypes$Overall,
-									chooserMode: $author$project$DataTypes$FoldedUp,
-									questions: _List_fromArray(
+									X: $author$project$DataTypes$Overall,
+									aR: $author$project$DataTypes$FoldedUp,
+									bd: _List_fromArray(
 										[27]),
-									uniSearchIndex: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
-									unis: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
+									bt: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
+									bv: $elm$core$Dict$keys($author$project$Data$overallUniCodes)
 								});
 						} else {
 							return _Utils_update(
 								model,
 								{
-									chartMode: $author$project$DataTypes$Overall,
-									chooserMode: $author$project$DataTypes$Uni(''),
-									questions: $elm$core$Dict$keys($author$project$DataTypes$questionCodes),
-									uniSearchIndex: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
-									unis: _List_Nil
+									X: $author$project$DataTypes$Overall,
+									aR: $author$project$DataTypes$Uni(''),
+									bd: $elm$core$Dict$keys($author$project$DataTypes$questionCodes),
+									bt: $author$project$Update$makeSearchIndex($author$project$Data$overallUniCodes),
+									bv: _List_Nil
 								});
 						}
 					}());
-			case 'SubjectMode':
+			case 2:
 				return $author$project$Update$freshModel(
 					_Utils_update(
 						model,
 						{
-							chartMode: $author$project$DataTypes$BySubject($elm$core$Maybe$Nothing),
-							chooserMode: $author$project$DataTypes$Subject(''),
-							uniSearchIndex: $author$project$Update$makeSearchIndex($author$project$Data$uniCodes),
-							unis: _List_Nil
+							X: $author$project$DataTypes$BySubject($elm$core$Maybe$Nothing),
+							aR: $author$project$DataTypes$Subject(''),
+							bt: $author$project$Update$makeSearchIndex($author$project$Data$uniCodes),
+							bv: _List_Nil
 						}));
 			default:
 				var dat = msg.a;
-				if (dat.$ === 'Err') {
+				if (dat.$ === 1) {
 					var err = dat.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								getRequestErr: $elm$core$Maybe$Just(
+								a_: $elm$core$Maybe$Just(
 									$author$project$Update$errToStr(err)),
-								pageLoading: false
+								bc: false
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
-					var error = dat.a.error;
-					var result = dat.a.result;
+					var error = dat.a.aV;
+					var result = dat.a.bg;
 					if (error === '') {
 						var _v27 = $author$project$Update$data2Tuple(result);
-						if (_v27.$ === 'Just') {
+						if (!_v27.$) {
 							var goodresult = _v27.a;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
-									{data: goodresult, getRequestErr: $elm$core$Maybe$Nothing, pageLoading: false}),
+									{aS: goodresult, a_: $elm$core$Maybe$Nothing, bc: false}),
 								$elm$core$Platform$Cmd$none);
 						} else {
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
 									{
-										data: _List_Nil,
-										getRequestErr: $elm$core$Maybe$Just('Couldn\'t convert data to tuples.'),
-										pageLoading: false
+										aS: _List_Nil,
+										a_: $elm$core$Maybe$Just('Couldn\'t convert data to tuples.'),
+										bc: false
 									}),
 								$elm$core$Platform$Cmd$none);
 						}
@@ -9834,8 +9784,8 @@ var $author$project$Update$update = F2(
 							_Utils_update(
 								model,
 								{
-									getRequestErr: $elm$core$Maybe$Just(error),
-									pageLoading: false
+									a_: $elm$core$Maybe$Just(error),
+									bc: false
 								}),
 							$elm$core$Platform$Cmd$none);
 					}
@@ -9856,7 +9806,7 @@ var $elm$core$List$maximum = function (list) {
 var $author$project$Chart$maxStringLength = function (strs) {
 	var _v0 = $elm$core$List$maximum(
 		A2($elm$core$List$map, $elm$core$String$length, strs));
-	if (_v0.$ === 'Just') {
+	if (!_v0.$) {
 		var a = _v0.a;
 		return a;
 	} else {
@@ -9874,11 +9824,11 @@ var $elm$core$List$concat = function (lists) {
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $author$project$Chart$axisType2Codes = F2(
 	function (axisType, _v0) {
-		var unis = _v0.unis;
-		var questions = _v0.questions;
-		var chartMode = _v0.chartMode;
-		if (axisType.$ === 'UniAxis') {
-			if (chartMode.$ === 'Overall') {
+		var unis = _v0.bv;
+		var questions = _v0.bd;
+		var chartMode = _v0.X;
+		if (!axisType) {
+			if (!chartMode.$) {
 				return _Utils_Tuple2($author$project$Data$overallUniCodes, unis);
 			} else {
 				return _Utils_Tuple2($author$project$Data$uniCodes, unis);
@@ -9898,7 +9848,7 @@ var $author$project$Chart$getCurrentLabels = F2(
 				selections));
 	});
 var $author$project$Chart$maybe2list = function (maybeList) {
-	if (maybeList.$ === 'Nothing') {
+	if (maybeList.$ === 1) {
 		return _List_Nil;
 	} else {
 		var a = maybeList.a;
@@ -9981,9 +9931,9 @@ var $elm$svg$Svg$Attributes$preserveAspectRatio = _VirtualDom_attribute('preserv
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
 var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
 var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
-var $author$project$AxisLabels$Medium = {$: 'Medium'};
-var $author$project$AxisLabels$Thick = {$: 'Thick'};
-var $author$project$AxisLabels$Thin = {$: 'Thin'};
+var $author$project$AxisLabels$Medium = 1;
+var $author$project$AxisLabels$Thick = 2;
+var $author$project$AxisLabels$Thin = 0;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$svg$Svg$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$svg$Svg$Attributes$textAnchor = _VirtualDom_attribute('text-anchor');
@@ -10027,10 +9977,10 @@ var $author$project$AxisLabels$oneVerticalLine = F4(
 						(yoffset + ($elm$core$Basics$round($author$project$DataTypes$scale) * maxY)) + 15)),
 					$elm$svg$Svg$Attributes$class(
 					function () {
-						switch (weight.$) {
-							case 'Thick':
+						switch (weight) {
+							case 2:
 								return 'thickline';
-							case 'Medium':
+							case 1:
 								return 'mediumline';
 							default:
 								return 'thinline';
@@ -10054,19 +10004,19 @@ var $author$project$AxisLabels$xAxisLabels = F4(
 		return _Utils_ap(
 			A2(
 				grid,
-				$author$project$AxisLabels$Thick,
+				2,
 				_List_fromArray(
 					[0, 20, 40, 60, 80, 100])),
 			_Utils_ap(
 				A2(
 					grid,
-					$author$project$AxisLabels$Medium,
+					1,
 					_List_fromArray(
 						[10, 30, 50, 70, 90])),
 				_Utils_ap(
 					A2(
 						grid,
-						$author$project$AxisLabels$Thin,
+						0,
 						_List_fromArray(
 							[5, 15, 25, 35, 45, 55, 65, 75, 85, 95])),
 					A2(
@@ -10076,10 +10026,10 @@ var $author$project$AxisLabels$xAxisLabels = F4(
 	});
 var $author$project$AxisLabels$axisValues = F2(
 	function (model, axisType) {
-		if (axisType.$ === 'UniAxis') {
-			var _v1 = _Utils_Tuple2(model.unis, model.chartMode);
+		if (!axisType) {
+			var _v1 = _Utils_Tuple2(model.bv, model.X);
 			if (!_v1.a.b) {
-				if (_v1.b.$ === 'BySubject') {
+				if (_v1.b.$ === 1) {
 					return $elm$core$Dict$keys($author$project$Data$uniCodes);
 				} else {
 					var _v2 = _v1.b;
@@ -10090,7 +10040,7 @@ var $author$project$AxisLabels$axisValues = F2(
 				return unis;
 			}
 		} else {
-			var _v3 = model.questions;
+			var _v3 = model.bd;
 			if (!_v3.b) {
 				return $elm$core$Dict$keys($author$project$DataTypes$questionCodes);
 			} else {
@@ -10102,8 +10052,8 @@ var $author$project$AxisLabels$axisValues = F2(
 var $author$project$AxisLabels$getLabel = F3(
 	function (chartMode, axisType, code) {
 		var _v0 = _Utils_Tuple2(chartMode, axisType);
-		if (_v0.b.$ === 'UniAxis') {
-			if (_v0.a.$ === 'BySubject') {
+		if (!_v0.b) {
+			if (_v0.a.$ === 1) {
 				var _v1 = _v0.b;
 				return A2($elm$core$Dict$get, code, $author$project$Data$uniCodes);
 			} else {
@@ -10120,7 +10070,7 @@ var $author$project$AxisLabels$oneYLabel = F5(
 	function (chartMode, axisType, yoffset, pos, labelID) {
 		var ypos = ((pos * $elm$core$Basics$round($author$project$DataTypes$scale)) + yoffset) + 5;
 		var _v0 = A3($author$project$AxisLabels$getLabel, chartMode, axisType, labelID);
-		if (_v0.$ === 'Nothing') {
+		if (_v0.$ === 1) {
 			return $elm$core$Maybe$Nothing;
 		} else {
 			var label = _v0.a;
@@ -10142,18 +10092,18 @@ var $author$project$AxisLabels$oneYLabel = F5(
 						])));
 		}
 	});
-var $author$project$DataTypes$QuestionAxis = {$: 'QuestionAxis'};
-var $author$project$DataTypes$UniAxis = {$: 'UniAxis'};
+var $author$project$DataTypes$QuestionAxis = 1;
+var $author$project$DataTypes$UniAxis = 0;
 var $author$project$DataTypes$yAxisType = function (axesConfig) {
-	if (axesConfig.$ === 'UniVsA') {
-		return $author$project$DataTypes$UniAxis;
+	if (!axesConfig) {
+		return 0;
 	} else {
-		return $author$project$DataTypes$QuestionAxis;
+		return 1;
 	}
 };
 var $author$project$AxisLabels$yAxisLabels = F3(
 	function (model, xoffset, yoffset) {
-		var axisType = $author$project$DataTypes$yAxisType(model.axesConfig);
+		var axisType = $author$project$DataTypes$yAxisType(model.aN);
 		var yVals = A2($author$project$AxisLabels$axisValues, model, axisType);
 		var yPositions = A2(
 			$elm$core$List$range,
@@ -10162,12 +10112,12 @@ var $author$project$AxisLabels$yAxisLabels = F3(
 		return $elm_community$maybe_extra$Maybe$Extra$combine(
 			A3(
 				$elm$core$List$map2,
-				A3($author$project$AxisLabels$oneYLabel, model.chartMode, axisType, yoffset),
+				A3($author$project$AxisLabels$oneYLabel, model.X, axisType, yoffset),
 				yPositions,
 				yVals));
 	});
 var $author$project$Chart$chart = function (model) {
-	var yAxisTypel = $author$project$DataTypes$yAxisType(model.axesConfig);
+	var yAxisTypel = $author$project$DataTypes$yAxisType(model.aN);
 	var yLabelNames = A2($author$project$Chart$labelList, model, yAxisTypel);
 	var widestYlabel = $author$project$Chart$calcOffset(yLabelNames);
 	var widestXlabel = 12;
@@ -10183,9 +10133,9 @@ var $author$project$Chart$chart = function (model) {
 		A2(
 			$elm$core$List$indexedMap,
 			$author$project$Chart$plotRow(widestXlabel),
-			model.data));
+			model.aS));
 	var maybeYLabels = A3($author$project$AxisLabels$yAxisLabels, model, widestYlabel, widestXlabel);
-	if (maybeYLabels.$ === 'Just') {
+	if (!maybeYLabels.$) {
 		var yLabels = maybeYLabels.a;
 		return _List_fromArray(
 			[
@@ -10225,12 +10175,12 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$View$QuestionErr = {$: 'QuestionErr'};
-var $author$project$View$SubjectErr = {$: 'SubjectErr'};
-var $author$project$View$UniErr = {$: 'UniErr'};
+var $author$project$View$QuestionErr = 1;
+var $author$project$View$SubjectErr = 3;
+var $author$project$View$UniErr = 2;
 var $author$project$View$dataCorrectLength = F4(
 	function (axesConfig, data, unis, questions) {
-		if (axesConfig.$ === 'UniVsA') {
+		if (!axesConfig) {
 			return _Utils_eq(
 				$elm$core$List$length(data),
 				$elm$core$List$length(unis));
@@ -10241,12 +10191,12 @@ var $author$project$View$dataCorrectLength = F4(
 		}
 	});
 var $author$project$View$noSelectWords = function (axisType) {
-	switch (axisType.$) {
-		case 'UniErr':
+	switch (axisType) {
+		case 2:
 			return 'universities';
-		case 'QuestionErr':
+		case 1:
 			return 'questions';
-		case 'AnswerErr':
+		case 0:
 			return 'answers';
 		default:
 			return 'subjects';
@@ -10262,13 +10212,13 @@ var $author$project$View$noSelectErrorMsg = function (axisType) {
 			]));
 };
 var $author$project$View$errorMsg = function (_v0) {
-	var pageLoading = _v0.pageLoading;
-	var axesConfig = _v0.axesConfig;
-	var chartMode = _v0.chartMode;
-	var data = _v0.data;
-	var getRequestErr = _v0.getRequestErr;
-	var unis = _v0.unis;
-	var questions = _v0.questions;
+	var pageLoading = _v0.bc;
+	var axesConfig = _v0.aN;
+	var chartMode = _v0.X;
+	var data = _v0.aS;
+	var getRequestErr = _v0.a_;
+	var unis = _v0.bv;
+	var questions = _v0.bd;
 	var _v1 = _Utils_Tuple3(
 		_Utils_Tuple3(pageLoading, getRequestErr, unis),
 		_Utils_Tuple3(chartMode, questions, data),
@@ -10278,7 +10228,7 @@ var $author$project$View$errorMsg = function (_v0) {
 		var _v3 = _v1.b;
 		return $elm$core$Maybe$Just('Loading data.  Please wait...');
 	} else {
-		if (_v1.a.b.$ === 'Just') {
+		if (!_v1.a.b.$) {
 			var _v4 = _v1.a;
 			var _v5 = _v1.b;
 			return $elm$core$Maybe$Just('Chart not available.  Check internet connection.');
@@ -10287,20 +10237,20 @@ var $author$project$View$errorMsg = function (_v0) {
 				var _v6 = _v1.a;
 				var _v7 = _v1.b;
 				return $elm$core$Maybe$Just(
-					$author$project$View$noSelectErrorMsg($author$project$View$UniErr));
+					$author$project$View$noSelectErrorMsg(2));
 			} else {
-				if ((_v1.b.a.$ === 'BySubject') && (_v1.b.a.a.$ === 'Nothing')) {
+				if ((_v1.b.a.$ === 1) && (_v1.b.a.a.$ === 1)) {
 					var _v8 = _v1.a;
 					var _v9 = _v1.b;
 					var _v10 = _v9.a.a;
 					return $elm$core$Maybe$Just(
-						$author$project$View$noSelectErrorMsg($author$project$View$SubjectErr));
+						$author$project$View$noSelectErrorMsg(3));
 				} else {
 					if (!_v1.b.b.b) {
 						var _v11 = _v1.a;
 						var _v12 = _v1.b;
 						return $elm$core$Maybe$Just(
-							$author$project$View$noSelectErrorMsg($author$project$View$QuestionErr));
+							$author$project$View$noSelectErrorMsg(1));
 					} else {
 						if (!_v1.b.c.b) {
 							var _v13 = _v1.a;
@@ -10325,9 +10275,9 @@ var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$View$chartOrMsg = function (model) {
 	var _v0 = _Utils_Tuple2(
 		$author$project$View$errorMsg(model),
-		model.fatalErr);
-	if (_v0.b.$ === 'Nothing') {
-		if (_v0.a.$ === 'Just') {
+		model.aX);
+	if (_v0.b.$ === 1) {
+		if (!_v0.a.$) {
 			var msg = _v0.a.a;
 			var _v1 = _v0.b;
 			return A2(
@@ -10362,19 +10312,19 @@ var $author$project$View$chartOrMsg = function (model) {
 				]));
 	}
 };
-var $author$project$DataTypes$ChooseAQuestion = {$: 'ChooseAQuestion'};
-var $author$project$DataTypes$ChooseASubject = {$: 'ChooseASubject'};
-var $author$project$DataTypes$ChooseAUni = {$: 'ChooseAUni'};
-var $author$project$DataTypes$OverallMode = {$: 'OverallMode'};
-var $author$project$DataTypes$SubjectMode = {$: 'SubjectMode'};
-var $author$project$DataChooser$Tick = {$: 'Tick'};
+var $author$project$DataTypes$ChooseAQuestion = {$: 7};
+var $author$project$DataTypes$ChooseASubject = {$: 8};
+var $author$project$DataTypes$ChooseAUni = {$: 6};
+var $author$project$DataTypes$OverallMode = {$: 1};
+var $author$project$DataTypes$SubjectMode = {$: 2};
+var $author$project$DataChooser$Tick = 1;
 var $author$project$DataChooser$axisMessagesAndLabels = _List_fromArray(
 	[
-		_Utils_Tuple2($author$project$DataTypes$UniVsA, 'Compare universities'),
-		_Utils_Tuple2($author$project$DataTypes$QVsA, 'Look at one university')
+		_Utils_Tuple2(0, 'Compare universities'),
+		_Utils_Tuple2(1, 'Look at one university')
 	]);
 var $author$project$DataChooser$boxType2String = function (boxType) {
-	if (boxType.$ === 'Radio') {
+	if (!boxType) {
 		return 'radio';
 	} else {
 		return 'checkbox';
@@ -10392,7 +10342,7 @@ var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('
 var $elm$html$Html$input = _VirtualDom_node('input');
 var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
+	return {$: 0, a: a};
 };
 var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var $elm$html$Html$Events$on = F2(
@@ -10441,16 +10391,16 @@ var $author$project$DataChooser$checkBox = F5(
 				]));
 	});
 var $author$project$DataTypes$AxesConfigChoice = function (a) {
-	return {$: 'AxesConfigChoice', a: a};
+	return {$: 0, a: a};
 };
-var $author$project$DataChooser$Radio = {$: 'Radio'};
+var $author$project$DataChooser$Radio = 0;
 var $author$project$DataChooser$radioButton = F2(
 	function (alreadyChosen, _v0) {
 		var thisOne = _v0.a;
 		var label = _v0.b;
 		return A5(
 			$author$project$DataChooser$checkBox,
-			$author$project$DataChooser$Radio,
+			0,
 			$author$project$DataTypes$AxesConfigChoice(thisOne),
 			label,
 			_Utils_eq(alreadyChosen, thisOne),
@@ -10475,9 +10425,9 @@ var $author$project$DataChooser$axesConfigMode = F2(
 						[
 							A5(
 							$author$project$DataChooser$checkBox,
-							$author$project$DataChooser$Tick,
+							1,
 							function () {
-								if (chartMode.$ === 'Overall') {
+								if (!chartMode.$) {
 									return $author$project$DataTypes$SubjectMode;
 								} else {
 									return $author$project$DataTypes$OverallMode;
@@ -10490,10 +10440,10 @@ var $author$project$DataChooser$axesConfigMode = F2(
 					])));
 	});
 var $author$project$DataChooser$qButtonText = function (_v0) {
-	var axesConfig = _v0.axesConfig;
-	var questions = _v0.questions;
+	var axesConfig = _v0.aN;
+	var questions = _v0.bd;
 	var _v1 = _Utils_Tuple2(axesConfig, questions);
-	if (_v1.a.$ === 'QVsA') {
+	if (_v1.a === 1) {
 		if (!_v1.b.b) {
 			var _v2 = _v1.a;
 			return _Utils_Tuple2('Pick a survey question', 'Hide question chooser');
@@ -10512,12 +10462,12 @@ var $author$project$DataChooser$qButtonText = function (_v0) {
 	}
 };
 var $author$project$DataTypes$ChangeQuestion = function (a) {
-	return {$: 'ChangeQuestion', a: a};
+	return {$: 12, a: a};
 };
-var $author$project$DataTypes$ClearAllQuestions = {$: 'ClearAllQuestions'};
-var $author$project$DataTypes$SelectAllQuestions = {$: 'SelectAllQuestions'};
+var $author$project$DataTypes$ClearAllQuestions = {$: 15};
+var $author$project$DataTypes$SelectAllQuestions = {$: 16};
 var $author$project$DataTypes$ToggleQuestion = function (a) {
-	return {$: 'ToggleQuestion', a: a};
+	return {$: 11, a: a};
 };
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $author$project$DataChooser$clearAll = function (msg) {
@@ -10542,7 +10492,7 @@ var $author$project$DataChooser$chooserCheckBox = F6(
 		var thisEnabled = A2($elm$core$List$member, thisChoice, enabled);
 		var label = function () {
 			var _v0 = A2($elm$core$Dict$get, thisChoice, codes);
-			if (_v0.$ === 'Nothing') {
+			if (_v0.$ === 1) {
 				return $elm$core$String$fromInt(thisChoice);
 			} else {
 				var str = _v0.a;
@@ -10583,7 +10533,7 @@ var $author$project$DataChooser$selectAll = function (msg) {
 var $author$project$DataChooser$questionChooserButtons = F2(
 	function (axConf, questions) {
 		var contents = function () {
-			if (axConf.$ === 'QVsA') {
+			if (axConf === 1) {
 				return _List_fromArray(
 					[
 						$author$project$DataChooser$clearAll($author$project$DataTypes$ClearAllQuestions),
@@ -10591,7 +10541,7 @@ var $author$project$DataChooser$questionChooserButtons = F2(
 						A5(
 						$author$project$DataChooser$dataChooser,
 						$elm$core$Dict$keys($author$project$DataTypes$questionCodes),
-						$author$project$DataChooser$Tick,
+						1,
 						questions,
 						$author$project$DataTypes$questionCodes,
 						$author$project$DataTypes$ToggleQuestion)
@@ -10602,7 +10552,7 @@ var $author$project$DataChooser$questionChooserButtons = F2(
 						A5(
 						$author$project$DataChooser$dataChooser,
 						$elm$core$Dict$keys($author$project$DataTypes$questionCodes),
-						$author$project$DataChooser$Radio,
+						0,
 						questions,
 						$author$project$DataTypes$questionCodes,
 						$author$project$DataTypes$ChangeQuestion)
@@ -10648,17 +10598,17 @@ var $author$project$DataChooser$showChooserButton = F3(
 			]);
 	});
 var $author$project$DataChooser$subButtonTxt = function (subject) {
-	if (subject.$ === 'Nothing') {
+	if (subject.$ === 1) {
 		return 'Pick a subject area';
 	} else {
 		return 'Change subject area';
 	}
 };
 var $author$project$DataTypes$ChangeSubject = function (a) {
-	return {$: 'ChangeSubject', a: a};
+	return {$: 9, a: a};
 };
 var $author$project$DataTypes$SubjectChooserSearchText = function (a) {
-	return {$: 'SubjectChooserSearchText', a: a};
+	return {$: 5, a: a};
 };
 var $author$project$DataChooser$filterUnis = function (results) {
 	return $elm$core$Dict$filter(
@@ -10670,7 +10620,7 @@ var $author$project$DataChooser$filterUnis = function (results) {
 var $author$project$DataChooser$inRedMsgSubject = F2(
 	function (unis, chartMode) {
 		var _v0 = _Utils_Tuple2(chartMode, unis);
-		if (_v0.a.$ === 'Overall') {
+		if (!_v0.a.$) {
 			var _v1 = _v0.a;
 			return _List_Nil;
 		} else {
@@ -10697,7 +10647,7 @@ var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
 var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
+	return {$: 1, a: a};
 };
 var $elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
@@ -10758,7 +10708,7 @@ var $author$project$DataChooser$subjectChooserButtons = F6(
 							A3($author$project$DataChooser$searchBox, searchText, 'Search for a subject', $author$project$DataTypes$SubjectChooserSearchText)
 						]),
 						function () {
-						if (axConf.$ === 'UniVsA') {
+						if (!axConf) {
 							return _List_Nil;
 						} else {
 							return A2($author$project$DataChooser$inRedMsgSubject, unis, chartMode);
@@ -10770,7 +10720,7 @@ var $author$project$DataChooser$subjectChooserButtons = F6(
 							if (unis.b && (!unis.b.b)) {
 								var uni = unis.a;
 								var _v2 = A2($elm$core$Dict$get, uni, $author$project$Data$subjectsOffered);
-								if (_v2.$ === 'Just') {
+								if (!_v2.$) {
 									var subjects = _v2.a;
 									return subjects;
 								} else {
@@ -10780,9 +10730,9 @@ var $author$project$DataChooser$subjectChooserButtons = F6(
 								return $elm$core$Dict$keys($author$project$Data$subjectCodes);
 							}
 						}(),
-						$author$project$DataChooser$Radio,
+						0,
 						function () {
-							if (subject.$ === 'Nothing') {
+							if (subject.$ === 1) {
 								return _List_Nil;
 							} else {
 								var a = subject.a;
@@ -10801,10 +10751,10 @@ var $author$project$DataChooser$subjectChooserButtons = F6(
 					])));
 	});
 var $author$project$DataChooser$uniButtonText = function (_v0) {
-	var axesConfig = _v0.axesConfig;
-	var unis = _v0.unis;
+	var axesConfig = _v0.aN;
+	var unis = _v0.bv;
 	var _v1 = _Utils_Tuple2(axesConfig, unis);
-	if (_v1.a.$ === 'UniVsA') {
+	if (!_v1.a) {
 		if (!_v1.b.b) {
 			var _v2 = _v1.a;
 			return _Utils_Tuple2('Choose some universities', 'Hide university chooser');
@@ -10823,12 +10773,12 @@ var $author$project$DataChooser$uniButtonText = function (_v0) {
 	}
 };
 var $author$project$DataTypes$UniChooserSearchText = function (a) {
-	return {$: 'UniChooserSearchText', a: a};
+	return {$: 4, a: a};
 };
 var $author$project$DataChooser$availableUnis = F2(
 	function (chartMode, axConf) {
-		if (chartMode.$ === 'BySubject') {
-			if (chartMode.a.$ === 'Just') {
+		if (chartMode.$ === 1) {
+			if (!chartMode.a.$) {
 				var subject = chartMode.a.a;
 				return A2($elm$core$Dict$get, subject, $author$project$Data$unisOffering);
 			} else {
@@ -10842,22 +10792,22 @@ var $author$project$DataChooser$availableUnis = F2(
 		}
 	});
 var $author$project$DataTypes$ChangeUni = function (a) {
-	return {$: 'ChangeUni', a: a};
+	return {$: 13, a: a};
 };
 var $author$project$DataTypes$ToggleUni = function (a) {
-	return {$: 'ToggleUni', a: a};
+	return {$: 10, a: a};
 };
 var $author$project$DataChooser$checkBoxMsg = function (axConf) {
-	if (axConf.$ === 'UniVsA') {
+	if (!axConf) {
 		return $author$project$DataTypes$ToggleUni;
 	} else {
 		return $author$project$DataTypes$ChangeUni;
 	}
 };
-var $author$project$DataTypes$ClearAllUnis = {$: 'ClearAllUnis'};
-var $author$project$DataTypes$SelectAllUnis = {$: 'SelectAllUnis'};
+var $author$project$DataTypes$ClearAllUnis = {$: 14};
+var $author$project$DataTypes$SelectAllUnis = {$: 17};
 var $author$project$DataChooser$clearAndSelect = function (axConf) {
-	if (axConf.$ === 'UniVsA') {
+	if (!axConf) {
 		return $elm$core$List$concat(
 			_List_fromArray(
 				[
@@ -10871,7 +10821,7 @@ var $author$project$DataChooser$clearAndSelect = function (axConf) {
 var $author$project$DataChooser$foundBySearch = F2(
 	function (chartMode, searchResults) {
 		var codes = function () {
-			if (chartMode.$ === 'Overall') {
+			if (!chartMode.$) {
 				return $author$project$Data$overallUniCodes;
 			} else {
 				return $author$project$Data$uniCodes;
@@ -10884,10 +10834,10 @@ var $author$project$DataChooser$foundBySearch = F2(
 		}
 	});
 var $author$project$DataChooser$inRedMsgUni = function (chartMode) {
-	if (chartMode.$ === 'Overall') {
+	if (!chartMode.$) {
 		return _List_Nil;
 	} else {
-		if (chartMode.a.$ === 'Just') {
+		if (!chartMode.a.$) {
 			return _List_fromArray(
 				[
 					A2(
@@ -10908,10 +10858,10 @@ var $author$project$DataChooser$inRedMsgUni = function (chartMode) {
 	}
 };
 var $author$project$DataChooser$radioOrTick = function (axConf) {
-	if (axConf.$ === 'UniVsA') {
-		return $author$project$DataChooser$Tick;
+	if (!axConf) {
+		return 1;
 	} else {
-		return $author$project$DataChooser$Radio;
+		return 0;
 	}
 };
 var $author$project$DataChooser$uniChooserButtons = F5(
@@ -10925,7 +10875,7 @@ var $author$project$DataChooser$uniChooserButtons = F5(
 			$elm$core$List$concat(
 				function () {
 					var _v0 = A2($author$project$DataChooser$availableUnis, chartMode, axConf);
-					if (_v0.$ === 'Just') {
+					if (!_v0.$) {
 						var available = _v0.a;
 						return _List_fromArray(
 							[
@@ -10950,17 +10900,17 @@ var $author$project$DataChooser$uniChooserButtons = F5(
 	});
 var $author$project$DataChooser$dataChooserButtons_ = F2(
 	function (_v0, model) {
-		var uni = _v0.uni;
-		var question = _v0.question;
-		var subject = _v0.subject;
-		var uniSearchText = _v0.uniSearchText;
-		var subjectSearchText = _v0.subjectSearchText;
+		var uni = _v0.aE;
+		var question = _v0.D;
+		var subject = _v0.bl;
+		var uniSearchText = _v0.F;
+		var subjectSearchText = _v0.E;
 		return $elm$core$List$concat(
 			_List_fromArray(
 				[
 					_List_fromArray(
 					[
-						A2($author$project$DataChooser$axesConfigMode, model.axesConfig, model.chartMode)
+						A2($author$project$DataChooser$axesConfigMode, model.aN, model.X)
 					]),
 					A3(
 					$author$project$DataChooser$showChooserButton,
@@ -10969,7 +10919,7 @@ var $author$project$DataChooser$dataChooserButtons_ = F2(
 					$author$project$DataChooser$uniButtonText(model)),
 					uni ? _List_fromArray(
 					[
-						A5($author$project$DataChooser$uniChooserButtons, model.chartMode, model.axesConfig, uniSearchText, model.uniSearchResults, model.unis)
+						A5($author$project$DataChooser$uniChooserButtons, model.X, model.aN, uniSearchText, model.bu, model.bv)
 					]) : _List_Nil,
 					A3(
 					$author$project$DataChooser$showChooserButton,
@@ -10978,11 +10928,11 @@ var $author$project$DataChooser$dataChooserButtons_ = F2(
 					$author$project$DataChooser$qButtonText(model)),
 					question ? _List_fromArray(
 					[
-						A2($author$project$DataChooser$questionChooserButtons, model.axesConfig, model.questions)
+						A2($author$project$DataChooser$questionChooserButtons, model.aN, model.bd)
 					]) : _List_Nil,
 					function () {
-					var _v1 = model.chartMode;
-					if (_v1.$ === 'BySubject') {
+					var _v1 = model.X;
+					if (_v1.$ === 1) {
 						var maybeSubject = _v1.a;
 						return A3(
 							$author$project$DataChooser$showChooserButton,
@@ -10997,12 +10947,12 @@ var $author$project$DataChooser$dataChooserButtons_ = F2(
 					}
 				}(),
 					function () {
-					var _v2 = model.chartMode;
-					if (_v2.$ === 'BySubject') {
+					var _v2 = model.X;
+					if (_v2.$ === 1) {
 						var maybeSubject = _v2.a;
 						return subject ? _List_fromArray(
 							[
-								A6($author$project$DataChooser$subjectChooserButtons, model.axesConfig, model.chartMode, model.unis, subjectSearchText, model.subjectSearchResults, maybeSubject)
+								A6($author$project$DataChooser$subjectChooserButtons, model.aN, model.X, model.bv, subjectSearchText, model.bn, maybeSubject)
 							]) : _List_Nil;
 					} else {
 						return _List_Nil;
@@ -11010,23 +10960,23 @@ var $author$project$DataChooser$dataChooserButtons_ = F2(
 				}()
 				]));
 	});
-var $author$project$DataChooser$defaultConf = {question: false, subject: false, subjectSearchText: '', uni: false, uniSearchText: ''};
+var $author$project$DataChooser$defaultConf = {D: false, bl: false, E: '', aE: false, F: ''};
 var $author$project$DataChooser$makeChooserConfig = function (chooserMode) {
 	switch (chooserMode.$) {
-		case 'Uni':
+		case 2:
 			var searchText = chooserMode.a;
 			return _Utils_update(
 				$author$project$DataChooser$defaultConf,
-				{uni: true, uniSearchText: searchText});
-		case 'Question':
+				{aE: true, F: searchText});
+		case 0:
 			return _Utils_update(
 				$author$project$DataChooser$defaultConf,
-				{question: true});
-		case 'Subject':
+				{D: true});
+		case 1:
 			var searchText = chooserMode.a;
 			return _Utils_update(
 				$author$project$DataChooser$defaultConf,
-				{subject: true, subjectSearchText: searchText});
+				{bl: true, E: searchText});
 		default:
 			return $author$project$DataChooser$defaultConf;
 	}
@@ -11034,7 +10984,7 @@ var $author$project$DataChooser$makeChooserConfig = function (chooserMode) {
 var $author$project$DataChooser$dataChooserButtons = function (model) {
 	return A2(
 		$author$project$DataChooser$dataChooserButtons_,
-		$author$project$DataChooser$makeChooserConfig(model.chooserMode),
+		$author$project$DataChooser$makeChooserConfig(model.aR),
 		model);
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
@@ -11188,12 +11138,12 @@ var $author$project$Chart$whoWereStudying = F2(
 	});
 var $author$project$Chart$makeCaption = function (model) {
 	var _v0 = _Utils_Tuple2(
-		_Utils_Tuple2(model.axesConfig, model.chartMode),
-		_Utils_Tuple2(model.questions, model.unis));
+		_Utils_Tuple2(model.aN, model.X),
+		_Utils_Tuple2(model.bd, model.bv));
 	_v0$7:
 	while (true) {
-		if (_v0.a.a.$ === 'UniVsA') {
-			if (_v0.a.b.$ === 'Overall') {
+		if (!_v0.a.a) {
+			if (!_v0.a.b.$) {
 				if (_v0.b.a.b && (!_v0.b.a.b.b)) {
 					var _v1 = _v0.a;
 					var _v2 = _v1.a;
@@ -11202,7 +11152,7 @@ var $author$project$Chart$makeCaption = function (model) {
 					var _v5 = _v4.a;
 					var questionNum = _v5.a;
 					var _v6 = A2($elm$core$Dict$get, questionNum, $author$project$DataTypes$questionCodes);
-					if (_v6.$ === 'Nothing') {
+					if (_v6.$ === 1) {
 						return _List_Nil;
 					} else {
 						var question = _v6.a;
@@ -11216,7 +11166,7 @@ var $author$project$Chart$makeCaption = function (model) {
 					return _List_Nil;
 				}
 			} else {
-				if (_v0.a.b.a.$ === 'Nothing') {
+				if (_v0.a.b.a.$ === 1) {
 					var _v11 = _v0.a;
 					var _v12 = _v11.a;
 					var _v13 = _v11.b.a;
@@ -11233,7 +11183,7 @@ var $author$project$Chart$makeCaption = function (model) {
 						var _v19 = _Utils_Tuple2(
 							A2($elm$core$Dict$get, subjectNum, $author$project$Data$subjectCodes),
 							A2($elm$core$Dict$get, questionNum, $author$project$DataTypes$questionCodes));
-						if ((_v19.a.$ === 'Just') && (_v19.b.$ === 'Just')) {
+						if ((!_v19.a.$) && (!_v19.b.$)) {
 							var subject = _v19.a.a;
 							var question = _v19.b.a;
 							return A2($author$project$Chart$whoWereStudying, question, subject);
@@ -11249,7 +11199,7 @@ var $author$project$Chart$makeCaption = function (model) {
 				}
 			}
 		} else {
-			if (_v0.a.b.$ === 'Overall') {
+			if (!_v0.a.b.$) {
 				if (_v0.b.b.b && (!_v0.b.b.b.b)) {
 					var _v23 = _v0.a;
 					var _v24 = _v23.a;
@@ -11258,7 +11208,7 @@ var $author$project$Chart$makeCaption = function (model) {
 					var _v27 = _v26.b;
 					var uniNum = _v27.a;
 					var _v28 = A2($elm$core$Dict$get, uniNum, $author$project$Data$overallUniCodes);
-					if (_v28.$ === 'Nothing') {
+					if (_v28.$ === 1) {
 						return _List_Nil;
 					} else {
 						var uni = _v28.a;
@@ -11268,7 +11218,7 @@ var $author$project$Chart$makeCaption = function (model) {
 					break _v0$7;
 				}
 			} else {
-				if (((_v0.a.b.a.$ === 'Just') && _v0.b.b.b) && (!_v0.b.b.b.b)) {
+				if (((!_v0.a.b.a.$) && _v0.b.b.b) && (!_v0.b.b.b.b)) {
 					var _v29 = _v0.a;
 					var _v30 = _v29.a;
 					var subjectNum = _v29.b.a.a;
@@ -11278,7 +11228,7 @@ var $author$project$Chart$makeCaption = function (model) {
 					var _v33 = _Utils_Tuple2(
 						A2($elm$core$Dict$get, subjectNum, $author$project$Data$subjectCodes),
 						A2($elm$core$Dict$get, uniNum, $author$project$Data$uniCodes));
-					if ((_v33.a.$ === 'Just') && (_v33.b.$ === 'Just')) {
+					if ((!_v33.a.$) && (!_v33.b.$)) {
 						var subject = _v33.a.a;
 						var uni = _v33.b.a;
 						return A2($author$project$Chart$bySubjectQVsA, subject, uni);
@@ -11328,12 +11278,12 @@ var $author$project$View$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{
-		init: $author$project$Main$init,
-		subscriptions: function (_v0) {
+		a2: $author$project$Main$init,
+		bp: function (_v0) {
 			return $elm$core$Platform$Sub$none;
 		},
-		update: $author$project$Update$update,
-		view: $author$project$View$view
+		bw: $author$project$Update$update,
+		bx: $author$project$View$view
 	});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
+	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
