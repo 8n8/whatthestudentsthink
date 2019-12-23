@@ -447,19 +447,20 @@ getOverallData qList uniList =
   let
     uniS = Set.fromList uniList
     qS = Set.fromList qList
+    f i = matching qS uniS (intToNss i)
   in
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
-    List.map getDataPoint <|
-    List.filter (matching qS uniS) nss
+    List.map (getDataPoint << intToNss) <|
+    List.filter f Data.nss
 
 
-nss =
-    List.map intToNss Data.nss
-
-
-nss2 =
-    List.map intToNss2 Data.nss2
+-- nss =
+--     List.map intToNss Data.nss
+-- 
+-- 
+-- nss2 =
+--     List.map intToNss2 Data.nss2
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -477,11 +478,12 @@ getSubjectData subject questionList uniList =
   let
     uniS = Set.fromList uniList
     qS = Set.fromList questionList
+    f i = matching2 subject qS uniS (intToNss2 i)
   in
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
-    List.map getDataPoint2 <|
-    List.filter (matching2 subject qS uniS) nss2
+    List.map (getDataPoint2 << intToNss2) <|
+    List.filter f Data.nss2
 
 
 intToNss2 : Float -> Data.Nss2LineInt
