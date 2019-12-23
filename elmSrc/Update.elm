@@ -455,14 +455,6 @@ getOverallData qList uniList =
     List.filter f Data.nss
 
 
--- nss =
---     List.map intToNss Data.nss
--- 
--- 
--- nss2 =
---     List.map intToNss2 Data.nss2
-
-
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
 getDataPoint {uni, min, value, max} =
     (uni, (min, value, max))
