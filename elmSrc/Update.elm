@@ -40,7 +40,6 @@ import Http
 import Set
 import Maybe.Extra
 import Basics.Extra exposing (fractionalModBy)
-import Array
 
 
 errToStr : Http.Error -> String
@@ -451,17 +450,16 @@ getOverallData qList uniList =
   in
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
-    Array.toList <|
-    Array.map getDataPoint <|
-    Array.filter (matching qS uniS) nss
+    List.map getDataPoint <|
+    List.filter (matching qS uniS) nss
 
 
 nss =
-    Array.map intToNss Data.nss
+    List.map intToNss Data.nss
 
 
 nss2 =
-    Array.map intToNss2 Data.nss2
+    List.map intToNss2 Data.nss2
 
 
 getDataPoint : Data.NssLineInt -> (Int, (Int, Int, Int))
@@ -482,9 +480,8 @@ getSubjectData subject questionList uniList =
   in
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
-    Array.toList <|
-    Array.map getDataPoint2 <|
-    Array.filter (matching2 subject qS uniS) nss2
+    List.map getDataPoint2 <|
+    List.filter (matching2 subject qS uniS) nss2
 
 
 intToNss2 : Float -> Data.Nss2LineInt
