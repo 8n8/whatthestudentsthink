@@ -46,7 +46,7 @@ makeElm nssRaw nss3Raw =
         Left parseErr -> Left $ show parseErr
         Right nss3 ->
           case P.nss nssOverallContents of
-            Left parseErr -> Left $ Text.Megaparsec.parseErrorPretty parseErr
+            Left parseErr -> Left $ Text.Megaparsec.errorBundlePretty parseErr
             Right nss ->
               let
                 bigNss3Unis = findBigNss3Unis nss3

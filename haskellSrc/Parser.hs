@@ -70,7 +70,7 @@ data IntNssLine = IntNssLine
 
 type Parser = M.Parsec Void T.Text
 
-type ParseError = M.ParseError Char Void
+type ParseError = M.ParseErrorBundle T.Text Void
 
 {-| It contains a single data point from the 'NSS3' worksheet, after parsing. -}
 data Nss3Line = Nss3Line
