@@ -18,9 +18,7 @@
 
 module MakeElm (makeElm) where
 
-{-| It reads in the data files, parses them, and does basic preprocessing,
-such as removing small institutions.
--}
+{-| It converts the raw data files into Elm Code. -}
 
 import qualified Data.ByteString as B
 import Data.Text.Encoding (decodeUtf8)
