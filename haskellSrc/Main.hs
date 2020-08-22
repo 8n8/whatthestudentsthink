@@ -18,8 +18,8 @@
 
 module Main (main) where
 
-{-| This module analyses the data files and creates the Elm code
-containing the various lookup dictionaries for the front end.
+{-| This module processes the raw data files and hard-codes it into
+the Elm code in the 'Data' module.
 -}
 
 import qualified Data.Text.IO as Tio
@@ -30,6 +30,8 @@ main :: IO ()
 main = do
     eitherResult <- readAndBasicProcess
     case eitherResult of
-        Left err -> print err
+        Left err ->
+            print err
+
         Right result ->
             Tio.writeFile "elmSrc/Data.elm" result
