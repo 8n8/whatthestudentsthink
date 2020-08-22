@@ -18,7 +18,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 
-module MakeElmCode (elmify) where
+module GenerateElm (elmify) where
 
 {-| It generates the Elm code.  This is so that the backend and frontend
 use the same integer codes for subjects and universities.  The results

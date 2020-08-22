@@ -29,7 +29,7 @@ import qualified MakeCodes
 import Data.List (nub)
 import qualified Data.Map as Map
 import qualified General as G
-import MakeElmCode (elmify)
+import GenerateElm (elmify)
 
 
 {-| It reads in the two CSV data files, parses them, removes the
