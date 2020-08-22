@@ -23,13 +23,15 @@ the Elm code in the 'Data' module.
 -}
 
 import qualified Data.Text.IO as Tio
+import qualified Data.ByteString as B
 import ReadAndBasicProcess (readAndBasicProcess)
 
 
 main :: IO ()
 main = do
-    eitherResult <- readAndBasicProcess
-    case eitherResult of
+    nssRaw <- B.readFile "dataFiles/nss.csv"
+    nss2Raw <- B.readFile "dataFiles/nss3.csv"
+    case readAndBasicProcess nssRaw nss2Raw of
         Left err ->
             print err
 

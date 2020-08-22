@@ -22,7 +22,7 @@ module ReadAndBasicProcess (readAndBasicProcess) where
 such as removing small institutions.
 -}
 
-import qualified Data.ByteString
+import qualified Data.ByteString as B
 import Data.Text.Encoding (decodeUtf8)
 import qualified Parser as P
 import qualified Data.Set as S
@@ -34,10 +34,6 @@ import qualified General as G
 import qualified Text.Megaparsec
 import MakeElmCode (elmify)
 
-{-| It reads a file to Text, using UTF8 encoding. -}
-readUtf8 :: String -> IO T.Text
-readUtf8 fileName = decodeUtf8 <$> Data.ByteString.readFile fileName
-
 binPath :: String
 binPath = "dataFiles"
 
@@ -45,27 +41,31 @@ binPath = "dataFiles"
 universities and creates the integer codes.
 -}
 readAndBasicProcess
-  :: IO (Either String T.Text)
-readAndBasicProcess = do
-  nssOverallContents <- readUtf8 $ binPath ++ "/nss.csv"
-  nss2Contents <- readUtf8 $ binPath ++ "/nss3.csv"
-  case P.nss2 nss2Contents of
-    Left parseErr -> return $ Left $ show parseErr
-    Right nss2 ->
-      case P.nss nssOverallContents of
-        Left parseErr -> return $ Left $ Text.Megaparsec.parseErrorPretty parseErr
-        Right nss -> do
-          let bigNss2Unis = findBigNss2Unis nss2
-          let bigNssUnis = findBigNssUnis (S.map fst bigNss2Unis) nss
-          let wordyNss = removeTinyUnis bigNssUnis nss
-          let wordyNss2 = removeTinyUnis2 bigNss2Unis nss2
-          let nss2Codes = MakeCodes.nss2 wordyNss2
-          let nssCodes = MakeCodes.nss wordyNss
-          case (nss2ToInt nss2Codes wordyNss2, nssToInt nssCodes wordyNss) of
-            (Just nss2Int, Just nssInt) -> return $
-                Right $ elmify (nssInt, nss2Int, nssCodes, nss2Codes)
-            _ -> return $
-                Left "Could not convert universities and subjects to ints."
+  :: B.ByteString
+  -> B.ByteString
+  -> (Either String T.Text)
+readAndBasicProcess nssRaw nss2Raw =
+    let
+        nssOverallContents = decodeUtf8 nssRaw
+        nss2Contents = decodeUtf8 nss2Raw
+    in case P.nss2 nss2Contents of
+        Left parseErr -> Left $ show parseErr
+        Right nss2 ->
+          case P.nss nssOverallContents of
+            Left parseErr -> Left $ Text.Megaparsec.parseErrorPretty parseErr
+            Right nss ->
+              let
+                bigNss2Unis = findBigNss2Unis nss2
+                bigNssUnis = findBigNssUnis (S.map fst bigNss2Unis) nss
+                wordyNss = removeTinyUnis bigNssUnis nss
+                wordyNss2 = removeTinyUnis2 bigNss2Unis nss2
+                nss2Codes = MakeCodes.nss2 wordyNss2
+                nssCodes = MakeCodes.nss wordyNss
+              in case (nss2ToInt nss2Codes wordyNss2, nssToInt nssCodes wordyNss) of
+                (Just nss2Int, Just nssInt) ->
+                    Right $ elmify (nssInt, nss2Int, nssCodes, nss2Codes)
+                _ ->
+                    Left "Could not convert universities and subjects to ints."
 
 {-| Given a list of Maybes, it returns Nothing if any of them is Nothing,
 and the values if they are all Just.
