@@ -32,3 +32,4 @@ executables:
     - -Wno-monomorphism-restriction
     - -Wno-prepositive-qualified-module
     - -Wno-missing-safe-haskell-mode
+    - -Wno-missing-deriving-strategies
