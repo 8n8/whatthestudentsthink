@@ -21,7 +21,7 @@ module MakeElm (makeElm) where
 {-| It converts the raw data files into Elm Code. -}
 
 import qualified Data.ByteString as B
-import Data.Text.Encoding (decodeUtf8)
+import Data.Text.Encoding (decodeUtf8')
 import qualified Parser as P
 import qualified Data.Set as S
 import qualified Data.Text as T
@@ -29,35 +29,50 @@ import qualified MakeCodes
 import Data.List (nub)
 import qualified Data.Map as Map
 import qualified General as G
-import qualified Text.Megaparsec
 import MakeElmCode (elmify)
 
-{-| It reads in the two CSV data files, parses them, removes the small
-universities and creates the integer codes.
+{-| It reads in the two CSV data files, parses them, removes the
+small universities and creates the integer codes.
 -}
 makeElm :: B.ByteString -> B.ByteString -> (Either String T.Text)
 makeElm nssRaw nss3Raw =
+    case (decodeUtf8' nssRaw, decodeUtf8' nss3Raw) of
+        (Left err, _) ->
+            Left $ "decoding UTF8 in nss: " ++ show err
+
+        (_, Left err) ->
+            Left $ "decoding UTF8 in nss3: " ++ show err
+
+        (Right nssText, Right nss3Text) ->
+            case (P.nss nssText, P.nss3 nss3Text) of
+                (Left err, _) ->
+                    Left $ "parsing nss: " ++ show err
+
+                (_, Left err) ->
+                    Left $ "parsing nss3: " ++ show err
+
+                (Right nss, Right nss3) ->
+                    processParsed nss nss3
+
+
+processParsed :: [P.NssLine] -> [P.Nss3Line] -> Either String T.Text
+processParsed nss nss3 =
     let
-        nssOverallContents = decodeUtf8 nssRaw
-        nss3Contents = decodeUtf8 nss3Raw
-    in case P.nss3 nss3Contents of
-        Left parseErr -> Left $ show parseErr
-        Right nss3 ->
-          case P.nss nssOverallContents of
-            Left parseErr -> Left $ Text.Megaparsec.errorBundlePretty parseErr
-            Right nss ->
-              let
-                bigNss3Unis = findBigNss3Unis nss3
-                bigNssUnis = findBigNssUnis (S.map fst bigNss3Unis) nss
-                wordyNss = removeTinyUnis bigNssUnis nss
-                wordyNss3 = removeTinyUnis3 bigNss3Unis nss3
-                nss3Codes = MakeCodes.nss3 wordyNss3
-                nssCodes = MakeCodes.nss wordyNss
-              in case (nss3ToInt nss3Codes wordyNss3, nssToInt nssCodes wordyNss) of
-                (Just nss3Int, Just nssInt) ->
-                    Right $ elmify (nssInt, nss3Int, nssCodes, nss3Codes)
-                _ ->
-                    Left "Could not convert universities and subjects to ints."
+        bigNssUnis = findBigNssUnis (S.map fst bigNss3Unis) nss
+        bigNss3Unis = findBigNss3Unis nss3
+        wordyNss = removeTinyUnis bigNssUnis nss
+        wordyNss3 = removeTinyUnis3 bigNss3Unis nss3
+        nssCodes = MakeCodes.nss wordyNss
+        nss3Codes = MakeCodes.nss3 wordyNss3
+        maybeNssInt = nssToInt nssCodes wordyNss
+        maybeNss3Int = nss3ToInt nss3Codes wordyNss3
+    in case (maybeNss3Int, maybeNssInt) of
+        (Just nss3Int, Just nssInt) ->
+            Right $ elmify (nssInt, nss3Int, nssCodes, nss3Codes)
+
+        _ ->
+            Left "could not convert universities and subjects to ints"
+
 
 {-| Given a list of Maybes, it returns Nothing if any of them is Nothing,
 and the values if they are all Just.
