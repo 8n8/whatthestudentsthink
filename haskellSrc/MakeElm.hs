@@ -16,7 +16,7 @@
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
 
-module ReadAndBasicProcess (readAndBasicProcess) where
+module MakeElm (makeElm) where
 
 {-| It reads in the data files, parses them, and does basic preprocessing,
 such as removing small institutions.
@@ -34,17 +34,11 @@ import qualified General as G
 import qualified Text.Megaparsec
 import MakeElmCode (elmify)
 
-binPath :: String
-binPath = "dataFiles"
-
 {-| It reads in the two CSV data files, parses them, removes the small
 universities and creates the integer codes.
 -}
-readAndBasicProcess
-  :: B.ByteString
-  -> B.ByteString
-  -> (Either String T.Text)
-readAndBasicProcess nssRaw nss2Raw =
+makeElm :: B.ByteString -> B.ByteString -> (Either String T.Text)
+makeElm nssRaw nss2Raw =
     let
         nssOverallContents = decodeUtf8 nssRaw
         nss2Contents = decodeUtf8 nss2Raw
