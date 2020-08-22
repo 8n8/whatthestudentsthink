@@ -127,6 +127,7 @@ oneNssToInt uniMap line =
                 , P.iMaxConf = P.nMaxConf line
                 , P.iSampleSize = P.nSampleSize line
                 }
+
         Nothing ->
             Nothing
 
@@ -167,6 +168,7 @@ oneNss3ToInt uniMap subjMap line =
                     , P.i3MaxConf = P.n3MaxConf line
                     , P.i3SampleSize = P.n3SampleSize line
                     }
+
         _ ->
             Nothing
   

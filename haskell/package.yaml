@@ -6,9 +6,6 @@ author:              "True Ghiassi"
 maintainer:          "true@ghiassitrio.co.uk"
 copyright:           "2020 True Ghiassi"
 
-extra-source-files:
-- README.md
-
 description:         Please see the README on GitHub at <https://github.com/8n8/whatthestudentsthink#readme>
 
 dependencies:
@@ -21,7 +18,7 @@ dependencies:
 executables:
   generateCodes:
     main:                Main.hs
-    source-dirs:         haskellSrc
+    source-dirs:         src
     ghc-options:
     - -threaded
     - -rtsopts
