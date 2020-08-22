@@ -28,8 +28,8 @@ import ReadAndBasicProcess (readAndBasicProcess)
 
 main :: IO ()
 main = do
-  eitherResult <- readAndBasicProcess
-  case eitherResult of
-    Left err -> print err
-    Right result ->
-      Tio.writeFile "elmSrc/Data.elm" result
+    eitherResult <- readAndBasicProcess
+    case eitherResult of
+        Left err -> print err
+        Right result ->
+            Tio.writeFile "elmSrc/Data.elm" result
