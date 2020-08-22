@@ -8,3 +8,4 @@ elm-stuff/
 *.hi
 elmSrc/Data.elm
 testserver.py
+whatthestudentsthink.cabal

@@ -1,0 +1,37 @@
+name:                whatthestudentsthink
+version:             0.1.0.0
+github:              "8n8/whatthestudentsthink"
+license:             GPL-3
+author:              "True Ghiassi"
+maintainer:          "true@ghiassitrio.co.uk"
+copyright:           "2020 True Ghiassi"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on GitHub at <https://github.com/8n8/whatthestudentsthink#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- containers
+- megaparsec
+- text
+
+executables:
+  generateCodes:
+    main:                Main.hs
+    source-dirs:         haskellSrc
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -O2
+    - -Weverything
+    - -Wno-implicit-prelude
+    - -Wno-safe
+    - -Wno-unsafe
+    - -Wno-all-missed-specialisations
+    - -Wno-monomorphism-restriction
+    - -Wno-prepositive-qualified-module
+    - -Wno-missing-safe-haskell-mode
