@@ -30,8 +30,8 @@ import MakeElm (makeElm)
 main :: IO ()
 main = do
     nssRaw <- B.readFile "dataFiles/nss.csv"
-    nss2Raw <- B.readFile "dataFiles/nss3.csv"
-    case makeElm nssRaw nss2Raw of
+    nss3Raw <- B.readFile "dataFiles/nss3.csv"
+    case makeElm nssRaw nss3Raw of
         Left err ->
             print err
 

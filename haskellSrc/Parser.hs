@@ -19,17 +19,17 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Parser
-  ( nss2
+  ( nss3
   , nss
   , NssLine(..)
-  , Nss2Line(..)
+  , Nss3Line(..)
   , IntNssLine(..)
-  , IntNss2Line(..)
+  , IntNss3Line(..)
   , ParseError
   ) where
 
 {-| It provides two parsers, one for the worksheet "NSS" in the data
-spreadsheet and one for the worksheet "NSS2".
+spreadsheet and one for the worksheet "NSS3".
 
 The reason for building a custom parser and not just using a standard
 CSV parser is that I would have had to have made custom parsers for 
@@ -72,28 +72,28 @@ type Parser = M.Parsec Void T.Text
 
 type ParseError = M.ParseError Char Void
 
-{-| It contains a single data point from the 'NSS2' worksheet, after parsing. -}
-data Nss2Line = Nss2Line
-  { n2UniName :: !T.Text
-  , n2Subject :: !T.Text
-  , n2Question :: !Int
-  , n2MinConf :: !Int
-  , n2Value :: !Int
-  , n2MaxConf :: !Int
-  , n2SampleSize :: !Int
+{-| It contains a single data point from the 'NSS3' worksheet, after parsing. -}
+data Nss3Line = Nss3Line
+  { n3UniName :: !T.Text
+  , n3Subject :: !T.Text
+  , n3Question :: !Int
+  , n3MinConf :: !Int
+  , n3Value :: !Int
+  , n3MaxConf :: !Int
+  , n3SampleSize :: !Int
   } deriving Show
 
-{-| A parsed line in the NSS2 worksheet, but with the strings converted to their
+{-| A parsed line in the NSS3 worksheet, but with the strings converted to their
 integer codes.
 -}
-data IntNss2Line = IntNss2Line
-  { i2Uni :: !Int
-  , i2Subject :: !Int
-  , i2Question :: !Int
-  , i2MinConf :: !Int
-  , i2Value :: !Int
-  , i2MaxConf :: !Int
-  , i2SampleSize :: !Int
+data IntNss3Line = IntNss3Line
+  { i3Uni :: !Int
+  , i3Subject :: !Int
+  , i3Question :: !Int
+  , i3MinConf :: !Int
+  , i3Value :: !Int
+  , i3MaxConf :: !Int
+  , i3SampleSize :: !Int
   }
 
 {-| Parses one line in the 'NSS' worksheet. -}
@@ -136,12 +136,12 @@ nss =
   M.parse parseNss "nssFile"
 
 
-{-| The input is the whole of the 'NSS2' worksheet in CSV form.  The output
+{-| The input is the whole of the 'NSS3' worksheet in CSV form.  The output
 is an error or the parsed data.
 -}
-nss2 :: T.Text -> Either ParseError [Nss2Line]
-nss2 =
-  M.parse parseNss2 "nss2File"
+nss3 :: T.Text -> Either ParseError [Nss3Line]
+nss3 =
+  M.parse parseNss3 "nss3File"
 
 
 {-| The parser for the 'NSS' worksheet. -}
@@ -151,11 +151,11 @@ parseNss = do
   contentsMaybes <- M.some parseNssLine
   return $ catMaybes contentsMaybes
 
-{-| The parser for the NSS2 worksheet. -}
-parseNss2 :: Parser [Nss2Line]
-parseNss2 = do
+{-| The parser for the NSS3 worksheet. -}
+parseNss3 :: Parser [Nss3Line]
+parseNss3 = do
   firstFourLines
-  contentsMaybes <- M.some parseNss2Line
+  contentsMaybes <- M.some parseNss3Line
   return $ catMaybes contentsMaybes
 
 {-| The first four lines in each worksheet are column headers and titles and
@@ -246,9 +246,9 @@ parseSubjectCode = do
     _ <- M.takeWhileP Nothing notComma
     comma
 
-{-| It parses one line of data in the 'NSS2' worksheet. -}
-parseNss2Line :: Parser (Maybe Nss2Line)
-parseNss2Line = do
+{-| It parses one line of data in the 'NSS3' worksheet. -}
+parseNss3Line :: Parser (Maybe Nss3Line)
+parseNss3Line = do
   uniName <- parseIdAndUni
   parseSubjectCode
   subject <- M.try parseQuotedSubject M.<|> parsePlainSubject
@@ -263,7 +263,7 @@ parseNss2Line = do
   voidEol M.<|> M.eof
   return $ case (level == "First degree", maybeQNum) of
     (True, Just qNum) -> Just $
-        Nss2Line uniName subject qNum minConf value maxConf sampleSize
+        Nss3Line uniName subject qNum minConf value maxConf sampleSize
     _ -> Nothing
 
 {-| It parses an end of line. -}

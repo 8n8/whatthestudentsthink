@@ -21,7 +21,7 @@
 module General
   ( Answer(..)
   , NssCodes(..)
-  , Nss2Codes(..)
+  , Nss3Codes(..)
   ) where
 
 {-| This module provides some datatypes required by several other modules.
@@ -36,11 +36,11 @@ data NssCodes = NssCodes
 {-| It contains the lookup codes for university codes and names, and
 subject area codes and names.
 -}
-data Nss2Codes = Nss2Codes
-  { c2Unis :: [(T.Text, Int)]
-  , c2Subjects :: [(T.Text, Int)]
-  , c2SubjectsOffered :: [(Int, [Int])]
-  , c2UnisOffering :: [(Int, [Int])]
+data Nss3Codes = Nss3Codes
+  { c3Unis :: [(T.Text, Int)]
+  , c3Subjects :: [(T.Text, Int)]
+  , c3SubjectsOffered :: [(Int, [Int])]
+  , c3UnisOffering :: [(Int, [Int])]
   }
 
 {-| The possible answers to the survey questions. -}

@@ -26,7 +26,7 @@ eventually get put in the file Data.elm in the elmSrc directory.  It makes
 five Elm dictionaries:
 
     1. uniCodes: Integer codes for the universities in the detailed
-       by-subject 'nss2' worksheet.
+       by-subject 'nss3' worksheet.
 
     2. subjectCodes: Integer codes for the subjects.
 
@@ -46,21 +46,21 @@ import qualified Parser as P
 {-| It converts the lookup tables of names to numbers to Elm code, for
 both the universities and the subject areas.
 -}
-elmify :: ([P.IntNssLine], [P.IntNss2Line], G.NssCodes, G.Nss2Codes) -> T.Text
-elmify (nss, nss2, G.NssCodes nssCodes, nss2Codes) = T.concat
+elmify :: ([P.IntNssLine], [P.IntNss3Line], G.NssCodes, G.Nss3Codes) -> T.Text
+elmify (nss, nss3, G.NssCodes nssCodes, nss3Codes) = T.concat
    [ preamble
    , "\n"
    , "\n"
-   , elmifyCode "uniCodes" $ reverseCode $ G.c2Unis nss2Codes
+   , elmifyCode "uniCodes" $ reverseCode $ G.c3Unis nss3Codes
    , "\n"
    , "\n"
-   , elmifyCode "subjectCodes" $ reverseCode $ G.c2Subjects nss2Codes
+   , elmifyCode "subjectCodes" $ reverseCode $ G.c3Subjects nss3Codes
    , "\n"
    , "\n"
-   , elmifyOffered "subjectsOffered" $ G.c2SubjectsOffered nss2Codes
+   , elmifyOffered "subjectsOffered" $ G.c3SubjectsOffered nss3Codes
    , "\n"
    , "\n"
-   , elmifyOffered "unisOffering" $ G.c2UnisOffering nss2Codes
+   , elmifyOffered "unisOffering" $ G.c3UnisOffering nss3Codes
    , "\n"
    , "\n"
    , elmifyCode "overallUniCodes" $ reverseCode nssCodes
@@ -69,7 +69,7 @@ elmify (nss, nss2, G.NssCodes nssCodes, nss2Codes) = T.concat
    , elmifyNss nss
    , "\n"
    , "\n"
-   , elmifyNss2 nss2
+   , elmifyNss3 nss3
    ]
 
 {-| The declaration of the dictionaries that have type "Dict Int (List Int)".
@@ -213,9 +213,9 @@ preamble =
    \    , unisOffering\n\
    \    , overallUniCodes\n\
    \    , nss\n\
-   \    , nss2\n\
+   \    , nss3\n\
    \    , NssLineInt\n\
-   \    , Nss2LineInt\n\
+   \    , Nss3LineInt\n\
    \    )\n\
    \import Dict exposing (Dict, fromList)\n\
    \\n\
@@ -229,7 +229,7 @@ preamble =
    \    }\n\
    \\n\
    \\n\
-   \type alias Nss2LineInt =\n\
+   \type alias Nss3LineInt =\n\
    \    { uni : Int\n\
    \    , subject : Int\n\
    \    , q : Int\n\
@@ -268,24 +268,24 @@ elmifyOneNss startChar nss =
         ]
 
 
-elmifyNss2 :: [P.IntNss2Line] -> T.Text
-elmifyNss2 nss2 =
+elmifyNss3 :: [P.IntNss3Line] -> T.Text
+elmifyNss3 nss3 =
     T.concat
-        [ "nss2 : List Float\n"
-        , "nss2 =\n"
-        , elmifyOneNss2 '[' (head nss2)
-        , T.concat $ map (elmifyOneNss2 ',') (tail nss2)
+        [ "nss3 : List Float\n"
+        , "nss3 =\n"
+        , elmifyOneNss3 '[' (head nss3)
+        , T.concat $ map (elmifyOneNss3 ',') (tail nss3)
         , "    ]\n"
         ]
 
 
-elmifyOneNss2 :: Char -> P.IntNss2Line -> T.Text
-elmifyOneNss2 startChar nss2 =
+elmifyOneNss3 :: Char -> P.IntNss3Line -> T.Text
+elmifyOneNss3 startChar nss3 =
     T.concat
         [ "    "
         , T.singleton startChar
         , " "
-        , T.pack $ show $ nss2ToInt nss2
+        , T.pack $ show $ nss3ToInt nss3
         , "\n"
         ]
 
@@ -304,8 +304,8 @@ nssToInt (P.IntNssLine uniS qS minS valS maxS _) =
     qL * 1000000 +
     uniL * 100000000
 
-nss2ToInt :: P.IntNss2Line -> Integer
-nss2ToInt (P.IntNss2Line uniS subS qS minS valS maxS _) =
+nss3ToInt :: P.IntNss3Line -> Integer
+nss3ToInt (P.IntNss3Line uniS subS qS minS valS maxS _) =
   let
     uniL = toInteger uniS
     subL = toInteger subS

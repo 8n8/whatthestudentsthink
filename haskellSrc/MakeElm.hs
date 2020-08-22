@@ -38,26 +38,26 @@ import MakeElmCode (elmify)
 universities and creates the integer codes.
 -}
 makeElm :: B.ByteString -> B.ByteString -> (Either String T.Text)
-makeElm nssRaw nss2Raw =
+makeElm nssRaw nss3Raw =
     let
         nssOverallContents = decodeUtf8 nssRaw
-        nss2Contents = decodeUtf8 nss2Raw
-    in case P.nss2 nss2Contents of
+        nss3Contents = decodeUtf8 nss3Raw
+    in case P.nss3 nss3Contents of
         Left parseErr -> Left $ show parseErr
-        Right nss2 ->
+        Right nss3 ->
           case P.nss nssOverallContents of
             Left parseErr -> Left $ Text.Megaparsec.parseErrorPretty parseErr
             Right nss ->
               let
-                bigNss2Unis = findBigNss2Unis nss2
-                bigNssUnis = findBigNssUnis (S.map fst bigNss2Unis) nss
+                bigNss3Unis = findBigNss3Unis nss3
+                bigNssUnis = findBigNssUnis (S.map fst bigNss3Unis) nss
                 wordyNss = removeTinyUnis bigNssUnis nss
-                wordyNss2 = removeTinyUnis2 bigNss2Unis nss2
-                nss2Codes = MakeCodes.nss2 wordyNss2
+                wordyNss3 = removeTinyUnis3 bigNss3Unis nss3
+                nss3Codes = MakeCodes.nss3 wordyNss3
                 nssCodes = MakeCodes.nss wordyNss
-              in case (nss2ToInt nss2Codes wordyNss2, nssToInt nssCodes wordyNss) of
-                (Just nss2Int, Just nssInt) ->
-                    Right $ elmify (nssInt, nss2Int, nssCodes, nss2Codes)
+              in case (nss3ToInt nss3Codes wordyNss3, nssToInt nssCodes wordyNss) of
+                (Just nss3Int, Just nssInt) ->
+                    Right $ elmify (nssInt, nss3Int, nssCodes, nss3Codes)
                 _ ->
                     Left "Could not convert universities and subjects to ints."
 
@@ -99,37 +99,37 @@ oneNssToInt uniMap line =
     Nothing -> Nothing
 
 {-| It takes in the integer codes for universities and subjects for the
-'NSS2' worksheet, and the parsed data.  Its output is the same data but with
+'NSS3' worksheet, and the parsed data.  Its output is the same data but with
 the subject and university names replaced with their integer codes.
 -}
-nss2ToInt :: G.Nss2Codes -> [P.Nss2Line] -> Maybe [P.IntNss2Line]
-nss2ToInt codes dat =
+nss3ToInt :: G.Nss3Codes -> [P.Nss3Line] -> Maybe [P.IntNss3Line]
+nss3ToInt codes dat =
   let
-    uniMap = Map.fromList $ G.c2Unis codes
-    subjMap = Map.fromList $ G.c2Subjects codes
+    uniMap = Map.fromList $ G.c3Unis codes
+    subjMap = Map.fromList $ G.c3Subjects codes
   in
-    fromMaybes . map (oneNss2ToInt uniMap subjMap) $ dat
+    fromMaybes . map (oneNss3ToInt uniMap subjMap) $ dat
 
-{-| It converts the university and subject names in one line from the 'NSS2'
+{-| It converts the university and subject names in one line from the 'NSS3'
 worksheet into their integer codes.
 -}
-oneNss2ToInt
+oneNss3ToInt
   :: Map.Map T.Text Int
   -> Map.Map T.Text Int
-  -> P.Nss2Line
-  -> Maybe P.IntNss2Line
-oneNss2ToInt uniMap subjMap line =
-  case ( Map.lookup (P.n2UniName line) uniMap
-       , Map.lookup (P.n2Subject line) subjMap) of
+  -> P.Nss3Line
+  -> Maybe P.IntNss3Line
+oneNss3ToInt uniMap subjMap line =
+  case ( Map.lookup (P.n3UniName line) uniMap
+       , Map.lookup (P.n3Subject line) subjMap) of
     ( Just uni, Just subj ) -> Just
-        P.IntNss2Line
-          { P.i2Uni = uni
-          , P.i2Subject = subj
-          , P.i2Question = P.n2Question line
-          , P.i2MinConf = P.n2MinConf line
-          , P.i2Value = P.n2Value line
-          , P.i2MaxConf = P.n2MaxConf line
-          , P.i2SampleSize = P.n2SampleSize line
+        P.IntNss3Line
+          { P.i3Uni = uni
+          , P.i3Subject = subj
+          , P.i3Question = P.n3Question line
+          , P.i3MinConf = P.n3MinConf line
+          , P.i3Value = P.n3Value line
+          , P.i3MaxConf = P.n3MaxConf line
+          , P.i3SampleSize = P.n3SampleSize line
           }
     _ -> Nothing
 
@@ -143,28 +143,28 @@ removeTinyUnis :: S.Set T.Text -> [P.NssLine] -> [P.NssLine]
 removeTinyUnis bigUnis =
   filter (flip S.member bigUnis . P.nUniName)
 
-{-| Removes small universities from the 'NSS2' data. -}
-removeTinyUnis2 :: S.Set (T.Text, T.Text) -> [P.Nss2Line] -> [P.Nss2Line]
-removeTinyUnis2 bigUnis =
-  filter (flip S.member bigUnis . nss2ToTup)
+{-| Removes small universities from the 'NSS3' data. -}
+removeTinyUnis3 :: S.Set (T.Text, T.Text) -> [P.Nss3Line] -> [P.Nss3Line]
+removeTinyUnis3 bigUnis =
+  filter (flip S.member bigUnis . nss3ToTup)
 
-nss2ToTup :: P.Nss2Line -> (T.Text, T.Text)
-nss2ToTup line = (P.n2UniName line, P.n2Subject line)
+nss3ToTup :: P.Nss3Line -> (T.Text, T.Text)
+nss3ToTup line = (P.n3UniName line, P.n3Subject line)
 
-{-| It takes in the whole of the NSS2 parsed data, and outputs the university
+{-| It takes in the whole of the NSS3 parsed data, and outputs the university
 and subject for each subject where the sample size is greater than 40 for
 survey question 1.
 -}
-findBigNss2Unis :: [P.Nss2Line] -> S.Set (T.Text, T.Text)
-findBigNss2Unis =
-    S.fromList . nub . map nss2ToTup . filter ((> 40) . P.n2SampleSize) .
-      filter ((== 1) . P.n2Question)
+findBigNss3Unis :: [P.Nss3Line] -> S.Set (T.Text, T.Text)
+findBigNss3Unis =
+    S.fromList . nub . map nss3ToTup . filter ((> 40) . P.n3SampleSize) .
+      filter ((== 1) . P.n3Question)
 
-{-| Given the names of the bigger universities in the NSS2 worksheet, it
+{-| Given the names of the bigger universities in the NSS3 worksheet, it
 finds the universities in the NSS worksheet that are included in it and
 have a sample size greater than 200.
 -}
 findBigNssUnis :: S.Set T.Text -> [P.NssLine] -> S.Set T.Text
-findBigNssUnis bigNss2Unis =
-  S.fromList . filter (`S.member` bigNss2Unis) .
+findBigNssUnis bigNss3Unis =
+  S.fromList . filter (`S.member` bigNss3Unis) .
     map P.nUniName . filter ((> 200) . P.nSampleSize)

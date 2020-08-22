@@ -18,7 +18,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 
-module MakeCodes (nss, nss2) where
+module MakeCodes (nss, nss3) where
 
 {-| It makes integer codes for the universities for both datasets. -}
 
@@ -42,27 +42,27 @@ nss dat =
     G.NssCodes $ zip uniNames [1..]
 
 {-| It extracts the university names and subject names from the detailed
-data worksheet 'NSS2'.  This is the one that gives scores for each university
+data worksheet 'NSS3'.  This is the one that gives scores for each university
 for each subject area.  It also compiles a list of subjects offered at each
 university, and a list of universities that offer it for each subject.
 -}
-nss2 :: [P.Nss2Line] -> G.Nss2Codes
-nss2 dat =
+nss3 :: [P.Nss3Line] -> G.Nss3Codes
+nss3 dat =
   let
-    unis = zip (sort . nub $ map P.n2UniName dat) [1..]
-    subjects = zip (sort . nub $ map P.n2Subject dat) [1..]
+    unis = zip (sort . nub $ map P.n3UniName dat) [1..]
+    subjects = zip (sort . nub $ map P.n3Subject dat) [1..]
   in
-    G.Nss2Codes
-      { G.c2Unis = unis
-      , G.c2Subjects = subjects
-      , G.c2SubjectsOffered = subjectsOffered dat unis subjects
-      , G.c2UnisOffering = unisOffering dat unis subjects
+    G.Nss3Codes
+      { G.c3Unis = unis
+      , G.c3Subjects = subjects
+      , G.c3SubjectsOffered = subjectsOffered dat unis subjects
+      , G.c3UnisOffering = unisOffering dat unis subjects
       }
 
 {-| It calculates which universities offer each subject.
 -}
 unisOffering
-  :: [P.Nss2Line]
+  :: [P.Nss3Line]
   -> [(T.Text, Int)]
   -> [(T.Text, Int)]
   -> [(Int, [Int])]
@@ -81,14 +81,14 @@ unisOffering points unisl subjectsl =
 
 {-| It makes a list of the universities that offer a particular subject.
 -}
-subjectUnis :: [P.Nss2Line] -> T.Text -> [T.Text]
+subjectUnis :: [P.Nss3Line] -> T.Text -> [T.Text]
 subjectUnis points subject =
-  sort . nub . map P.n2UniName . filter ((== subject) . P.n2Subject) $ points
+  sort . nub . map P.n3UniName . filter ((== subject) . P.n3Subject) $ points
 
 {-| It makes a list of the subjects offered for each university.
 -}
 subjectsOffered
-  :: [P.Nss2Line]
+  :: [P.Nss3Line]
   -> [(T.Text, Int)]
   -> [(T.Text, Int)]
   -> [(Int, [Int])]
@@ -107,9 +107,9 @@ subjectsOffered points unisl subjectsl =
 
 {-| It makes a list of the subjects offered by a particular university.
 -}
-uniSubjects :: [P.Nss2Line] -> T.Text -> [T.Text]
+uniSubjects :: [P.Nss3Line] -> T.Text -> [T.Text]
 uniSubjects points uniName =
-  sort . nub . map P.n2Subject . filter ((== uniName) . P.n2UniName) $ points
+  sort . nub . map P.n3Subject . filter ((== uniName) . P.n3UniName) $ points
 
 {-| It converts text strings to ints using a lookup table.  This is used for
 converting lists of subjects and universities to their corresponding codes.
