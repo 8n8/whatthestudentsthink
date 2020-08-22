@@ -16,8 +16,6 @@
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
 
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main (main) where
 
 {-| This module analyses the data files and creates the Elm code
@@ -25,8 +23,8 @@ containing the various lookup dictionaries for the front end.
 -}
 
 import qualified Data.Text.IO as Tio
-import MakeElmCode (elmify)
 import ReadAndBasicProcess (readAndBasicProcess)
+
 
 main :: IO ()
 main = do
@@ -34,4 +32,4 @@ main = do
   case eitherResult of
     Left err -> print err
     Right result ->
-      Tio.writeFile "elmSrc/Data.elm" $ elmify result
+      Tio.writeFile "elmSrc/Data.elm" result

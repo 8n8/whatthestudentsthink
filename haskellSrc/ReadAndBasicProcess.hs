@@ -32,6 +32,7 @@ import Data.List (nub)
 import qualified Data.Map as Map
 import qualified General as G
 import qualified Text.Megaparsec
+import MakeElmCode (elmify)
 
 {-| It reads a file to Text, using UTF8 encoding. -}
 readUtf8 :: String -> IO T.Text
@@ -44,12 +45,7 @@ binPath = "dataFiles"
 universities and creates the integer codes.
 -}
 readAndBasicProcess
-  :: IO ( Either String
-         ( [P.IntNssLine]
-         , [P.IntNss2Line]
-         , G.NssCodes
-         , G.Nss2Codes
-         ))
+  :: IO (Either String T.Text)
 readAndBasicProcess = do
   nssOverallContents <- readUtf8 $ binPath ++ "/nss.csv"
   nss2Contents <- readUtf8 $ binPath ++ "/nss3.csv"
@@ -67,7 +63,7 @@ readAndBasicProcess = do
           let nssCodes = MakeCodes.nss wordyNss
           case (nss2ToInt nss2Codes wordyNss2, nssToInt nssCodes wordyNss) of
             (Just nss2Int, Just nssInt) -> return $
-                Right (nssInt, nss2Int, nssCodes, nss2Codes)
+                Right $ elmify (nssInt, nss2Int, nssCodes, nss2Codes)
             _ -> return $
                 Left "Could not convert universities and subjects to ints."
 
