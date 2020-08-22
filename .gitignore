@@ -6,6 +6,6 @@ elm-stuff/
 .#*
 .~lock*
 *.hi
-elmSrc/Data.elm
+elm/src/Data.elm
 testserver.py
 whatthestudentsthink.cabal
