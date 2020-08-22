@@ -74,13 +74,26 @@ processParsed nss nss3 =
             Left "could not convert universities and subjects to ints"
 
 
-{-| Given a list of Maybes, it returns Nothing if any of them is Nothing,
-and the values if they are all Just.
+{-| Given a list of Maybes, it returns Nothing if any of them is
+Nothing, and the values if they are all Just.
 -}
 fromMaybes :: [Maybe a] -> Maybe [a]
-fromMaybes [] = Just []
-fromMaybes (Nothing : _) = Nothing
-fromMaybes (Just a : rest) = fmap (a :) (fromMaybes rest)
+fromMaybes maybes =
+    fromMaybesHelp maybes []
+
+
+fromMaybesHelp :: [Maybe a] -> [a] -> Maybe [a]
+fromMaybesHelp maybes accum =
+    case maybes of
+        [] ->
+            Just $ reverse accum
+
+        Nothing : _ ->
+            Nothing
+
+        Just m : aybes ->
+            fromMaybesHelp aybes (m : accum)
+
 
 {-| It takes in the parsed data from the 'NSS' worksheet and the
 integer codes for the universities, and produces a dataset with the
