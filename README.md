@@ -19,9 +19,12 @@ Software versions that the build is tested with:
 
 The build has only been tested in Ubuntu Linux, version 19.10.
 
-Run the following commands (starting at the package root):
+Run the following commands:
 
 ```
+git clone git@github.com:8n8/whatthestudentsthink.git
+cd whatthestudentsthink
+
 # 'haskell' directory contains all the Haskell code.
 cd haskell
 
