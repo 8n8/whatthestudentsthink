@@ -470,16 +470,16 @@ getSubjectData subject questionList uniList =
   let
     uniS = Set.fromList uniList
     qS = Set.fromList questionList
-    f i = matching2 subject qS uniS (intToNss2 i)
+    f i = matching3 subject qS uniS (intToNss3 i)
   in
     List.map Tuple.second <|
     List.sortBy Tuple.first <|
-    List.map (getDataPoint2 << intToNss2) <|
-    List.filter f Data.nss2
+    List.map (getDataPoint3 << intToNss3) <|
+    List.filter f Data.nss3
 
 
-intToNss2 : Float -> Data.Nss2LineInt
-intToNss2 i =
+intToNss3 : Float -> Data.Nss3LineInt
+intToNss3 i =
         { max = unwrap <| floor <| fractionalModBy 100 i
         , value = unwrap <| floor <| fractionalModBy 100 (i / 100)
         , min = unwrap <| floor <| fractionalModBy 100 (i / 10000)
@@ -507,8 +507,8 @@ intToNss i =
         }
 
 
-matching2 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss2LineInt -> Bool
-matching2 subjectCandidate qs unis {uni, subject, q} =
+matching3 : Int -> Set.Set Int -> Set.Set Int -> Data.Nss3LineInt -> Bool
+matching3 subjectCandidate qs unis {uni, subject, q} =
     List.all (\x -> x)
         [ subject == subjectCandidate
         , Set.member uni unis
@@ -516,8 +516,8 @@ matching2 subjectCandidate qs unis {uni, subject, q} =
         ]
 
 
-getDataPoint2 : Data.Nss2LineInt -> (Int, (Int, Int, Int))
-getDataPoint2 {uni, min, value, max} =
+getDataPoint3 : Data.Nss3LineInt -> (Int, (Int, Int, Int))
+getDataPoint3 {uni, min, value, max} =
     (uni, (min, value, max))
 
 
