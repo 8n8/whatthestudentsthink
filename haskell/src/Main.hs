@@ -5,13 +5,13 @@
 -- Whatthestudentsthink is free software: you can redistribute it and/or
 -- modify it under the terms of the GNU General Public License as
 -- published by the Free Software Foundation, either version 3 of the
--- License, or (at your option) any later version.  
--- 
+-- License, or (at your option) any later version.
+--
 -- Whatthestudentsthink is distributed in the hope that it will be
 -- useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 -- of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 -- General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Whatthestudentsthink.  If not, see
 -- <http://www.gnu.org/licenses/>.
@@ -29,11 +29,11 @@ import MakeElm (makeElm)
 
 main :: IO ()
 main = do
-    nssRaw <- B.readFile "dataFiles/nss.csv"
-    nss3Raw <- B.readFile "dataFiles/nss3.csv"
+    nssRaw <- B.readFile "nss.csv"
+    nss3Raw <- B.readFile "nss3.csv"
     case makeElm nssRaw nss3Raw of
         Left err ->
             print err
 
         Right result ->
-            Tio.writeFile "elmSrc/Data.elm" result
+            Tio.writeFile "../elm/src/Data.elm" result
