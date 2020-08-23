@@ -69,7 +69,7 @@ explainConfidenceIntervals =
         [ class "explainP" ]
         [ text """The dot gives the percentage of students who answered "Mostly agree" or "Definitely agree".  The line gives the """
         , Html.a
-            [ Html.Attributes.href "https://web.archive.org/web/20191220172052/https://www.officeforstudents.org.uk/advice-and-guidance/student-information-and-data/national-student-survey-nss/questions-about-the-nss-data/"
+            [ Html.Attributes.href "https://www.officeforstudents.org.uk/advice-and-guidance/student-information-and-data/national-student-survey-nss/questions-about-the-nss-data/"
             ]
             [ text "95% confidence interval" ]
         , text "."
