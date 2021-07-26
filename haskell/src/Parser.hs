@@ -116,8 +116,6 @@ parseNssLine = do
     maybeQNum <- parseQuestionNum M.<|> parseNhs
     (minConf, value, maxConf) <- parseQColsAndMinValMax
     sampleSize <- M.try parseInt
-    comma
-    _ <- P.char 'Y' M.<|> return ' '
     voidEol M.<|> M.eof
     return $ case maybeQNum of
         Just qNum ->
@@ -289,8 +287,6 @@ parseNss3Line = do
     maybeQNum <- parseQuestionNum M.<|> parseNhs
     (minConf, value, maxConf) <- parseQColsAndMinValMax
     sampleSize <- parseInt
-    comma
-    _ <- P.char 'Y' M.<|> return ' '
     voidEol M.<|> M.eof
     return $ case (level == "First degree", maybeQNum) of
         (True, Just qNum) ->

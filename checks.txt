@@ -1,0 +1,22 @@
+I manually checked these datapoints by comparing the chart with the spreadsheet from Office for Students.
+
+# NSS
+
+Q27 Bournemouth University
+Q27 ICMP Management Limited
+Q5 ACM Guildford Limited
+Q5 Coventry University
+Q5 York St John University
+Q26 Birkbeck College
+Q26 Global Banking School Limited
+Q26 University of Durham
+Q24 The University of Cumbria
+
+# NSS3
+
+Q25 Anthropology Goldsmiths' College
+Q27 Law University of Newcastle upon Tyne
+Q1 Law King's College London
+Q1 Others in technology SAE Education Limited
+Q1 Others in technology University of Portsmouth
+Q3 Others in technology Birmingham City University
